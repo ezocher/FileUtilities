@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Ignore output folders
+.[Rr]eports/
+
+# Ignore zips of downloaded projects
+*.zip
+
 # User-specific files
 *.suo
 *.user
