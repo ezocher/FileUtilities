@@ -80,7 +80,7 @@ namespace Explorations
             string path = "";
             bool argException = false;
 
-            const int numberScanned = 40000;
+            const int numberScanned = 1000;
             const int progressInterval = 100;
 
             for (int i = 0; i < numberScanned; i++)
