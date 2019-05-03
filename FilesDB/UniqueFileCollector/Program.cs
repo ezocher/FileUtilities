@@ -10,6 +10,7 @@ namespace UniqueFileCollector
     {
         static void Main(string[] args)
         {
+            FileDB.
         }
     }
 }
