@@ -10,7 +10,8 @@ namespace UniqueFileCollector
     {
         static void Main(string[] args)
         {
-            FileDB.
+            FileDB db = new FileDB();
+            LoadFileList.Load(@"", db);
         }
     }
 }

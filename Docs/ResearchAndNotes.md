@@ -10,11 +10,12 @@
 	* Volume/Media/Machine (first one in scan priority order)
 	* Full Path
       * Only store full paths since Path.GetFileName() .GetExtension() etc. are cheap
-	* Which dates? None for now
+	* Which dates? None for now Future TODO
 	* Length
 	* Checksum (Dictionary key)
 	* Cloud (Generalize to where) bit array
       * OneDrive and Dropbox for now
+      * Derive this at DB load time based on ONeDrive and Dropbox paths? TODO
 	* Number of copies in this volume
       * During scan, duplicates found just increment this counter
 * "In memory DB": Dictionary<string, file-record>
@@ -32,8 +33,12 @@
 ## Unique File Collector
 * Load previously made DB Files that define Base File Collection in "priority order" into in-memory DB
 * Scan new volume and compare to DB
-  * Unique files copied in existing directory structure into: Found Photos, found Music/Podcasts/Sounds, found Office/Documents, found Code, found PDFs, found Web, found Adobe
+  * Unique files copied in _existing directory structure_ into: Found Photos, found Music/Podcasts/Sounds, found Office/Documents, found Code, found PDFs, found Web, found Adobe
+    * TODO: add source vol to existing directory name??
+    * TODO: depending on naming strategy, look out for existing found files
   * Destination volume for found files can be specified (or in config file)
+  * Only add first instance of found file
+  * TODO - "rebase" long full paths to avoid path length overrun
 * Add found files to in-memory DB
 * Create and serialize found files DB in Known DB format
 * These can be added to Base File Collection for running more scans without having to rescan anything

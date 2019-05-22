@@ -22,12 +22,12 @@ class FileDescription
 
     private static long ParseLength(string lengthString)
     {
-        if (long.TryParse(lengthString, out long l))
-            return (l);
+        if (long.TryParse(lengthString, out long x))
+            return (x);
         else
             return 0;
     }
-    // From DreDuper project/xxxx.cs:
+    // From DeDuper project/xxxx.cs:
     //    const string FilesReportHeader = "Num\tVolume\tCreation Time\tLast Write Time\tLast Acc Time\tAttributes\tFull Path\tExt\tFile Name\tLength\tChecksum";
     //    const string FilesReportFormat = "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}";
 

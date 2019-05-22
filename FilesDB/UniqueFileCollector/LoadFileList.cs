@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 class LoadFileList
 {
-    public static void Load(string path)
+    public static void Load(string path, FileDB db)
     {
         try
         {
@@ -21,7 +21,7 @@ class LoadFileList
                 }
                 else
                 {
-                    FileDB.AddRecord(FileDescription.ParseRecord(line));
+                    db.AddRecord(FileDescription.ParseRecord(line));
                 }
             }
         }

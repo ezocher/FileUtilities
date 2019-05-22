@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 class FileDB
 {
-    static Dictionary<string, FileDescription> db;
+    Dictionary<string, FileDescription> db;
 
-    public static void Initialize()
+    public FileDB()
     {
         db = new Dictionary<string, FileDescription>();
     }
 
-    public static void AddRecord(FileDescription fd)
+    public void AddRecord(FileDescription fd)
     {
         if (db.ContainsKey(fd.Fingerprint))
             db[fd.Fingerprint].NumberOfCopies++;
         else
-            db[fd.Fingerprint] = fd;   
+            db[fd.Fingerprint] = fd;
     }
 }
 
