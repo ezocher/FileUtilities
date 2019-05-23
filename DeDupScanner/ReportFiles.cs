@@ -11,13 +11,18 @@ namespace DeDupScanner
     {
         static StreamWriter filesReport;
         static StreamWriter directoriesReport;
+        static StreamWriter excludedReport;
+
+        static int excludedReportLineNum = 1;
 
         const string FilesReportHeader = "Num\tVolume\tCreation Time\tLast Write Time\tLast Acc Time\tAttributes\tFull Path\tExt\tFile Name\tLength\tChecksum";
         const string FilesReportFormat = "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}";
 
-
         const string DirectoriesReportHeader = "Num\tVolume\tCreation Time\tLast Write Time\tLast Acc Time\tAttributes\tFull Path\tDir Name\tNum Scanned\tNum Items\tChecksum";
         const string DirectoriesReportFormat = "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}";
+
+        const string ExcludedReportHeader = "Num\tF or D\tFull Path\tReason\tDetail";
+        const string ExcludedReportFormat = "{0}\t{1}\t{2}\t{3}\t{4}";
 
         public static void Open(string baseName, string scanRootDir)
         {
@@ -25,6 +30,7 @@ namespace DeDupScanner
             const string ReportFilesExtension = ".txt";
             const string FilesReportNamePrefix = "File List - ";
             const string DirectoriesReportNamePrefix = "Directory List - ";
+            const string ExcludedReportNamePrefix = "Excluded List - ";
 
 
             string reportsDirectoryPath = System.Windows.Forms.Application.StartupPath + Path.DirectorySeparatorChar + ReportsFolderName;
@@ -41,12 +47,19 @@ namespace DeDupScanner
             directoriesReport = new StreamWriter(directoriesReportFullName, false); // Append = true
             // directoryReport.WriteLine("Starting scan of {0}\n", scanRootDir);
             directoriesReport.WriteLine(DirectoriesReportHeader);
+
+            string excludedReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + ExcludedReportNamePrefix + baseName + ReportFilesExtension;
+            excludedReportFullName = FileUtil.GetUniqueFileName(excludedReportFullName);
+            excludedReport = new StreamWriter(excludedReportFullName, false); // Append = true
+            // directoryReport.WriteLine("Starting scan of {0}\n", scanRootDir);
+            excludedReport.WriteLine(ExcludedReportHeader);
         }
 
         public static void Close()
         {
             filesReport.Close();
             directoriesReport.Close();
+            excludedReport.Close();
         }
 
         public static void WriteFileInfo(FileInfo fi, string baseName, string fileFingerprint, int numFilesCompleted)
@@ -63,6 +76,13 @@ namespace DeDupScanner
                 di.CreationTime, di.LastWriteTime, di.LastAccessTime,
                 di.Attributes, // fi.IsReadOnly, - ReadOnly is included FileInfo.Attributes
                 di.FullName, di.Name, numItemsScanned, totalNumItems, directoryFingerprint);
+        }
+
+        public static void WriteExcludedInfo(bool isFile, string fullPath, string reason, string detail)
+        {
+            excludedReport.WriteLine(ExcludedReportFormat, excludedReportLineNum++, isFile ? "File" : "Dir", 
+                fullPath, reason, detail);
+            excludedReport.Flush(); // Temp for debugging / TODO remove when done
         }
 
     }

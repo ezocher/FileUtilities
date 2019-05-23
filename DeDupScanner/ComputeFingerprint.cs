@@ -28,7 +28,7 @@ namespace DeDupScanner
             {
                 lock (ConsoleUtil._lockGlobalConsole)
                     Console.WriteLine("\n*** File SHA Exception: {0}\n      File: {1}", e.Message, path);
-                RunParallelScan.progress.FileException();
+                RunParallelScan.progress.FileException(path, e.Message);
                 return "";
             }
         }

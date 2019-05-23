@@ -98,6 +98,7 @@ namespace DeDupScanner
         void ProcessDirectory(Tuple<DirectoryInfo, DirectoryFingerprint> d)
         {
             bool directoryAccessException = false;
+            string exceptionMessage = "";
             int fileCount = 0;
             int directoryCount = 0;
             DirectoryInfo dirInfo = d.Item1;
@@ -106,7 +107,7 @@ namespace DeDupScanner
             if (DirectoryInSkipList(dirInfo))
             {
                 parentFingerprint?.ChildDirectorySkipped();
-                RunParallelScan.progress.SkipListDirSkipped();
+                RunParallelScan.progress.SkipListDirSkipped(dirInfo);
                 return;
             }
 
@@ -114,25 +115,28 @@ namespace DeDupScanner
 
             try
             {
+                string reason;
                 FileInfo[] nextFiles = dirInfo.GetFiles();
                 foreach (FileInfo fi in nextFiles)
-                    if (FileIncluded(fi))
+                    if (FileIncluded(fi, out reason))
                     {
                         files.Enqueue(Tuple.Create<FileInfo, DirectoryFingerprint>(fi, myFingerprint));
                         fileCount++;
                     }
                     else
-                        RunParallelScan.progress.HiddenSystemFileSkipped();
+                        RunParallelScan.progress.FileSkipped(fi, reason);
             }
             catch (UnauthorizedAccessException)
             {
                 Error("Directory: " + dirInfo.FullName, "Access denied");
                 directoryAccessException = true;
+                exceptionMessage = "UnauthorizedAccessException";
             }
             catch (DirectoryNotFoundException)
             {
                 Error("Directory: " + dirInfo.FullName, "Directory not found");
                 directoryAccessException = true;
+                exceptionMessage = "DirectoryNotFoundException";
             }
             catch (Exception e)
             {
@@ -144,7 +148,7 @@ namespace DeDupScanner
             if (directoryAccessException)
             {
                 parentFingerprint?.ChildDirectorySkipped();
-                RunParallelScan.progress.DirException();
+                RunParallelScan.progress.DirException(dirInfo, exceptionMessage);
                 return;
             }
             else
@@ -187,14 +191,16 @@ namespace DeDupScanner
             ConsoleUtil.RestoreColors();
         }
 
-        // TODO: Fix stats to correctly count exclusion for different reasons
-        // TODO: Report of exluded files
+        // TODO: Add stats to correctly count exclusion for different reasons
+        // TODO: Change reason to an enum?
+      
         // TODO: Exclude files by extension: e.g. .tmp, .dll, .exe
-        bool FileIncluded(FileInfo fi)
+        bool FileIncluded(FileInfo fi, out string reason)
         {
             // Exclude files of zero length
             if (fi.Length == 0)
             {
+                reason = "zero length";
                 return false;
             }
             
@@ -202,9 +208,13 @@ namespace DeDupScanner
             {
                 // Exclude Hidden and System files
                 if (FileUtil.IsSystemOrHidden(fi))
+                {
+                    reason = "System or Hidden";
                     return false;
+                }
+                    
             }
-
+            reason = "Included";
             return true;
         }
 

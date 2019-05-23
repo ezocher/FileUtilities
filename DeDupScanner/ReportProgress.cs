@@ -23,7 +23,7 @@ namespace DeDupScanner
         long totalBytesCompleted = 0;
         long lastBytesCompleted = 0;
 
-        int numHiddenSystemFilesSkipped = 0;
+        int numFilesSkipped = 0;
         int numHiddenSystemDirsSkipped = 0;
         int numSkipListDirsSkipped = 0;
         int numDirExceptions = 0;
@@ -77,35 +77,39 @@ namespace DeDupScanner
             }
         }
     
-        public void SkipListDirSkipped()
+        public void SkipListDirSkipped(DirectoryInfo di)
         {
             lock (_lockStats)
             {
                 numSkipListDirsSkipped++;
+                ReportFiles.WriteExcludedInfo(false, di.FullName, "Dir in skip list", "");
             }
         }
 
-        public void DirException()
+        public void DirException(DirectoryInfo di, string message)
         {
             lock (_lockStats)
             {
                 numDirExceptions++;
+                ReportFiles.WriteExcludedInfo(false, di.FullName, "Dir exception", message);
             }
         }
 
-        public void HiddenSystemFileSkipped()
+        public void FileSkipped(FileInfo fi, string reason)
         {
             lock (_lockStats)
             {
-                numHiddenSystemFilesSkipped++;
+                numFilesSkipped++;
+                ReportFiles.WriteExcludedInfo(true, fi.FullName, "File skipped", reason);
             }
         }
 
-        public void FileException()
+        public void FileException(string fullName, string message)
         {
             lock (_lockStats)
             {
                 numFileExceptions++;
+                ReportFiles.WriteExcludedInfo(true, fullName, "File exception", message);
             }
         }
 
@@ -191,13 +195,13 @@ namespace DeDupScanner
 
             int totalFilesSkipped = 0, totalDirsSkipped = 0;
 
-            totalFilesSkipped = numHiddenSystemFilesSkipped + numFileExceptions;
+            totalFilesSkipped = numFilesSkipped + numFileExceptions;
             totalDirsSkipped = numSkipListDirsSkipped + numHiddenSystemDirsSkipped + numDirExceptions;
 
             if (totalFilesSkipped > 0)
             {
                 Console.WriteLine("\nTotal files skipped = {0:N0}", totalFilesSkipped);
-                if (numHiddenSystemFilesSkipped > 0) Console.WriteLine("    Hidden or System: {0:N0}", numHiddenSystemFilesSkipped);
+                if (numFilesSkipped > 0) Console.WriteLine("    Hidden or System: {0:N0}", numFilesSkipped);
                 if (numFileExceptions > 0) Console.WriteLine("    Files with exceptions: {0:N0}", numFileExceptions);
             }
 
