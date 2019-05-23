@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="ComputeFingerprint.cs" />
     <Compile Include="ConcurrentFilesystemTraverser.cs" />
+    <Compile Include="Util\ConfigFileUtil.cs" />
+    <Compile Include="Util\ConfigSettings.cs" />
     <Compile Include="Util\ConsoleUtil.cs" />
     <Compile Include="DirectoryFingerprint.cs" />
     <Compile Include="Util\FileUtil.cs" />

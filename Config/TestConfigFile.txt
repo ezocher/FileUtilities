@@ -1,0 +1,21 @@
+// Hello world
+# another
+ggg
+	  # boom
+	   // tingle
+  hhh
+[Exclude]
+.abc
+.cde
+    
+.xxx // yes
+.yyy          // hello
+.zzz	# no
+.xxx	// maybe it # could be
+.yyy  # //
+.zzz /#/
+
+[Photos]
+.jpg
+
+
