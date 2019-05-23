@@ -18,6 +18,7 @@ namespace UniqueFileCollector
             if (listFilePath != "")
             {
                 LoadFileList.Load(listFilePath, db);
+                db.DisplayStatsToConsole();
             }
 
             ConsoleUtil.WaitForKeyPress();
