@@ -34,11 +34,20 @@ namespace DeDupScanner
         // A path will be excluded from the list if it is higher in the directory tree than where the scan is starting
         static string[] DirectorySkipListPaths =
         {
+            @"\FileDB",
+            @"\Intel",
+            @"\MSOTraceLite",
+            @"\PerfLogs",
+            @"\processing-3.3",
+            @"\Program Files",
+            @"\Program Files (x86)",
+            @"\SymCache",
+            @"\TestDir",
+            @"\Users\Public",
             @"\Windows",
             @"\Windows.old",
             @"\Windows10Upgrade",
-            @"\Program Files",
-            @"\Program Files (x86)",
+
             @"\Users\ezoch\.nuget"
         };
 
@@ -178,18 +187,25 @@ namespace DeDupScanner
             ConsoleUtil.RestoreColors();
         }
 
+        // TODO: Fix stats to correctly count exclusion for different reasons
+        // TODO: Report of exluded files
+        // TODO: Exclude files by extension: e.g. .tmp, .dll, .exe
         bool FileIncluded(FileInfo fi)
         {
-            if (includeSystemHiddenFilesDirs)
-                return true;
-            else
+            // Exclude files of zero length
+            if (fi.Length == 0)
+            {
+                return false;
+            }
+            
+            if (!includeSystemHiddenFilesDirs)
             {
                 // Exclude Hidden and System files
-                bool include = !FileUtil.IsSystemOrHidden(fi);
-                // if (!include)
-                //    Console.WriteLine("\nFile {0} is System and/or Hidden", fi.FullName);
-                return (include);
+                if (FileUtil.IsSystemOrHidden(fi))
+                    return false;
             }
+
+            return true;
         }
 
         bool DirectoryIncluded(DirectoryInfo di)

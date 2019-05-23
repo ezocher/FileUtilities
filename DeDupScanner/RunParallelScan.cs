@@ -41,6 +41,8 @@ namespace DeDupScanner
                 FileInfo fi = file.Item1;
                 DirectoryFingerprint parentFingerprint = file.Item2;
 
+                // TODO: check if file should be skipped
+
                 string fileChecksum = ComputeFingerprint.FileChecksum(fi.FullName);
                 if (fileChecksum == "")
                 {
