@@ -8,10 +8,19 @@ namespace UniqueFileCollector
 {
     class Program
     {
-        static void Main(string[] args)
+        [STAThreadAttribute]
+        public static void Main(string[] args)
         {
+            ConsoleUtil.InitConsoleSettings("Unique File Collector - Under Development");
+
             FileDB db = new FileDB();
-            LoadFileList.Load(@"", db);
+            string listFilePath = FileUtil.SelectTextFile();
+            if (listFilePath != "")
+            {
+                LoadFileList.Load(listFilePath, db);
+            }
+
+            ConsoleUtil.WaitForKeyPress();
         }
     }
 }
