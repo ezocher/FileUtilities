@@ -31,15 +31,28 @@ class FileDescription
     //    const string FilesReportHeader = "Num\tVolume\tCreation Time\tLast Write Time\tLast Acc Time\tAttributes\tFull Path\tExt\tFile Name\tLength\tChecksum";
     //    const string FilesReportFormat = "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}";
 
+    // Returns null if the line doesn't contain a full record
     public static FileDescription ParseRecord(string line)
     {
+        const int FieldIndexVolumeName = 1;
+        const int FieldIndexFullPath = 6;
+        const int FieldIndexLength = 9;
+        const int FieldIndexFingerprint = 10;
+
         FileDescription fd = new FileDescription();
         string[] fields = line.Split('\t');
-        fd.VolumeName = fields[1];
+
+        if (fields.Length < (FieldIndexFingerprint + 1))
+        {
+            ConsoleUtil.WriteLineColor(String.Format("*** Bad line read: '{0}'", line), ConsoleColor.Red);
+            return null;
+        }
+
+        fd.VolumeName = fields[FieldIndexVolumeName];
         fd.Machine = ""; // TODO: Implement in scan then implement here
-        fd.FullPath = fields[6];
-        fd.Length = ParseLength(fields[9]);
-        fd.Fingerprint = fields[10];
+        fd.FullPath = fields[FieldIndexFullPath];
+        fd.Length = ParseLength(fields[FieldIndexLength]);
+        fd.Fingerprint = fields[FieldIndexFingerprint];
         fd.NumberOfCopies = 1; // The 1 is counting this file
         return (fd);
     }
