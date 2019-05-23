@@ -1,0 +1,15 @@
+// PhotoExtensions.txt
+
+// TODO: clean up and split into lines
+[Photos]
+
+            ".jpg", ".jpeg", ".jpe", ".jif", ".jfif", ".jfi",   // JPEG
+            ".jp2", ".j2k",  ".jpf", ".jpx", ".jpm",  ".mj2",   // JPEG 2000
+            ".jxr", ".hdp",  ".wdp",                            // JPEG XR aka HD Photo
+            ".heif", ".heic",                                   // HEIF
+
+            // Raw image formats extensions from https://en.wikipedia.org/wiki/Raw_image_format
+            ".3fr", ".ari", ".arw", ".bay", ".crw", ".cr2", ".cr3", ".cap", ".data", ".dcs", ".dcr", ".dng", ".drf", ".eip", ".erf", ".fff", ".gpr", ".iiq", ".k25",
+            ".kdc", ".mdc", ".mef", ".mos", ".mrw", ".nef", ".nrw", ".obm", ".orf",  ".pef", ".ptx", ".pxn", ".r3d", ".raf", ".raw", ".rwl", ".rw2", ".rwz", ".sr2",
+            ".srf", ".srw", ".tif", ".x3f"
+        };
