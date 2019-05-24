@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 class ConfigFileUtil
 {
+    public const string DoubleSlashComment = "//";
+    public const string HashComment = "#";
+
     public static ConfigSettings[] LoadConfigFile(string path)
     {
         const string DefaultCategory = "Default";
@@ -41,9 +44,6 @@ class ConfigFileUtil
         return settings.ToArray();
     }
 
-    public const string DoubleSlashComment = "//";
-    public const string HashComment = "#";
-
     private static bool IsCommentOrBlankLine(string line)
     {
         return (line.Trim().StartsWith(DoubleSlashComment) || line.Trim().StartsWith(HashComment) || (line.Trim() == ""));
@@ -68,6 +68,7 @@ class ConfigFileUtil
         return false;
     }
 }
+
 public static class StringHelper
 {
     public static string StripTrailingComments(this string s)

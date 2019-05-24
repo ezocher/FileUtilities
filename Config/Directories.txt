@@ -1,0 +1,23 @@
+// Directories.txt
+[Exclude]
+\Drivers
+\FileDB
+\Intel
+\MSOTraceLite
+\NVIDIA
+\Oculus Apps
+\OpenSpace-0.13.0
+\PerfLogs
+\processing-3.3
+\processing-3.3.4
+\Program Files
+\Program Files (x86)
+\SymCache
+\TestDir
+\Test Directory
+\Users\Public
+\Windows
+\Windows.old
+\Windows10Upgrade
+
+\Users\ezoch\.nuget

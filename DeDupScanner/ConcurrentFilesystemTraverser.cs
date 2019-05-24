@@ -27,7 +27,7 @@ namespace DeDupScanner
 
             includeSystemHiddenFilesDirs = !excludeSystemHiddenFilesDirs;
 
-            InitDirSkipList(rootDirectoryPath);
+            InitDirSkipList( rootDirectoryPath, Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\Directories.txt") );
         }
 
         // Path list below contains full paths of directories to skip, independent of volume letter
@@ -53,16 +53,21 @@ namespace DeDupScanner
 
         static HashSet<string> DirectorySkipList;
 
-        void InitDirSkipList(string rootDirectoryPath)
+        void InitDirSkipList(string rootDirectoryPath, string directoryConfigFilePath)
         {
             DirectorySkipList = new HashSet<string>();
 
             string volume = rootDirectoryPath.Substring(0, @"X:".Length);
-            foreach (string path in DirectorySkipListPaths)
+            var dirList = ConfigFileUtil.LoadConfigFile(directoryConfigFilePath);
+
+            foreach (ConfigSettings settings in dirList)
             {
-                string newSkipPath = volume + path;
-                if (newSkipPath.Length >= rootDirectoryPath.Length)
-                    DirectorySkipList.Add(newSkipPath);
+                if (settings.Category == "Exclude")
+                {
+                    string newSkipPath = volume + settings.Key;
+                    if (newSkipPath.Length >= rootDirectoryPath.Length)
+                        DirectorySkipList.Add(newSkipPath);
+                }
             }
         }
 
