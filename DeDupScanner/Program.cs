@@ -22,7 +22,6 @@ namespace DeDupScanner
         public static void Main(string[] args)
         {
             ConsoleUtil.InitConsoleSettings("DeDup Scanner - Under Development");
-            var aaa = ConfigFileUtil.LoadConfigFile(@"C:\Users\ezoch\Repos\FileUtilities\Config\config.txt");
 
             string scanRootDir = FileUtil.SelectDirectory();
             baseName = FileUtil.GetBaseName(scanRootDir); // e.g. "<system name> Vol C"
