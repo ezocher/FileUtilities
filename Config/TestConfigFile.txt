@@ -1,9 +1,10 @@
-// Hello world
+// Hello world [InAComment]
 # another
 ggg
 	  # boom
 	   // tingle
-  hhh
+
+"  hhh"
 [Exclude]
 .abc
 .cde
@@ -11,11 +12,43 @@ ggg
 .xxx // yes
 .yyy          // hello
 .zzz	# no
-.xxx	// maybe it # could be
-.yyy  # //
-.zzz /#/
+.aaa	// maybe it # could be
+.bbb  # // ConfigSettings[8]
+.ccc /#/
 
-[Photos]
+[Photos]   // Category with comment
 .jpg
 
+[]
+jjj
+kkk = 55
 
+[Settings]
+x=1
+MarfaZipCode = 30499
+Bling Bling = TRUE		// Could be
+Hio = \JingleBell	# What is this
+    = everything
+= nothing
+formula =+ sum	// Why?
+Seasons==summer, spring, fall
+
+[%username%]
+%windir%
+%path%   // again?
+%userdomain% = %processor_level% $Cookies$
+$UserProfile$
+
+[BAD]
+$xxx$
+%yyy%
+$a$ = $b$
+
+[Degenerate]
+$
+%
+$$
+%%
+
+[The End]
+lastline = $History$    // no crlf after this comment

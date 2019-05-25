@@ -201,7 +201,7 @@ namespace DeDupScanner
             if (totalFilesSkipped > 0)
             {
                 Console.WriteLine("\nTotal files skipped = {0:N0}", totalFilesSkipped);
-                if (numFilesSkipped > 0) Console.WriteLine("    Hidden or System: {0:N0}", numFilesSkipped);
+                if (numFilesSkipped > 0) Console.WriteLine("    Skipped by rules: {0:N0}", numFilesSkipped);
                 if (numFileExceptions > 0) Console.WriteLine("    Files with exceptions: {0:N0}", numFileExceptions);
             }
 

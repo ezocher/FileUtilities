@@ -16,6 +16,9 @@ namespace DeDupScanner
 
         static readonly object _lockNextFile = new object();
 
+        const string directoriesConfigFile = "Directories.txt";
+        const string filesConfigFile = "Extensions.txt";
+
         public ConcurrentFilesystemTraverser(string rootDirectoryPath, bool excludeSystemHiddenFilesDirs)
         {
             directories = new Stack<Tuple<DirectoryInfo, DirectoryFingerprint>> ();
@@ -27,30 +30,18 @@ namespace DeDupScanner
 
             includeSystemHiddenFilesDirs = !excludeSystemHiddenFilesDirs;
 
-            InitDirSkipList( rootDirectoryPath, Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\Directories.txt") );
+            string configFolderPath = Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\");
+
+            InitDirSkipList( rootDirectoryPath, Path.Combine(configFolderPath, directoriesConfigFile) );
+            InitFileSkipList( rootDirectoryPath, Path.Combine(configFolderPath, filesConfigFile) );
         }
 
-        // Path list below contains full paths of directories to skip, independent of volume letter
+        // The path list in the config file (Directories.txt) contains full paths of directories to skip, independent of volume letter
         // A path will be excluded from the list if it is higher in the directory tree than where the scan is starting
-        static string[] DirectorySkipListPaths =
-        {
-            @"\FileDB",
-            @"\Intel",
-            @"\MSOTraceLite",
-            @"\PerfLogs",
-            @"\processing-3.3",
-            @"\Program Files",
-            @"\Program Files (x86)",
-            @"\SymCache",
-            @"\TestDir",
-            @"\Users\Public",
-            @"\Windows",
-            @"\Windows.old",
-            @"\Windows10Upgrade",
-
-            @"\Users\ezoch\.nuget"
-        };
-
+        //      example paths:
+        //          \Users\Public
+        //          \Program Files
+        //          \Windows.old
         static HashSet<string> DirectorySkipList;
 
         void InitDirSkipList(string rootDirectoryPath, string directoryConfigFilePath)
@@ -69,6 +60,21 @@ namespace DeDupScanner
                         DirectorySkipList.Add(newSkipPath);
                 }
             }
+        }
+
+        // The file extension list in the config file (Extensions.txt) lists the extensions of files to be excluded from the scan
+        // Extensions get converted to lower case before loading into this list and file extensions are lower-cased before looking them up
+        static HashSet<string> ExtensionSkipList;
+
+        void InitFileSkipList(string rootDirectoryPath, string extensionConfigFilePath)
+        {
+            ExtensionSkipList = new HashSet<string>();
+
+            var extList = ConfigFileUtil.LoadConfigFile(extensionConfigFilePath);
+
+            foreach (ConfigSettings settings in extList)
+                if (settings.Category == "Exclude")
+                    ExtensionSkipList.Add(settings.Key.ToLower());
         }
 
         public Tuple<FileInfo, DirectoryFingerprint> NextFile()
@@ -196,10 +202,8 @@ namespace DeDupScanner
             ConsoleUtil.RestoreColors();
         }
 
-        // TODO: Add stats to correctly count exclusion for different reasons
+        // TODO: Add stats to correctly count exclusion for different reasons?
         // TODO: Change reason to an enum?
-      
-        // TODO: Exclude files by extension: e.g. .tmp, .dll, .exe
         bool FileIncluded(FileInfo fi, out string reason)
         {
             // Exclude files of zero length
@@ -217,8 +221,15 @@ namespace DeDupScanner
                     reason = "System or Hidden";
                     return false;
                 }
-                    
             }
+
+            // Exclude extensions in skip list
+            if ( ExtensionSkipList.Contains(fi.Extension.ToLower()) )
+            {
+                reason = "exension in skip list";
+                return false;
+            }
+
             reason = "Included";
             return true;
         }

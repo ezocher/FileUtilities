@@ -1,4 +1,7 @@
 // Directories.txt
+[Settings]
+ExcludeHiddenAndSystem = True
+
 [Exclude]
 \Drivers
 \FileDB
@@ -20,4 +23,4 @@
 \Windows.old
 \Windows10Upgrade
 
-\Users\ezoch\.nuget
+$UserProfile$\.nuget
