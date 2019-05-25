@@ -3,6 +3,11 @@
 ExcludeHiddenAndSystem = True
 
 [Exclude]
+%ProgramFiles%
+%ProgramFiles(X86)%
+%public%
+%windir%
+
 \Drivers
 \FileDB
 \Intel
@@ -13,13 +18,9 @@ ExcludeHiddenAndSystem = True
 \PerfLogs
 \processing-3.3
 \processing-3.3.4
-\Program Files
-\Program Files (x86)
 \SymCache
 \TestDir
 \Test Directory
-\Users\Public
-\Windows
 \Windows.old
 \Windows10Upgrade
 

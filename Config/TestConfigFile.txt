@@ -23,10 +23,10 @@ ggg
 jjj
 kkk = 55
 
-[Settings]
+[  Settings  ]
 x=1
 MarfaZipCode = 30499
-Bling Bling = TRUE		// Could be
+Bling Bling = TRUE		// Could be - [15]
 Hio = \JingleBell	# What is this
     = everything
 = nothing
@@ -35,20 +35,21 @@ Seasons==summer, spring, fall
 
 [%username%]
 %windir%
-%path%   // again?
-%userdomain% = %processor_level% $Cookies$
-$UserProfile$
+%path%   // more comments [22]
+%userdomain% = %processor_level% = $Cookies$
+$UserProfile$\Repos\FileUtilities\Config\TestConfigFile.txt	//  This file [24]
+
 
 [BAD]
 $xxx$
 %yyy%
-$a$ = $b$
+$a$ = $b$	// [25] - two previous lines yield nothing
 
 [Degenerate]
 $
 %
 $$
-%%
+%%			// [29] - these four become keys
 
 [The End]
 lastline = $History$    // no crlf after this comment

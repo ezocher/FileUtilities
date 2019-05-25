@@ -23,8 +23,8 @@ namespace DeDupScanner
         {
             ConsoleUtil.InitConsoleSettings("DeDup Scanner - Under Development");
 
-            string configFolderPath = Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\");
-            var testList = ConfigFileUtil.LoadConfigFile(Path.Combine(configFolderPath, "TestConfigFile.txt"));
+            // string configFolderPath = Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\");
+            // var testList = ConfigFileUtil.LoadConfigFile(Path.Combine(configFolderPath, "TestConfigFile.txt"));
 
             string scanRootDir = FileUtil.SelectDirectory();
             baseName = FileUtil.GetBaseName(scanRootDir); // e.g. "<system name> Vol C"
