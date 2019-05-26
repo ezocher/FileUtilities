@@ -1,7 +1,7 @@
 # Hello world [InAComment]
 # another
 # Settings in Default category
-ggg							# [0] 
+ggg							xxx# [0] 
 	  # boom
 "  hhh"
   iii = radio silence		# [2]
@@ -26,17 +26,21 @@ eee  = 55
 hash\#ish
 \# a key not a comment
 
-[  Settings  ]
+[  Category Tests  ]
 x=1
+
+aaa [A key not a category]
 MarfaZipCode = 30499
-Bling Bling = TRUE			# [16]
+
+x = [A key-value pair, not a category]
+Bling Bling = TRUE			# [18]
 
 [Category with trailing chars] a = b
 Hio = \JingleBell	# What is this
     = everything	# No key, so this line and the next two don't yield anything
 =
 = nothing
-formula =+ sum				# [18]
+formula =+ sum				# [20]
 Seasons==summer, spring, fall
 
 [Name resolution tests]
@@ -45,7 +49,7 @@ Seasons==summer, spring, fall
 [%username%]
 path%   # more comments
 %userdomain% = %processor_level% = $Cookies$
-$UserProfile$\Repos\FileUtilities\Config\TestConfigFile.txt  	#  This file [23]
+$UserProfile$\Repos\FileUtilities\Config\TestConfigFile.txt  	#  This file [25]
 
 [BAD]
 $xxx$
@@ -54,9 +58,11 @@ $a$ = $b$	# this and two previous lines yield nothing
 
 [Degenerate]
 $
-%
+%			# These two become keys
 $$
-%%			# these four become keys [24]
+%%			# These two don't yield anything 
+$$$
+%%%			# these two become keys [29]
 
 [The End]
-lastline = $History$    #  no crlf after this comment [28]
+lastline = $History$    #  no crlf after this comment [30]

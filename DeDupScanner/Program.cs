@@ -23,8 +23,6 @@ namespace DeDupScanner
         {
             ConsoleUtil.InitConsoleSettings("DeDup Scanner - Under Development");
 
-            ConfigFileUtil_ManualTests.LoadConfigFile_Test();
-
             string scanRootDir = FileUtil.SelectDirectory();
             baseName = FileUtil.GetBaseName(scanRootDir); // e.g. "<system name> Vol C"
 

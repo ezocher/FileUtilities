@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
 class ConfigFileUtil
 {
-    public const string LineCommentStart = "#";
-    public const char EscapeCharacter = '\\';  // Currently only implemented for comments
-    const string OpenCategory = "[";
-    const string CloseCategory = "]";
-    const string KeyEqualsValue = "=";
-    public const string OpenCloseEnvironmentVariable = "%";
-    public const string OpenCloseSpecialFolder = "$";
-    const string DefaultCategory = "";
+    const string CategoryRegex = @"^\[([^\]]*)\]";
+    const string SpecialFoldersRegex = @"\$([^\$]*)\$";
+    const string EnvironmentVariablesRegex = @"%([^%]*)%";
 
+    const string UnescapedCommentRegex = @"(?<!\\)#";
+    const string CommentStart = "#";
+    const string EscapedCommentStart = @"\#";  // Currently only implemented for comments
+
+    const string KeyEqualsValue = "=";
+
+    const string DefaultCategory = "";
 
     public static ConfigSettings[] LoadConfigFile(string path)
     {
@@ -27,11 +30,11 @@ class ConfigFileUtil
         {
             foreach (string line in File.ReadLines(path))
             {
-                string lineContents = line.StripComments();
+                string lineContents = StripComments(line);
 
                 if (!IsBlankLine(lineContents))
                 {
-                    lineContents = lineContents.ResolveEnvironmentVariables().ResolveSpecialFolders();
+                    lineContents = ResolveEnvironmentVariables( ResolveSpecialFolders(lineContents) );
                     if (!IsBlankLine(lineContents))
                     {
                         if (IsCategoryLine(lineContents, out string newCategory))
@@ -39,6 +42,7 @@ class ConfigFileUtil
                         else if (IsKeyEqualValueLine(lineContents, out string key, out string value, out bool equalWithNoKey))
                             settings.Add(new ConfigSettings(category, key, value));
                         else if (!equalWithNoKey)
+                            // It must be a key-only line
                             settings.Add(new ConfigSettings(category, lineContents.Trim()));
                     }
                 }
@@ -53,28 +57,78 @@ class ConfigFileUtil
         return settings.ToArray();
     }
 
-    private static bool IsBlankLine(string line)
+    static string StripComments(string line)
+    {
+        // Strip unescaped comments
+        Match m = Regex.Match(line, UnescapedCommentRegex);
+        if (m.Success)
+            line = line.Substring(0, m.Index);
+
+        // Remove escape characters from escaped comment chars
+        line = line.Replace(EscapedCommentStart, CommentStart);
+
+        return line.Trim();
+    }
+
+    static bool IsBlankLine(string line)
     {
         return (line.Trim() == "");
     }
 
-    private static bool IsCategoryLine(string line, out string newCategory)
+    static string ResolveSpecialFolders(string line)
     {
-        if (line.StartsWith(OpenCategory))
+        do
         {
-            int closeIndex = line.IndexOf(CloseCategory);
-            if (closeIndex != -1)
+            Match m = Regex.Match(line, SpecialFoldersRegex);
+            if (m.Success)
             {
-                newCategory = line.Substring(1, closeIndex - 1).Trim();  // Leave out opening and closing characters and enclosed whitespace
-                return true;
+                string specialFolder = FileUtil.GetSpecialFolder(m.Groups[1].ToString());
+                if (specialFolder == null)
+                    line = line.Remove(m.Index, m.Length);
+                else
+                    line = line.Remove(m.Index, m.Length).Insert(m.Index, specialFolder);
             }
+            else
+                return line.Trim();
         }
-
-        newCategory = null;
-        return false;
+        while (true);
     }
 
-    private static bool IsKeyEqualValueLine(string line, out string key, out string value, out bool equalWithNoKey)
+    static string ResolveEnvironmentVariables(string line)
+    {
+        do
+        {
+            Match m = Regex.Match(line, EnvironmentVariablesRegex);
+            if (m.Success)
+            {
+                string environmentValue = Environment.GetEnvironmentVariable(m.Groups[1].ToString());
+                if (environmentValue == null)
+                    line = line.Remove(m.Index, m.Length);
+                else
+                    line = line.Remove(m.Index, m.Length).Insert(m.Index, environmentValue);
+            }
+            else
+                return line.Trim();
+        }
+        while (true);
+    }
+
+    static bool IsCategoryLine(string line, out string newCategory)
+    {
+        Match m = Regex.Match(line, CategoryRegex);
+        if (m.Success)
+        {
+            newCategory = m.Groups[1].ToString().Trim();
+            return true;
+        }
+        else
+        {
+            newCategory = null;
+            return false;
+        }
+    }
+
+    static bool IsKeyEqualValueLine(string line, out string key, out string value, out bool equalWithNoKey)
     {
         int equalsLocation = line.IndexOf(KeyEqualsValue);
         equalWithNoKey = false;
@@ -101,85 +155,6 @@ class ConfigFileUtil
     }
 }
 
-public static class StringHelper
-{
-    public static string StripComments(this string s)
-    {
-        int foundIndex;
-        int startIndex = 0;
-
-        string returnString = s;
-
-        do
-        {
-            foundIndex = returnString.IndexOf(ConfigFileUtil.LineCommentStart, startIndex);
-            if (foundIndex == -1)
-                // Not found
-                break;
-            else if ( (foundIndex > 0) && (returnString[foundIndex - 1] == ConfigFileUtil.EscapeCharacter))
-            // Remove escape character and skip over escaped comment start character, then continue searching
-            {
-                returnString = returnString.Remove(foundIndex - 1, 1);
-                startIndex = foundIndex;
-            }
-            else
-                // Found, but not escaped
-                break;
-        }
-        while (true);
-
-
-        if (foundIndex == -1)
-            return returnString.Trim();
-        else
-            return returnString.Substring(0, foundIndex).Trim();
-    }
-
-    public static string ResolveSpecialFolders(this string s)
-    {
-        string returnString = s;
-        do
-        {
-            int i = returnString.IndexOf(ConfigFileUtil.OpenCloseSpecialFolder);
-            if (i == -1)
-                return returnString.Trim();
-
-            int j = returnString.IndexOf(ConfigFileUtil.OpenCloseSpecialFolder, i + 1);
-            if ((j == -1) || (j == (i + 1)))
-                return returnString.Trim();
-
-            string folder = FileUtil.GetSpecialFolder(returnString.Substring(i + 1, (j - i) - 1));
-            if (folder == null)
-                returnString = returnString.Substring(0, i) + returnString.Substring(j + 1);
-            else
-                returnString = returnString.Substring(0, i) + folder + returnString.Substring(j + 1);
-        }
-        while (true);
-    }
-
-    public static string ResolveEnvironmentVariables(this string s)
-    {
-        string x = s;
-        do
-        {
-            int i = x.IndexOf(ConfigFileUtil.OpenCloseEnvironmentVariable);
-            if (i == -1)
-                return x.Trim();
-
-            int j = x.IndexOf(ConfigFileUtil.OpenCloseEnvironmentVariable, i + 1);
-            if ((j == -1) || (j == (i + 1)))
-                return x.Trim();
-
-            string env = Environment.GetEnvironmentVariable(x.Substring(i + 1, (j - i) - 1));
-            if (env == null)
-                x = x.Substring(0, i) + x.Substring(j + 1);
-            else
-                x = x.Substring(0, i) + env + x.Substring(j + 1);
-        }
-        while (true);
-    }
-}
-
 public class ConfigFileUtil_ManualTests
 {
     public static void LoadConfigFile_Test()
@@ -195,4 +170,3 @@ public class ConfigFileUtil_ManualTests
             Console.WriteLine("{0} {1}", i++, setting);
     }
 }
-
