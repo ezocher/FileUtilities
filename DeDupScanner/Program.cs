@@ -23,15 +23,15 @@ namespace DeDupScanner
         {
             ConsoleUtil.InitConsoleSettings("DeDup Scanner - Under Development");
 
-            // string configFolderPath = Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\");
-            // var testList = ConfigFileUtil.LoadConfigFile(Path.Combine(configFolderPath, "TestConfigFile.txt"));
+            ConfigFileUtil_ManualTests.LoadConfigFile_Test();
 
             string scanRootDir = FileUtil.SelectDirectory();
             baseName = FileUtil.GetBaseName(scanRootDir); // e.g. "<system name> Vol C"
 
             if ((scanRootDir == "") || (baseName == ""))
             {
-                Console.WriteLine("Error: scan directory '{0}' or directory name '{1}' is empty", scanRootDir, baseName);
+                ConsoleUtil.WriteLineColor(String.Format("Error: scan directory '{0}' or directory name '{1}' is empty", scanRootDir, baseName),
+                    ConsoleColor.Red);
                 ConsoleUtil.WaitForKeyPress();
                 return;
             }

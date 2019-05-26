@@ -1,55 +1,62 @@
-// Hello world [InAComment]
+# Hello world [InAComment]
 # another
-ggg
+# Settings in Default category
+ggg							# [0] 
 	  # boom
-	   // tingle
-
 "  hhh"
-[Exclude]
-.abc
-.cde
-    
-.xxx // yes
-.yyy          // hello
-.zzz	# no
-.aaa	// maybe it # could be
-.bbb  # // ConfigSettings[8]
-.ccc /#/
+  iii = radio silence		# [2]
 
-[Photos]   // Category with comment
+[Keys and comments]
+.abc
+    
+.xxx # yes
+.yyy          # hello
+.zzz	# # no
+.ccc /#/
+.ddd \#						# [8]
+
+	[Photos]   # Category with comment
 .jpg
 
 []
-jjj
-kkk = 55
+eee  = 55
+
+[\#EscapedHashes]
+\# = \#		# hash = hash	#[11]
+hash\#ish
+\# a key not a comment
 
 [  Settings  ]
 x=1
 MarfaZipCode = 30499
-Bling Bling = TRUE		// Could be - [15]
+Bling Bling = TRUE			# [16]
+
+[Category with trailing chars] a = b
 Hio = \JingleBell	# What is this
-    = everything
+    = everything	# No key, so this line and the next two don't yield anything
+=
 = nothing
-formula =+ sum	// Why?
+formula =+ sum				# [18]
 Seasons==summer, spring, fall
 
-[%username%]
+[Name resolution tests]
 %windir%
-%path%   // more comments [22]
-%userdomain% = %processor_level% = $Cookies$
-$UserProfile$\Repos\FileUtilities\Config\TestConfigFile.txt	//  This file [24]
 
+[%username%]
+path%   # more comments
+%userdomain% = %processor_level% = $Cookies$
+$UserProfile$\Repos\FileUtilities\Config\TestConfigFile.txt  	#  This file [23]
 
 [BAD]
 $xxx$
 %yyy%
-$a$ = $b$	// [25] - two previous lines yield nothing
+$a$ = $b$	# this and two previous lines yield nothing
 
 [Degenerate]
 $
 %
 $$
-%%			// [29] - these four become keys
+%%			# these four become keys [24]
 
 [The End]
-lastline = $History$    // no crlf after this comment
+lastline = $History$    #  no crlf after this comment [28]

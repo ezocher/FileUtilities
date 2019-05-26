@@ -8,19 +8,18 @@ using System.Threading.Tasks;
 
 class ConfigFileUtil
 {
-    public const string DoubleSlashComment = "//";
-    public const string HashComment = "#";
+    public const string LineCommentStart = "#";
+    public const char EscapeCharacter = '\\';  // Currently only implemented for comments
     const string OpenCategory = "[";
     const string CloseCategory = "]";
     const string KeyEqualsValue = "=";
     public const string OpenCloseEnvironmentVariable = "%";
     public const string OpenCloseSpecialFolder = "$";
+    const string DefaultCategory = "";
 
 
     public static ConfigSettings[] LoadConfigFile(string path)
     {
-        const string DefaultCategory = "Default";
-
         var settings = new List<ConfigSettings>();
 
         string category = DefaultCategory;
@@ -28,16 +27,20 @@ class ConfigFileUtil
         {
             foreach (string line in File.ReadLines(path))
             {
-                string lineContents = line.StripComments().ResolveEnvironmentVariables().ResolveSpecialFolders();
+                string lineContents = line.StripComments();
 
                 if (!IsBlankLine(lineContents))
                 {
-                    if (IsCategoryLine(lineContents, out string newCategory))
-                        category = newCategory;
-                    else if (IsKeyEqualValueLine(lineContents, out string key, out string value))
-                        settings.Add(new ConfigSettings(category, key, value));
-                    else
-                        settings.Add(new ConfigSettings(category, lineContents.Trim()));
+                    lineContents = lineContents.ResolveEnvironmentVariables().ResolveSpecialFolders();
+                    if (!IsBlankLine(lineContents))
+                    {
+                        if (IsCategoryLine(lineContents, out string newCategory))
+                            category = newCategory;
+                        else if (IsKeyEqualValueLine(lineContents, out string key, out string value, out bool equalWithNoKey))
+                            settings.Add(new ConfigSettings(category, key, value));
+                        else if (!equalWithNoKey)
+                            settings.Add(new ConfigSettings(category, lineContents.Trim()));
+                    }
                 }
             }
         }
@@ -71,20 +74,22 @@ class ConfigFileUtil
         return false;
     }
 
-    private static bool IsKeyEqualValueLine(string line, out string key, out string value)
+    private static bool IsKeyEqualValueLine(string line, out string key, out string value, out bool equalWithNoKey)
     {
         int equalsLocation = line.IndexOf(KeyEqualsValue);
+        equalWithNoKey = false;
 
-        // -1 means no equals 
-        // Shortest valid line is "x=" where equalsLocation is 1
-        if (equalsLocation > 0)
+        if (equalsLocation != -1)
         {
             key = line.Substring(0, equalsLocation).Trim();
             value = line.Substring(equalsLocation + 1).Trim();
 
             // Don't allow an empty key, but allow an empty value
             if (key.Length == 0)
+            {
+                equalWithNoKey = true;
                 return false;
+            }
             else
                 return true;
         }
@@ -100,41 +105,54 @@ public static class StringHelper
 {
     public static string StripComments(this string s)
     {
-        int i = s.IndexOf(ConfigFileUtil.DoubleSlashComment);
-        int j = s.IndexOf(ConfigFileUtil.HashComment);
+        int foundIndex;
+        int startIndex = 0;
 
-        if (i == j) return s.Trim();   // Can only be == when both are -1
+        string returnString = s;
 
-        int commentStart;
+        do
+        {
+            foundIndex = returnString.IndexOf(ConfigFileUtil.LineCommentStart, startIndex);
+            if (foundIndex == -1)
+                // Not found
+                break;
+            else if ( (foundIndex > 0) && (returnString[foundIndex - 1] == ConfigFileUtil.EscapeCharacter))
+            // Remove escape character and skip over escaped comment start character, then continue searching
+            {
+                returnString = returnString.Remove(foundIndex - 1, 1);
+                startIndex = foundIndex;
+            }
+            else
+                // Found, but not escaped
+                break;
+        }
+        while (true);
 
-        if (i == -1)
-            commentStart = j;
-        else if (j == -1)
-            commentStart = i;
+
+        if (foundIndex == -1)
+            return returnString.Trim();
         else
-            commentStart = Math.Min(i, j);
-
-        return s.Substring(0, commentStart).Trim();
+            return returnString.Substring(0, foundIndex).Trim();
     }
 
     public static string ResolveSpecialFolders(this string s)
     {
-        string x = s;
+        string returnString = s;
         do
         {
-            int i = x.IndexOf(ConfigFileUtil.OpenCloseSpecialFolder);
+            int i = returnString.IndexOf(ConfigFileUtil.OpenCloseSpecialFolder);
             if (i == -1)
-                return x.Trim();
+                return returnString.Trim();
 
-            int j = x.IndexOf(ConfigFileUtil.OpenCloseSpecialFolder, i + 1);
+            int j = returnString.IndexOf(ConfigFileUtil.OpenCloseSpecialFolder, i + 1);
             if ((j == -1) || (j == (i + 1)))
-                return x.Trim();
+                return returnString.Trim();
 
-            string folder = FileUtil.GetSpecialFolder(x.Substring(i + 1, (j - i) - 1));
+            string folder = FileUtil.GetSpecialFolder(returnString.Substring(i + 1, (j - i) - 1));
             if (folder == null)
-                x = x.Substring(0, i) + x.Substring(j + 1);
+                returnString = returnString.Substring(0, i) + returnString.Substring(j + 1);
             else
-                x = x.Substring(0, i) + folder + x.Substring(j + 1);
+                returnString = returnString.Substring(0, i) + folder + returnString.Substring(j + 1);
         }
         while (true);
     }
@@ -159,6 +177,22 @@ public static class StringHelper
                 x = x.Substring(0, i) + env + x.Substring(j + 1);
         }
         while (true);
+    }
+}
+
+public class ConfigFileUtil_ManualTests
+{
+    public static void LoadConfigFile_Test()
+    {
+        const string testFileName = "TestConfigFile.txt";
+
+        string configFolderPath = Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\");
+        var testList = ConfigFileUtil.LoadConfigFile(Path.Combine(configFolderPath, testFileName));
+        Console.WriteLine("Loaded config file '{0}' - {1} config settings found", testFileName, testList.Length);
+
+        int i = 0;
+        foreach (ConfigSettings setting in testList)
+            Console.WriteLine("{0} {1}", i++, setting);
     }
 }
 

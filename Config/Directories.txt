@@ -1,4 +1,4 @@
-// Directories.txt
+# Directories.txt
 [Settings]
 ExcludeHiddenAndSystem = True
 

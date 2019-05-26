@@ -20,5 +20,13 @@ struct ConfigSettings
         Key = key;
         Value = null;
     }
+
+    public override string ToString()
+    {
+        string returnString = String.Format("[{0}] '{1}'", this.Category, this.Key);
+        if (this.Value != null)
+            returnString += String.Format(" = '{0}'", this.Value);
+        return returnString;
+    }
 }
 
