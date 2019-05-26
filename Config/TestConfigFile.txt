@@ -15,6 +15,7 @@ ggg							xxx# [0]
 .ccc /#/
 .ddd \#						# [8]
 
+
 	[Photos]   # Category with comment
 .jpg
 
@@ -44,10 +45,10 @@ formula =+ sum				# [20]
 Seasons==summer, spring, fall
 
 [Name resolution tests]
-%windir%
+%windir% 
 
 [%username%]
-path%   # more comments
+%path%   # more comments
 %userdomain% = %processor_level% = $Cookies$
 $UserProfile$\Repos\FileUtilities\Config\TestConfigFile.txt  	#  This file [25]
 
@@ -64,5 +65,10 @@ $$
 $$$
 %%%			# these two become keys [29]
 
+[Comma seperated values]
+aaaa,bbbb,cccc
+	aaa, bbb,		ccc , ddd ,    e  e  e , fff			# [38]
+,, ,	, preceeding four don't yield values				# [39]
+
 [The End]
-lastline = $History$    #  no crlf after this comment [30]
+lastline = $History$    #  no crlf after this comment [40]

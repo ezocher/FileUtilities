@@ -18,6 +18,7 @@ class ConfigFileUtil
     const string EscapedCommentStart = @"\#";  // Currently only implemented for comments
 
     const string KeyEqualsValue = "=";
+    const char ValueSeparator = ',';
 
     const string DefaultCategory = "";
 
@@ -42,8 +43,8 @@ class ConfigFileUtil
                         else if (IsKeyEqualValueLine(lineContents, out string key, out string value, out bool equalWithNoKey))
                             settings.Add(new ConfigSettings(category, key, value));
                         else if (!equalWithNoKey)
-                            // It must be a key-only line
-                            settings.Add(new ConfigSettings(category, lineContents.Trim()));
+                            // It must be a key-only line (possibly with comma seperation)
+                            ProcessValuesOnlyLine(category, lineContents, settings);
                     }
                 }
             }
@@ -52,6 +53,7 @@ class ConfigFileUtil
         {
             ConsoleUtil.WriteLineColor(String.Format("*** Exception loading config file '{0}' - {1}", path, e.Message),
                 ConsoleColor.Red);
+            throw e;
         }
         
         return settings.ToArray();
@@ -153,11 +155,37 @@ class ConfigFileUtil
             return false;
         }
     }
+
+    static void ProcessValuesOnlyLine(string category, string line, List<ConfigSettings> settings)
+    {
+        int separatorLocation = line.IndexOf(ValueSeparator);
+
+        if (separatorLocation == -1)
+            settings.Add(new ConfigSettings(category, line.Trim()));
+        else
+        {
+            string[] values = line.Split(new char[] { ValueSeparator });
+
+            foreach (string v in values)
+            {
+                string value = v.Trim();
+                if (value != "")
+                    settings.Add(new ConfigSettings(category, value));
+            }
+        }
+    }
 }
 
+
+//             ConfigFileUtil_ManualTests.Run();
 public class ConfigFileUtil_ManualTests
 {
-    public static void LoadConfigFile_Test()
+    public static void Run()
+    {
+        LoadConfigFile_Test();
+    }
+
+    static void LoadConfigFile_Test()
     {
         const string testFileName = "TestConfigFile.txt";
 
@@ -167,6 +195,6 @@ public class ConfigFileUtil_ManualTests
 
         int i = 0;
         foreach (ConfigSettings setting in testList)
-            Console.WriteLine("{0} {1}", i++, setting);
+            Console.WriteLine("{0} {1}", i++, setting.ToString());
     }
 }

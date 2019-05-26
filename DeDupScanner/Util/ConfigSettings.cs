@@ -14,18 +14,19 @@ struct ConfigSettings
         Value = value;
     }
 
-    public ConfigSettings(string category, string key)
+    public ConfigSettings(string category, string value)
     {
         Category = category;
-        Key = key;
-        Value = null;
+        Key = null;
+        Value = value;
     }
 
     public override string ToString()
     {
-        string returnString = String.Format("[{0}] '{1}'", this.Category, this.Key);
-        if (this.Value != null)
-            returnString += String.Format(" = '{0}'", this.Value);
+        string returnString = String.Format("[{0}] ", this.Category);
+        if (this.Key != null)
+            returnString += String.Format("'{0}' = ", this.Key);
+        returnString += String.Format("'{0}'", Value);
         return returnString;
     }
 }
