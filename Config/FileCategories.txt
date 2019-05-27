@@ -1,0 +1,86 @@
+# FileCategories.txt - file categories for organizing found files
+# For use with ezocher/FileUtilities/DeDupScanner and ezocher/FileUtilities/FilesDB/UniqueFileCollector/
+
+[General]
+
+[Web]
+.url, .lnk
+.gif 
+.htm, .html
+
+
+[Documents and Books]		# Papers, books, text files
+.pdf
+.txt, 
+.doc, .docx					# Include here, or in [Office]?
+
+
+[Office]
+.xlsx, .xls
+.pptx, .ppt
+.one
+
+
+[Photos]	# Photo and image formats
+.jpg, .jpeg, .jpe, .jif, .jfif, .jfi	# JPEG
+.jp2, .j2k,  .jpf, .jpx, .jpm,  .mj2	# JPEG 2000
+.jxr, .hdp, .wdp                      	# JPEG XR aka HD Photo
+.heif, .heic                           	# HEIF
+.tif, .tiff								# TIFF
+
+.png									# .gif is in web; I use PNG for screen shots etc.				
+
+# Raw image formats - File extensions from https://en.wikipedia.org/wiki/Raw_image_format
+.3fr, .ari, .arw, .bay, .crw, .cr2, .cr3, .cap, .data, .dcs, .dcr, .dng, .drf, .eip, .erf, .fff, .gpr
+.iiq, .k25, .kdc, .mdc, .mef, .mos, .mrw, .nef, .nrw, .obm, .orf,  .pef, .ptx, .pxn, .r3d, .raf, .raw
+.rwl, .rw2, .rwz, .sr2, .srf, .srw, .x3f
+
+
+[Music]		# Sound and Music formats
+.wav
+.mp3
+.aac
+
+[Video]
+.mp4
+
+[Creative]
+.ai
+.psd, .psb			# Photoshop
+.abr
+.epr, .olp			# Premiere and Media encoder
+
+
+[Code]				# Source code and related docs and files
+.md
+.cs, .csproj, .sln
+.resx				# .NET resource files (XML)
+.snk				# .NET strong name key
+.editorconfig		# For ??
+.dat, .res			# Testing, ?Unit
+.cake
+.xml				# Sometimes code/data, sometimes app settings
+.linq
+.nuspec
+.props				# Sometimes source, sometimes generated (nuget)
+.js, .json
+.xml
+.gitattributes, .gitignore												# git
+.meta, .tga, .fbx, .mat, .prefab, .shader, .unity, .pfx, .asset, .pfx	# Unity
+.ico
+.ps1				# PowerShell
+.sh
+.bat, .cmd
+
+[Fonts]
+.ttf
+
+[VR]
+.glb				# Oculus user-generated content
+
+[Settings]
+.ini
+
+[Archives]
+.zip, .rar
+

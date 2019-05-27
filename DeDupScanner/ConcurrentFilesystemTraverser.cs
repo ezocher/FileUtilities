@@ -13,12 +13,17 @@ namespace DeDupScanner
         Stack<Tuple<DirectoryInfo, DirectoryFingerprint>> directories;
         Queue<Tuple<FileInfo, DirectoryFingerprint>> files;
 
-        bool excludeSystemHiddenFilesDirs;
+        bool excludeHiddenSystemFilesDirs;
+        const string excludeHiddenSystemKey = "ExcludeHiddenAndSystem";
 
         static readonly object _lockNextFile = new object();
 
+        const string configFolderPathUserRelative = @"Repos\FileUtilities\Config\";
         const string directoriesConfigFile = "Directories.txt";
-        const string filesConfigFile = "Extensions.txt";
+        const string filesIgnoreFile = "FilesIgnore.txt";
+        const string settingsCategory = "Settings";
+        const string ignoreCategory = "Ignore";
+        const string extensionsIgnoreCategory = "Extensions Ignore";
 
         public ConcurrentFilesystemTraverser(string rootDirectoryPath)
         {
@@ -29,16 +34,17 @@ namespace DeDupScanner
             DirectoryInfo di = new DirectoryInfo(rootDirectoryPath);
             directories.Push(Tuple.Create<DirectoryInfo, DirectoryFingerprint>(di, null));
 
-            string configFolderPath = Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\");
+            string configFolderPath = Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), configFolderPathUserRelative);
 
             InitDirSkipList( rootDirectoryPath, Path.Combine(configFolderPath, directoriesConfigFile) );
-            InitFileSkipList( rootDirectoryPath, Path.Combine(configFolderPath, filesConfigFile) );
+            InitFileSkipList( rootDirectoryPath, Path.Combine(configFolderPath, filesIgnoreFile) );
         }
 
-        // The path list in the config file (Directories.txt) contains full paths of directories to skip, independent of volume letter
-        // A path will be excluded from the list if it is higher in the directory tree than where the scan is starting
+        // The path list in the config file (Directories.txt) contains full paths of directories to skip. It may or may not
+        // include a volume letter. The volume letter will be added or changed to the volume being scanned as necessary.
+        // A path won't be added to the skip list if it is a shorter name than where the scan is starting
         //      example paths:
-        //          \Users\Public
+        //          C:\Users\Public
         //          \Program Files
         //          \Windows.old
         static HashSet<string> DirectorySkipList;
@@ -53,7 +59,7 @@ namespace DeDupScanner
             foreach (ConfigSettings settings in dirList)
             {
                 
-                if (settings.Category == "Exclude")
+                if (settings.Category == ignoreCategory)
                 {
                     string newSkipPath = settings.Value;
                     Match match = Regex.Match(newSkipPath, @"^[a-zA-Z]:");
@@ -64,14 +70,14 @@ namespace DeDupScanner
                     if (newSkipPath.Length >= rootDirectoryPath.Length)
                         DirectorySkipList.Add(newSkipPath.ToLower());
                 }
-                else if ((settings.Category == "Settings") && (settings.Key == "ExcludeHiddenAndSystem"))
+                else if ((settings.Category == settingsCategory) && (settings.Key == excludeHiddenSystemKey))
                 {
-                    excludeSystemHiddenFilesDirs = !(settings.Value.ToLower() == "false");
+                    excludeHiddenSystemFilesDirs = !(settings.Value.ToLower() == "false");
                 }
             }
         }
 
-        // The file extension list in the config file (Extensions.txt) lists the extensions of files to be excluded from the scan
+        // The file extension list in the config file (FilesIgnore.txt) lists the extensions of files to be excluded from the scan
         // Extensions get converted to lower case before loading into this list and file extensions are lower-cased before looking them up
         static HashSet<string> ExtensionSkipList;
 
@@ -82,7 +88,7 @@ namespace DeDupScanner
             var extList = ConfigFileUtil.LoadConfigFile(extensionConfigFilePath);
 
             foreach (ConfigSettings settings in extList)
-                if (settings.Category == "Exclude")
+                if (settings.Category == extensionsIgnoreCategory)
                     ExtensionSkipList.Add(settings.Value.ToLower());
         }
 
@@ -222,7 +228,7 @@ namespace DeDupScanner
                 return false;
             }
             
-            if (excludeSystemHiddenFilesDirs)
+            if (excludeHiddenSystemFilesDirs)
             {
                 // Exclude Hidden and System files
                 if (FileUtil.IsSystemOrHidden(fi))
@@ -245,7 +251,7 @@ namespace DeDupScanner
 
         bool DirectoryIncluded(DirectoryInfo di)
         {
-            if (!excludeSystemHiddenFilesDirs)
+            if (!excludeHiddenSystemFilesDirs)
                 return true;
             else
             {

@@ -1,0 +1,41 @@
+# FilesIgnore.txt - files to ignore for ezocher/FileUtilities/DeDupScanner
+# and ezocher/FileUtilities/FilesDB/UniqueFileCollector/
+
+[Extensions Ignore]
+.dll, .exe, .bin
+.tmp
+.jar
+.log
+.bak
+
+# Development, Unity
+.pdb, .cache, .config, .gitconfig, .manifest, .projdata1, .suo
+.buildreport
+.user									# .csproj.user files
+.targets								# nuget
+
+# Unity Library\ folder
+	.db, .dwlt							# ShaderCache.db
+	.info								# metadata
+	.mdb								# PlayerDataCache
+	.pref								# Timeline
+	.resource							# metadata
+	.resS								# PlayerDataCache
+	.stamp
+
+.dtbcache								# Visual Studio
+.ide, .ide-shm, .ide-wal, .sqlite		# Visual Studio sqllite3 files
+
+
+# Adobe
+.sesx
+.essentialsound						# Premiere Pro
+.prfpset							# Premiere Pro Presets
+
+# Microsoft
+.etl								# Skype, Teams
+.mhm								# Microsoft Hardware Macro (?)
+.searchconnector-ms
+
+# Apple
+.itc2, .itdb, .itl					# iTunes

@@ -2,7 +2,7 @@
 [Settings]
 ExcludeHiddenAndSystem = True
 
-[Exclude]
+[Ignore]
 %public%
 %windir%
 
@@ -11,7 +11,6 @@ ExcludeHiddenAndSystem = True
 \Intel
 \MSOTraceLite
 \NVIDIA
-\Oculus Apps
 \OpenSpace-0.13.0
 \PerfLogs
 \processing-3.3
@@ -24,7 +23,23 @@ ExcludeHiddenAndSystem = True
 \Windows.old
 \Windows10Upgrade
 
+$UserProfile$\.dnx
 $UserProfile$\.dotnet
 $UserProfile$\.gradle
 $UserProfile$\.nuget
 $UserProfile$\.templateengine
+$UserProfile$\Tracing					# Skype and MS Teams
+$UserProfile$\Ansel						# GeForce Experience screen shots and ?
+
+# Adobe Creative Cloud app settings
+$UserProfile$\Documents\Adobe
+
+# Oculus Rift apps and settings
+\Oculus Apps
+\Users\OVRLibraryService
+
+# Other users
+\Users\Default.migrated
+\Users\robil
+\Users\zoche
+\Users\guest_wevfv1k

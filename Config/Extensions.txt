@@ -1,8 +1,0 @@
-# Extensions.txt
-[Exclude]
-.dll, .exe, .bin
-.tmp
-.jar
-.log
-
-.pdb, .cache, .config

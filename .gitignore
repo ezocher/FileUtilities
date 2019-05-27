@@ -6,6 +6,9 @@
 # Ignore output folders
 .[Rr]eports/
 
+# Ignore windows symlinks
+*.lnk
+
 # Ignore zips of downloaded projects
 *.zip
 
