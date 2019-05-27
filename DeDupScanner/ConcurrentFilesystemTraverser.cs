@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace DeDupScanner
 {
@@ -12,14 +13,14 @@ namespace DeDupScanner
         Stack<Tuple<DirectoryInfo, DirectoryFingerprint>> directories;
         Queue<Tuple<FileInfo, DirectoryFingerprint>> files;
 
-        bool includeSystemHiddenFilesDirs;
+        bool excludeSystemHiddenFilesDirs;
 
         static readonly object _lockNextFile = new object();
 
         const string directoriesConfigFile = "Directories.txt";
         const string filesConfigFile = "Extensions.txt";
 
-        public ConcurrentFilesystemTraverser(string rootDirectoryPath, bool excludeSystemHiddenFilesDirs)
+        public ConcurrentFilesystemTraverser(string rootDirectoryPath)
         {
             directories = new Stack<Tuple<DirectoryInfo, DirectoryFingerprint>> ();
             files = new Queue<Tuple<FileInfo, DirectoryFingerprint>>();
@@ -27,8 +28,6 @@ namespace DeDupScanner
             // TBD: handle exceptions on root directory
             DirectoryInfo di = new DirectoryInfo(rootDirectoryPath);
             directories.Push(Tuple.Create<DirectoryInfo, DirectoryFingerprint>(di, null));
-
-            includeSystemHiddenFilesDirs = !excludeSystemHiddenFilesDirs;
 
             string configFolderPath = Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\");
 
@@ -53,11 +52,21 @@ namespace DeDupScanner
 
             foreach (ConfigSettings settings in dirList)
             {
+                
                 if (settings.Category == "Exclude")
                 {
-                    string newSkipPath = volume + settings.Key;
+                    string newSkipPath = settings.Value;
+                    Match match = Regex.Match(newSkipPath, @"^[a-zA-Z]:");
+                    if (match.Success)
+                        newSkipPath = newSkipPath.Remove(0, volume.Length);
+                    newSkipPath = volume + newSkipPath;
+
                     if (newSkipPath.Length >= rootDirectoryPath.Length)
-                        DirectorySkipList.Add(newSkipPath);
+                        DirectorySkipList.Add(newSkipPath.ToLower());
+                }
+                else if ((settings.Category == "Settings") && (settings.Key == "ExcludeHiddenAndSystem"))
+                {
+                    excludeSystemHiddenFilesDirs = !(settings.Value.ToLower() == "false");
                 }
             }
         }
@@ -74,7 +83,7 @@ namespace DeDupScanner
 
             foreach (ConfigSettings settings in extList)
                 if (settings.Category == "Exclude")
-                    ExtensionSkipList.Add(settings.Key.ToLower());
+                    ExtensionSkipList.Add(settings.Value.ToLower());
         }
 
         public Tuple<FileInfo, DirectoryFingerprint> NextFile()
@@ -192,7 +201,7 @@ namespace DeDupScanner
 
         bool DirectoryInSkipList(DirectoryInfo di)
         {
-            return DirectorySkipList.Contains(di.FullName);
+            return DirectorySkipList.Contains(di.FullName.ToLower());
         }
 
         void Error(string item, string errorMsg)
@@ -213,7 +222,7 @@ namespace DeDupScanner
                 return false;
             }
             
-            if (!includeSystemHiddenFilesDirs)
+            if (excludeSystemHiddenFilesDirs)
             {
                 // Exclude Hidden and System files
                 if (FileUtil.IsSystemOrHidden(fi))
@@ -236,7 +245,7 @@ namespace DeDupScanner
 
         bool DirectoryIncluded(DirectoryInfo di)
         {
-            if (includeSystemHiddenFilesDirs)
+            if (!excludeSystemHiddenFilesDirs)
                 return true;
             else
             {

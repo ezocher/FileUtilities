@@ -16,7 +16,7 @@ namespace DeDupScanner
         {
             ReportFiles.Open(baseName, scanRootDir);
 
-            fst = new ConcurrentFilesystemTraverser(scanRootDir, true);  // true: exclude System and Hidden files and dirs
+            fst = new ConcurrentFilesystemTraverser(scanRootDir);
 
             progress = new ReportProgress(numThreads);
             progress.Start();

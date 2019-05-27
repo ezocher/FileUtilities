@@ -3,8 +3,6 @@
 ExcludeHiddenAndSystem = True
 
 [Exclude]
-%ProgramFiles%
-%ProgramFiles(X86)%
 %public%
 %windir%
 
@@ -18,10 +16,15 @@ ExcludeHiddenAndSystem = True
 \PerfLogs
 \processing-3.3
 \processing-3.3.4
+\Program Files
+\Program Files (x86)
 \SymCache
 \TestDir
 \Test Directory
 \Windows.old
 \Windows10Upgrade
 
+$UserProfile$\.dotnet
+$UserProfile$\.gradle
 $UserProfile$\.nuget
+$UserProfile$\.templateengine

@@ -47,7 +47,7 @@ Seasons==summer, spring, fall
 [Name resolution tests]
 %windir% 
 
-[%username%]
+[%username%] 
 %path%   # more comments
 %userdomain% = %processor_level% = $Cookies$
 $UserProfile$\Repos\FileUtilities\Config\TestConfigFile.txt  	#  This file [25]
