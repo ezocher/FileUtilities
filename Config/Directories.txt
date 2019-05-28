@@ -3,26 +3,41 @@
 ExcludeHiddenAndSystem = True
 
 [Ignore]
-%public%
-%windir%
-
-\Drivers
-\FileDB
-\Intel
 \MSOTraceLite
-\NVIDIA
-\OpenSpace-0.13.0
 \PerfLogs
-\processing-3.3
-\processing-3.3.4
 \Program Files
 \Program Files (x86)
 \SymCache
-\TestDir
-\Test Directory
+%public%
+%windir%
+\WindowsApps
 \Windows.old
 \Windows10Upgrade
 
+# Drivers etc.
+\Drivers
+\Intel
+\NVIDIA
+
+# Apps, languages
+\Digital Universe
+\OpenSpace-0.13.0
+\processing-3.3
+\processing-3.3.4
+
+# Classes - Downloaded Videos
+\Classes - Videos
+
+# Oculus Rift apps and settings
+\Oculus Apps
+\Users\OVRLibraryService
+
+# Testing and personal projects
+\FileDB
+\TestDir
+\Test Directory
+
+# Dev etc.
 $UserProfile$\.dnx
 $UserProfile$\.dotnet
 $UserProfile$\.gradle
@@ -33,10 +48,6 @@ $UserProfile$\Ansel						# GeForce Experience screen shots and ?
 
 # Adobe Creative Cloud app settings
 $UserProfile$\Documents\Adobe
-
-# Oculus Rift apps and settings
-\Oculus Apps
-\Users\OVRLibraryService
 
 # Other users
 \Users\Default.migrated
