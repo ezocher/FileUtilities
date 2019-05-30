@@ -18,6 +18,7 @@ ExcludeHiddenAndSystem = True
 \Drivers
 \Intel
 \NVIDIA
+$UserProfile$\Documents\Microsoft Hardware
 
 # Apps, languages
 \Digital Universe
@@ -34,7 +35,6 @@ ExcludeHiddenAndSystem = True
 
 # Testing and personal projects
 \FileDB
-\TestDir
 \Test Directory
 
 # Dev etc.
