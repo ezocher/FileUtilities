@@ -7,7 +7,7 @@
 .[Rr]eports/
 
 # Ignore .dump files created to validate configuation files
-.dump
+*.dump
 
 # Ignore windows symlinks
 *.lnk
