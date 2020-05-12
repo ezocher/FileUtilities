@@ -8,7 +8,11 @@
 .log
 .bak
 
+# Development and binaries, Android
+.a, .aar, .apk
+
 # Development, Unity
+.asmdef
 .pdb, .cache, .config, .gitconfig, .manifest, .projdata1, .suo
 .buildreport
 .user									# .csproj.user files
@@ -39,3 +43,4 @@
 
 # Apple
 .itc2, .itdb, .itl					# iTunes
+.bundle								# Mac OS X Application Bundle

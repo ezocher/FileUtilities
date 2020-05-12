@@ -3,15 +3,9 @@
 
 [General]
 
-[Web]
-.url, .lnk
-.gif 
-.htm, .html
-
 
 [Documents and Books]		# Papers, books, text files
 .pdf
-.txt, 
 .doc, .docx					# Include here, or in [Office]?
 
 
@@ -20,15 +14,19 @@
 .pptx, .ppt
 .one
 
+[Web]
+.url, .lnk
+.htm, .html
+
+[Images]
+.gif, .png, .webp
 
 [Photos]	# Photo and image formats
 .jpg, .jpeg, .jpe, .jif, .jfif, .jfi	# JPEG
 .jp2, .j2k,  .jpf, .jpx, .jpm,  .mj2	# JPEG 2000
 .jxr, .hdp, .wdp                      	# JPEG XR aka HD Photo
 .heif, .heic                           	# HEIF
-.tif, .tiff								# TIFF
-
-.png									# .gif is in web; I use PNG for screen shots etc.				
+.tif, .tiff								# TIFF		
 
 # Raw image formats - File extensions from https://en.wikipedia.org/wiki/Raw_image_format
 .3fr, .ari, .arw, .bay, .crw, .cr2, .cr3, .cap, .data, .dcs, .dcr, .dng, .drf, .eip, .erf, .fff, .gpr
@@ -36,10 +34,11 @@
 .rwl, .rw2, .rwz, .sr2, .srf, .srw, .x3f
 
 
-[Music]		# Sound and Music formats
+[Music]		# Music, Sound, and Podcast formats
 .wav
 .mp3
 .aac
+.m4a
 
 [Video]
 .mp4
@@ -52,7 +51,8 @@
 
 
 [Code]				# Source code and related docs and files
-.md
+.md, .txt
+.c, .cpp
 .cs, .csproj, .sln
 .resx				# .NET resource files (XML)
 .snk				# .NET strong name key
@@ -70,7 +70,11 @@
 .ico
 .ps1				# PowerShell
 .sh
-.bat, .cmd
+.bat, .cmd, .cake, .cmake
+# Unity
+.asset, .controller			
+.cginc				# Shader include file
+.clang-format		# Clang compiler
 
 [Fonts]
 .ttf

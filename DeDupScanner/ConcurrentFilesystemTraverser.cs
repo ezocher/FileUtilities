@@ -78,7 +78,7 @@ namespace DeDupScanner
         }
 
         // The file extension list in the config file (FilesIgnore.txt) lists the extensions of files to be excluded from the scan
-        // Extensions get converted to lower case before loading into this list and file extensions are lower-cased before looking them up
+        // Extensions get converted to lower case before loading into this list and file extensions are lower-cased before comparing them
         static HashSet<string> ExtensionSkipList;
 
         void InitFileSkipList(string rootDirectoryPath, string extensionConfigFilePath)

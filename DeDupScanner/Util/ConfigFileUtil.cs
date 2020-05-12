@@ -59,6 +59,24 @@ class ConfigFileUtil
         return settings.ToArray();
     }
 
+    // Process each config file (*.txt) in the config directory and dump the processed settings into corresponding .dump files (tab-delimited text)
+    public static void DumpConfigFiles(string configDirectoryPath)
+    {
+        const string DumpFilesExtension = ".dump";
+
+        DirectoryInfo di = new DirectoryInfo(configDirectoryPath);
+        foreach (var fi in di.GetFiles("*.txt"))
+        {
+            ConfigSettings[] configSettings = LoadConfigFile(fi.FullName);
+
+            var dumpFile = new StreamWriter( Path.ChangeExtension(fi.FullName, DumpFilesExtension), false ); // Append = true
+            dumpFile.WriteLine("Category\tKey\tValue");
+            foreach (var setting in configSettings)
+                dumpFile.WriteLine("{0}\t{1}\t{2}", setting.Category, setting.Key, setting.Value);
+            dumpFile.Close();
+        }
+    }
+
     static string StripComments(string line)
     {
         // Strip unescaped comments
@@ -177,7 +195,7 @@ class ConfigFileUtil
 }
 
 
-//             ConfigFileUtil_ManualTests.Run();
+// ConfigFileUtil_ManualTests.Run();
 public class ConfigFileUtil_ManualTests
 {
     public static void Run()

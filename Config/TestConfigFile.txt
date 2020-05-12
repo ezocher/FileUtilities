@@ -1,5 +1,5 @@
 # Hello world [InAComment]
-# another
+# another comment
 # Settings in Default category
 ggg							xxx# [0] 
 	  # boom
@@ -43,6 +43,7 @@ Hio = \JingleBell	# What is this
 = nothing
 formula =+ sum				# [20]
 Seasons==summer, spring, fall
+Seasons=  =summer, spring, fall
 
 [Name resolution tests]
 %windir% 
@@ -50,7 +51,7 @@ Seasons==summer, spring, fall
 [%username%] 
 %path%   # more comments
 %userdomain% = %processor_level% = $Cookies$
-$UserProfile$\Repos\FileUtilities\Config\TestConfigFile.txt  	#  This file [25]
+$UserProfile$\Repos\FileUtilities\Config\TestConfigFile.txt  	#  This file [26]
 
 [BAD]
 $xxx$
@@ -63,12 +64,12 @@ $
 $$
 %%			# These two don't yield anything 
 $$$
-%%%			# these two become keys [29]
+%%%			# these two become keys [30]
 
 [Comma seperated values]
 aaaa,bbbb,cccc
-	aaa, bbb,		ccc , ddd ,    e  e  e , fff			# [38]
-,, ,	, preceeding four don't yield values				# [39]
+	aaa, bbb,		ccc , ddd ,    e  e  e , fff			# [39]
+,, ,	, preceeding four don't yield values				# [40]
 
 [The End]
-lastline = $History$    #  no crlf after this comment [40]
+lastline = $History$    #  no crlf after this comment [41]

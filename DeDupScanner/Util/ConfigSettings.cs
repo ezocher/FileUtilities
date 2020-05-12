@@ -26,7 +26,7 @@ struct ConfigSettings
         string returnString = String.Format("[{0}] ", this.Category);
         if (this.Key != null)
             returnString += String.Format("'{0}' = ", this.Key);
-        returnString += String.Format("'{0}'", Value);
+        returnString += String.Format("'{0}'", this.Value);
         return returnString;
     }
 }

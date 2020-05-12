@@ -6,6 +6,9 @@
 # Ignore output folders
 .[Rr]eports/
 
+# Ignore .dump files created to validate configuation files
+.dump
+
 # Ignore windows symlinks
 *.lnk
 
