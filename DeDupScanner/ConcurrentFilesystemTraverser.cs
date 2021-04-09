@@ -241,7 +241,7 @@ namespace DeDupScanner
             // Exclude extensions in skip list
             if ( ExtensionSkipList.Contains(fi.Extension.ToLower()) )
             {
-                reason = "exension in skip list";
+                reason = "extension in skip list";
                 return false;
             }
 
