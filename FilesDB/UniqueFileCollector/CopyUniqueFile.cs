@@ -9,11 +9,11 @@ namespace UniqueFileCollector
 {
     class CopyUniqueFile
     {
-        static string destBasePath = @"D:\uu\unspecified";
+        static string destBasePath = @"D:\uu-unspecified";
 
         public static void SetSourceVolumeName(string name)
         {
-            destBasePath = @"D:\uu\" + name;
+            destBasePath = @"D:\uu-" + name;
         }
 
         public static void Copy(string filePath)
