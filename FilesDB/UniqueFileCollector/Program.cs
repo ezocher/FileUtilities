@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,21 +14,25 @@ namespace UniqueFileCollector
         {
             ConsoleUtil.InitConsoleSettings("Unique File Collector - Under Development");
 
-            FileDB db = new FileDB();
-            string listFilePath;
+            CopyUniqueFile.SetSourceVolumeName("sbook C");
+            CopyUniqueFile.Copy(@"C:\Users\ezoch\Desktop\TBS\Bainbridge speed limit - beach house dock - 4 second rule.xlsx");
+            CopyUniqueFile.Copy(@"C:\Users\ezoch\Desktop\bitcoin.pdf");
 
-            LoadFileList.LoadBaseFileLists(db);
+            //FileDB db = new FileDB();
+            //string listFilePath;
 
-            do
-            {
-                listFilePath = FileUtil.SelectTextFile();
-                if (listFilePath == "")
-                    break;
+            //LoadFileList.LoadBaseFileLists(db);
 
-                LoadFileList.Load(listFilePath, db);
-                db.DisplayStatsToConsole();
-            }
-            while (true);
+            //do
+            //{
+            //    listFilePath = FileUtil.SelectTextFile();
+            //    if (listFilePath == "")
+            //        break;
+
+            //    LoadFileList.Load(listFilePath, db);
+            //    db.DisplayStatsToConsole();
+            //}
+            //while (true);
 
             ConsoleUtil.WaitForKeyPress();
         }

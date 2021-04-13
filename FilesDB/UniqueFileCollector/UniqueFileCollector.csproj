@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CopyUniqueFile.cs" />
     <Compile Include="FileDB.cs" />
     <Compile Include="FileDescription.cs" />
     <Compile Include="Util\ConsoleUtil.cs" />
