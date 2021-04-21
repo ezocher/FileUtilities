@@ -30,9 +30,9 @@ namespace ConcurrentFilesystemTraverser
             ConcurrentFilesystemTraverser fst = new ConcurrentFilesystemTraverser(scanRootDir);
             
 
-            Console.WriteLine("Creating scan report file 'File List - {0}.txt'", baseName);
+            Console.WriteLine("Creating scan report file 'File List - {0}.tsv'", baseName);
             string listFileName = System.Windows.Forms.Application.StartupPath + Path.DirectorySeparatorChar
-                + "File List - " + baseName + ".txt";
+                + "File List - " + baseName + ".tsv";
 
             listFile = new StreamWriter(listFileName, false); // Append = true
             listFile.WriteLine("Starting scan of {0}", scanRootDir);

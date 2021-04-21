@@ -10,8 +10,7 @@ class LoadFileList
 {
     private const string BaseFileListsFolder = @"C:\FileDB\Base File Collection";
 
-    // TODO - Update this to new naming convention with KnownFilesDBMaker
-    private const string ListFileNameFilter = "File List - *.txt";
+    private const string ListFileNameFilter = "* - File List.tsv";
 
     public static void LoadBaseFileLists(FileDB db)
     {

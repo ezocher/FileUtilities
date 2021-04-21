@@ -27,7 +27,7 @@ namespace DeDupScanner
         public static void Open(string baseName, string scanRootDir)
         {
             const string ReportsFolderName = ".Reports";
-            const string ReportFilesExtension = ".txt";
+            const string ReportFilesExtension = ".tsv";
             const string FilesReportNameSuffix = " - File List";
             const string DirectoriesReportNameSuffix = " - Directory List";
             const string ExcludedReportNameSuffix = " - Excluded List";

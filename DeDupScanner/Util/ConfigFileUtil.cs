@@ -59,10 +59,10 @@ class ConfigFileUtil
         return settings.ToArray();
     }
 
-    // Process each config file (*.txt) in the config directory and dump the processed settings into corresponding .dump files (tab-delimited text)
+    // Process each config file (*.txt) in the config directory and dump the processed settings into corresponding .configdump files (tab separated values)
     public static void DumpConfigFiles(string configDirectoryPath)
     {
-        const string DumpFilesExtension = ".dump";
+        const string DumpFilesExtension = ".configdump.tsv";
 
         DirectoryInfo di = new DirectoryInfo(configDirectoryPath);
         foreach (var fi in di.GetFiles("*.txt"))
