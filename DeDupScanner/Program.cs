@@ -36,7 +36,8 @@ namespace DeDupScanner
                 return;
             }
 
-            if (FileUtil.IsDriveSolidState(scanRootDir))
+            if (FileUtil.IsSystemDrive(scanRootDir))
+                // All my current system drives are SSDs
                 numThreads = numThreadsSolidStateDrive;
             else
                 numThreads = numThreadsRotatingDrive;
@@ -52,7 +53,7 @@ namespace DeDupScanner
             if (input != String.Empty)
                 baseName = input;
 
-            Console.WriteLine("\nCreating scan report files 'File/Directory List - {0}.txt'", baseName);
+            Console.WriteLine("\nCreating scan report files '{0} - File/Directory List.txt'", baseName);
             Console.WriteLine("Read Buffer Size = {0}", FileUtil.FormatByteSize(ComputeFingerprint.ReadBufferSize));
             Console.WriteLine("Running {0} simultaneous threads on {1} hardware threads\n", numThreads, hardwareThreads);
 

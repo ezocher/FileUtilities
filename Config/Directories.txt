@@ -19,6 +19,7 @@ ExcludeHiddenAndSystem = True
 \Intel
 \NVIDIA
 $UserProfile$\Documents\Microsoft Hardware
+$UserProfile$\OneDrive\Documents\Microsoft Hardware
 
 # Apps, languages
 \Digital Universe
@@ -48,6 +49,7 @@ $UserProfile$\Ansel						# GeForce Experience screen shots and ?
 
 # Adobe Creative Cloud app settings
 $UserProfile$\Documents\Adobe
+$UserProfile$\OneDrive\Documents\Adobe
 
 # Other users
 \Users\Default.migrated

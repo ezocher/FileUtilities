@@ -28,27 +28,27 @@ namespace DeDupScanner
         {
             const string ReportsFolderName = ".Reports";
             const string ReportFilesExtension = ".txt";
-            const string FilesReportNamePrefix = "File List - ";
-            const string DirectoriesReportNamePrefix = "Directory List - ";
-            const string ExcludedReportNamePrefix = "Excluded List - ";
+            const string FilesReportNameSuffix = " - File List";
+            const string DirectoriesReportNameSuffix = " - Directory List";
+            const string ExcludedReportNameSuffix = " - Excluded List";
 
 
             string reportsDirectoryPath = System.Windows.Forms.Application.StartupPath + Path.DirectorySeparatorChar + ReportsFolderName;
             Directory.CreateDirectory(reportsDirectoryPath);
 
-            string filesReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + FilesReportNamePrefix + baseName + ReportFilesExtension;
+            string filesReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + FilesReportNameSuffix + ReportFilesExtension;
             filesReportFullName = FileUtil.GetUniqueFileName(filesReportFullName);
             filesReport = new StreamWriter(filesReportFullName, false); // Append = true
             // fileReport.WriteLine("Starting scan of {0}\n", scanRootDir);
             filesReport.WriteLine(FilesReportHeader);
 
-            string directoriesReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + DirectoriesReportNamePrefix + baseName + ReportFilesExtension;
+            string directoriesReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + DirectoriesReportNameSuffix + ReportFilesExtension;
             directoriesReportFullName = FileUtil.GetUniqueFileName(directoriesReportFullName);
             directoriesReport = new StreamWriter(directoriesReportFullName, false); // Append = true
             // directoryReport.WriteLine("Starting scan of {0}\n", scanRootDir);
             directoriesReport.WriteLine(DirectoriesReportHeader);
 
-            string excludedReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + ExcludedReportNamePrefix + baseName + ReportFilesExtension;
+            string excludedReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + ExcludedReportNameSuffix + ReportFilesExtension;
             excludedReportFullName = FileUtil.GetUniqueFileName(excludedReportFullName);
             excludedReport = new StreamWriter(excludedReportFullName, false); // Append = true
             // directoryReport.WriteLine("Starting scan of {0}\n", scanRootDir);

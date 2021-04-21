@@ -95,8 +95,7 @@ public class FileUtil
             return (d.Name + " on " + Environment.MachineName + " " + directory[0]);
     }
 
-    // Hacky solution for now - works on my current machines (Lenovo?)
-    public static bool IsDriveSolidState(string directory)
+    public static bool IsSystemDrive(string directory)
     {
         const string SystemDriveLetter = "C";
 
