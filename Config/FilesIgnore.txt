@@ -3,6 +3,7 @@
 
 [Extensions Ignore]
 .dll, .exe, .bin
+.msi
 .tmp
 .jar
 .log
@@ -11,9 +12,13 @@
 # Development and binaries, Android
 .a, .aar, .apk
 
+# git
+.pack, .idx
+.gitconfig
+
 # Development, Unity
 .asmdef
-.pdb, .cache, .config, .gitconfig, .manifest, .projdata1, .suo
+.pdb, .cache, .config, .manifest, .projdata1, .suo
 .buildreport
 .user									# .csproj.user files
 .targets								# nuget
@@ -44,3 +49,6 @@
 # Apple
 .itc2, .itdb, .itl					# iTunes
 .bundle								# Mac OS X Application Bundle
+
+# Extension I use to rename files with bad sectors
+.xxxbad

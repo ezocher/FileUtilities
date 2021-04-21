@@ -4,19 +4,28 @@
 [General]
 
 
-[Documents and Books]		# Papers, books, text files
-.pdf
+[Documents and Books]		# Papers, books, text files, eBooks
+.pdf, .ps
 .doc, .docx					# Include here, or in [Office]?
+.rtf
+# https://en.wikipedia.org/wiki/Comparison_of_e-book_formats
+.epub
+.ibooks
+.mobi, .prc
+.azw, .azw3, .kf8, .kfx
 
 
 [Office]
-.xlsx, .xls
+.xlsx, .xls, .csv
 .pptx, .ppt
 .one
+.ost, .pst, .eml
 
 [Web]
 .url, .lnk
 .htm, .html
+.mht
+.chm
 
 [Images]
 .gif, .png, .webp
@@ -32,16 +41,27 @@
 .3fr, .ari, .arw, .bay, .crw, .cr2, .cr3, .cap, .data, .dcs, .dcr, .dng, .drf, .eip, .erf, .fff, .gpr
 .iiq, .k25, .kdc, .mdc, .mef, .mos, .mrw, .nef, .nrw, .obm, .orf,  .pef, .ptx, .pxn, .r3d, .raf, .raw
 .rwl, .rw2, .rwz, .sr2, .srf, .srw, .x3f
+# .arw = Sony Raw, .nef = Nikon Raw, .crw/cr2/cr3 = Canon Raw, .gpr = GoPro
+# .dng = Adobe Digital Negative
 
 
 [Music]		# Music, Sound, and Podcast formats
 .wav
+.au
 .mp3
 .aac
-.m4a
+.m4a, .m4p
+.wma
+.m4b		# AAC audio book
 
 [Video]
-.mp4
+.mp4, .m4v
+.wmv, .avi
+.dvr-ms
+.vob		# DVD
+.mov
+.mts		# Sony camera video
+.mpg
 
 [Creative]
 .ai
@@ -86,5 +106,5 @@
 .ini
 
 [Archives]
-.zip, .rar
+.zip, .rar, .gz
 
