@@ -14,9 +14,9 @@ namespace UniqueFileCollector
         {
             ConsoleUtil.InitConsoleSettings("Unique File Collector - Under Development");
 
-            CopyUniqueFile.SetSourceVolumeName("sbook C");
-            CopyUniqueFile.Copy(@"C:\Users\ezoch\Desktop\TBS\Bainbridge speed limit - beach house dock - 4 second rule.xlsx");
-            CopyUniqueFile.Copy(@"C:\Users\ezoch\Desktop\bitcoin.pdf");
+            CopyUniqueFile.SetSourceVolumeName("ZB-DriveC");
+            CopyUniqueFile.Copy(@"C:\Users\ezoch\Desktop\temp.html");
+            CopyUniqueFile.Copy(@"C:\Users\ezoch\Desktop\LEFT MON\!Left DT - XMas\California wildfires- Is Trump right when he blames forest managers- - BBC News.url");
 
             //FileDB db = new FileDB();
             //string listFilePath;
