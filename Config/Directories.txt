@@ -27,8 +27,8 @@ $UserProfile$\OneDrive\Documents\Microsoft Hardware
 \processing-3.3
 \processing-3.3.4
 
-# Classes - Downloaded Videos
-\Classes - Videos
+# Classes with Videos
+\Premiere CIAB
 
 # Oculus Rift apps and settings
 \Oculus Apps
@@ -37,6 +37,7 @@ $UserProfile$\OneDrive\Documents\Microsoft Hardware
 # Testing and personal projects
 \FileDB
 \Test Directory
+\Test Directory - Bad Sectors
 
 # Dev etc.
 $UserProfile$\.dnx
@@ -51,7 +52,7 @@ $UserProfile$\Ansel						# GeForce Experience screen shots and ?
 $UserProfile$\Documents\Adobe
 $UserProfile$\OneDrive\Documents\Adobe
 
-# Other users
+# Exclude other users
 \Users\Default.migrated
 \Users\robil
 \Users\zoche
