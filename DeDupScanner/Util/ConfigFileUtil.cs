@@ -62,14 +62,16 @@ class ConfigFileUtil
     // Process each config file (*.txt) in the config directory and dump the processed settings into corresponding .configdump files (tab separated values)
     public static void DumpConfigFiles(string configDirectoryPath)
     {
-        const string DumpFilesExtension = ".configdump.tsv";
+        const string DumpFilesExtension = ".tsv";
+        const string DumpFilesPrefix = "ConfigDump-";
 
-        DirectoryInfo di = new DirectoryInfo(configDirectoryPath);
-        foreach (var fi in di.GetFiles("*.txt"))
+        DirectoryInfo dir = new DirectoryInfo(configDirectoryPath);
+        foreach (var file in dir.GetFiles("*.txt"))
         {
-            ConfigSettings[] configSettings = LoadConfigFile(fi.FullName);
+            ConfigSettings[] configSettings = LoadConfigFile(file.FullName);
 
-            var dumpFile = new StreamWriter( Path.ChangeExtension(fi.FullName, DumpFilesExtension), false ); // Append = true
+            string dumpFileName = DumpFilesPrefix + Path.GetFileNameWithoutExtension(file.FullName) + DumpFilesExtension;
+            var dumpFile = new StreamWriter( Path.Combine(configDirectoryPath, dumpFileName), false ); // Append = true
             dumpFile.WriteLine("Category\tKey\tValue");
             foreach (var setting in configSettings)
                 dumpFile.WriteLine("{0}\t{1}\t{2}", setting.Category, setting.Key, setting.Value);
