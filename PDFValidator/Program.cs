@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConcurrentFilesystemTraverser
+namespace FilesystemTraverser
 {
     class Program
     {
@@ -27,12 +27,12 @@ namespace ConcurrentFilesystemTraverser
                 return;
             }
 
-            ConcurrentFilesystemTraverser fst = new ConcurrentFilesystemTraverser(scanRootDir);
+            FilesystemTraverser fsTraverser = new FilesystemTraverser(scanRootDir);
             
 
-            Console.WriteLine("Creating scan report file 'File List - {0}.tsv'", baseName);
+            Console.WriteLine("Creating scan report file 'PDFs List - {0}.tsv'", baseName);
             string listFileName = System.Windows.Forms.Application.StartupPath + Path.DirectorySeparatorChar
-                + "File List - " + baseName + ".tsv";
+                + "PDFs List - " + baseName + ".tsv";
 
             listFile = new StreamWriter(listFileName, false); // Append = true
             listFile.WriteLine("Starting scan of {0}", scanRootDir);
@@ -44,7 +44,7 @@ namespace ConcurrentFilesystemTraverser
             string backspaces = new string('\b', 132);
             string spaces = new string(' ', 131);
 
-            while ((fi = fst.NextFile()) != null)
+            while ((fi = fsTraverser.NextFile()) != null)
             {
                 if ((totalNumFiles % 1000) == 0)
                     Console.Write(backspaces + spaces + backspaces + numPDFFiles.ToString() + "/" + totalNumFiles.ToString() + " - " + TrimFileName(fi.Name, 110));
@@ -79,8 +79,6 @@ namespace ConcurrentFilesystemTraverser
             else
                 return (name.Substring(0, maxLen - 3) + "...");
         }
-
-
 
     }
 }

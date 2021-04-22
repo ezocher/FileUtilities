@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace ConcurrentFilesystemTraverser
+namespace FilesystemTraverser
 {
-    class ConcurrentFilesystemTraverser
+    class FilesystemTraverser
     {
         Stack<DirectoryInfo> directories;
         Queue<FileInfo> files;
 
-        public ConcurrentFilesystemTraverser(string rootDirectoryPath)
+        public FilesystemTraverser(string rootDirectoryPath)
         {
             directories = new Stack<DirectoryInfo>();
             files = new Queue<FileInfo>();
@@ -26,7 +26,6 @@ namespace ConcurrentFilesystemTraverser
         {
             FileInfo fi;
 
-            // TBD: Lock this shit
             if (files.Count > 0)
                 fi = files.Dequeue();
             else
@@ -44,7 +43,6 @@ namespace ConcurrentFilesystemTraverser
             }
 
             finish:
-            // TBD: Unlock
             return fi;
         }
         
