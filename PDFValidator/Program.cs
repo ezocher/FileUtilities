@@ -35,8 +35,6 @@ namespace FilesystemTraverser
                 + "PDFs List - " + baseName + ".tsv";
 
             listFile = new StreamWriter(listFileName, false); // Append = true
-            listFile.WriteLine("Starting scan of {0}", scanRootDir);
-            listFile.WriteLine();
             listFile.WriteLine("Num\tFull Path\tFile Name\tLength\tPDF Version");
 
             int numPDFFiles = 0;
