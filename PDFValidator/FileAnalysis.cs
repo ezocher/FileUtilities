@@ -26,7 +26,7 @@ public class FileAnalysis
 
         // Read and count bytes
         long totalBytesRead = 0;
-        long[] Counts = new long[Byte.MaxValue + 1];    // Automatically intitialized to all zeros
+        long[] Counts = new long[Byte.MaxValue + 1];    // Automatically initialized to all zeros
 
         try
         {

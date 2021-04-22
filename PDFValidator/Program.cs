@@ -39,7 +39,7 @@ namespace FilesystemTraverser
             listFile.WriteLine();
             listFile.WriteLine("Num\tFull Path\tFile Name\tLength\tPDF Version");
 
-            int numPDFFiles = 1;
+            int numPDFFiles = 0;
             int totalNumFiles = 1;
             string backspaces = new string('\b', 132);
             string spaces = new string(' ', 131);
@@ -57,10 +57,10 @@ namespace FilesystemTraverser
                         listFile.Flush();
                     }
 
+                    numPDFFiles++;
                     listFile.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}", numPDFFiles,
                         fi.FullName, fi.Name, fi.Length,
                         CheckPDF.Check(fi, listFile));
-                    numPDFFiles++;
                 }
 
                 totalNumFiles++;
@@ -68,7 +68,7 @@ namespace FilesystemTraverser
 
             listFile.Close();
 
-            Console.WriteLine("\n\nScan Complete - Scanned {0} files", numPDFFiles - 1);
+            Console.WriteLine("\n\nScan Complete - Scanned {0} files", numPDFFiles);
             Console.ReadKey(true);
          }
 
