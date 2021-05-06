@@ -3,7 +3,9 @@
 ExcludeHiddenAndSystem = True
 
 [Ignore]
+\ESD
 \MSOTraceLite
+\OEMLOGO
 \PerfLogs
 \Program Files
 \Program Files (x86)

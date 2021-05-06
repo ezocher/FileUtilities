@@ -9,8 +9,9 @@
 .log
 .bak
 
-# Development and binaries, Android
-.a, .aar, .apk
+# Development and binaries, Androidmdb
+.aar, .apk
+# .a 			# would like to exclude Android .a, but .a is also used for some assembly language source code
 
 # git
 .pack, .idx
@@ -33,7 +34,8 @@
 	.stamp
 
 .dtbcache								# Visual Studio
-.ide, .ide-shm, .ide-wal, .sqlite		# Visual Studio sqllite3 files
+.ide, .ide-shm, .ide-wal, .sqlite, .lock	# Visual Studio sqllite3 files
+
 
 
 # Adobe
