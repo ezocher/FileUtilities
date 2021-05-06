@@ -69,11 +69,12 @@ namespace DeDupScanner
         }
 
 
-        public void HiddenSystemDirSkipped()
+        public void HiddenSystemDirSkipped(DirectoryInfo di)
         {
             lock (_lockStats)
             {
                 numHiddenSystemDirsSkipped++;
+                ReportFiles.WriteExcludedInfo(false, di.FullName, "System or Hidden", "");
             }
         }
     
@@ -91,7 +92,7 @@ namespace DeDupScanner
             lock (_lockStats)
             {
                 numDirExceptions++;
-                ReportFiles.WriteExcludedInfo(false, di.FullName, "Dir exception", message);
+                ReportFiles.WriteExcludedInfo(false, di.FullName, "Exception", message);
             }
         }
 
@@ -100,7 +101,7 @@ namespace DeDupScanner
             lock (_lockStats)
             {
                 numFilesSkipped++;
-                ReportFiles.WriteExcludedInfo(true, fi.FullName, "File skipped", reason);
+                ReportFiles.WriteExcludedInfo(true, fi.FullName, reason, fi.Extension);
             }
         }
 
@@ -109,7 +110,7 @@ namespace DeDupScanner
             lock (_lockStats)
             {
                 numFileExceptions++;
-                ReportFiles.WriteExcludedInfo(true, fullName, "File exception", message);
+                ReportFiles.WriteExcludedInfo(true, fullName, "Exception", message);
             }
         }
 
