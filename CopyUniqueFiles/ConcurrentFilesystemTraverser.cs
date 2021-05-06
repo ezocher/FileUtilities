@@ -191,7 +191,7 @@ namespace DeDupScanner
                             directoryCount++;
                         }
                         else
-                            RunParallelScan.progress.HiddenSystemDirSkipped();
+                            RunParallelScan.progress.HiddenSystemDirSkipped(di);
 
                     myFingerprint.SetNumberOfItems(fileCount, directoryCount);
                 }
@@ -224,7 +224,7 @@ namespace DeDupScanner
             // Exclude files of zero length
             if (fi.Length == 0)
             {
-                reason = "zero length";
+                reason = "Zero length";
                 return false;
             }
             
@@ -241,7 +241,7 @@ namespace DeDupScanner
             // Exclude extensions in skip list
             if ( ExtensionSkipList.Contains(fi.Extension.ToLower()) )
             {
-                reason = "extension in skip list";
+                reason = "Extension in skip list";
                 return false;
             }
 
