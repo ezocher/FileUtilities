@@ -50,7 +50,11 @@
 
 # Apple
 .itc2, .itdb, .itl					# iTunes
-.bundle								# Mac OS X Application Bundle
+.bundle							# Mac OS X Application Bundle
+.ds_store						# Mac OS Finder hidden Desktop Services Store file
+.apdisk							# Mac OS in shared folders mounted from Microsoft Windows server
+
+
 
 # Extension I use to rename files with bad sectors
 .xxxbad
