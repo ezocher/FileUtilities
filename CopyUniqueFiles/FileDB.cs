@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 class FileDB
 {
     Dictionary<string, FileDescription> db;
+
     long numUniqueFiles = 0,
         totalSizeOfUniqueFiles = 0,
         numFilesWithDuplicates = 0,
         numTotalDuplicateFiles = 0,
         totalSizeOfDuplicates = 0,
         mostCopiesOfAFile = 1;
-    string mostCopiedFilePath = "";
+    string mostCopiesFilePath = "";
 
     public FileDB()
     {
@@ -37,7 +38,7 @@ class FileDB
             if (n > mostCopiesOfAFile)
             {
                 mostCopiesOfAFile = n;
-                mostCopiedFilePath = db[fd.Fingerprint].FullPath;
+                mostCopiesFilePath = db[fd.Fingerprint].FullPath;
             }
         }
         else
@@ -50,14 +51,25 @@ class FileDB
 
     public void DisplayStatsToConsole()
     {
-        Console.WriteLine("Number of unique files = {0:N0} (Total size = {1})", numUniqueFiles,
+        Console.WriteLine("   Number of unique files = {0:N0} (Total size = {1})", numUniqueFiles,
             FileUtil.FormatByteSize(totalSizeOfUniqueFiles));
         Console.WriteLine("   Number of files with duplicates = {0:N0} ({1:F1}%)", numFilesWithDuplicates,
             (float)numFilesWithDuplicates / (float)numUniqueFiles * 100.0f);
-        Console.WriteLine("   Total number of duplicates = {0:N0} (Total size = {1})", numTotalDuplicateFiles,
-            FileUtil.FormatByteSize(totalSizeOfDuplicates));
-        Console.WriteLine("\n   Most duplicates of a single file = {0:N0} ('{1}')\n", mostCopiesOfAFile, mostCopiedFilePath);
+        Console.WriteLine("   Total number of duplicates = {0:N0} (Total size = {1}, {2:F1}%)", numTotalDuplicateFiles,
+            FileUtil.FormatByteSize(totalSizeOfDuplicates), 
+            (float)totalSizeOfDuplicates / (float)(totalSizeOfUniqueFiles + totalSizeOfDuplicates) * 100.0f);
+        Console.WriteLine("\n   Most duplicates of a single file = {0:N0} ('{1}')\n", mostCopiesOfAFile, mostCopiesFilePath);
     }
 
+    public void ResetFileStatistics()
+    {
+        numUniqueFiles = 0;
+        totalSizeOfUniqueFiles = 0;
+        numFilesWithDuplicates = 0;
+        numTotalDuplicateFiles = 0;
+        totalSizeOfDuplicates = 0;
+        mostCopiesOfAFile = 1;
+        mostCopiesFilePath = "";
+    }
 }
 

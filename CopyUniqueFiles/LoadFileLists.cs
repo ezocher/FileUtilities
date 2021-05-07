@@ -39,6 +39,8 @@ class LoadFileLists
     public static void Load(string path, FileDB db)
     {
         ConsoleUtil.WriteColor(String.Format("Loading '{0}'...\n", path), ConsoleColor.White);
+        db.ResetFileStatistics();
+
         try
         {
             bool firstLine = true;
