@@ -3,6 +3,7 @@
 
 [Extensions Ignore]
 .dll, .exe, .bin
+.o
 .msi
 .tmp
 .jar
