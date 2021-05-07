@@ -28,6 +28,7 @@ namespace DeDupScanner
 
             string scanRootDir = FileUtil.SelectDirectory();
             baseName = FileUtil.GetBaseName(scanRootDir); // e.g. "<system name> Vol C"
+            Console.WriteLine("Copying unique files from '{0}'\n", scanRootDir);
 
             if ((scanRootDir == "") || (baseName == ""))
             {
@@ -37,6 +38,11 @@ namespace DeDupScanner
                 return;
             }
 
+            Console.Write("File list name is '{0}'? ", baseName);
+            string input = Console.ReadLine();
+            if (input != String.Empty)
+                baseName = input;
+
             if (FileUtil.IsSystemDrive(scanRootDir))
                 // All my current system drives are SSDs
                 numThreads = numThreadsSolidStateDrive;
@@ -44,15 +50,10 @@ namespace DeDupScanner
                 numThreads = numThreadsRotatingDrive;
 
             Console.Write("Run with {0} threads? ", numThreads);
-            string input = Console.ReadLine();
+            input = Console.ReadLine();
             int i;
             if (Int32.TryParse(input, out i))
                 numThreads = i;
-
-            Console.Write("Directory or Volume name is '{0}'? ", baseName);
-            input = Console.ReadLine();
-            if (input != String.Empty)
-                baseName = input;
 
             Console.WriteLine("\nCreating report files '{0} - Unique Files Copied/Duplicate Files.tsv'", baseName);
             // Console.WriteLine("Read Buffer Size = {0}", FileUtil.FormatByteSize(ComputeFingerprint.ReadBufferSize));

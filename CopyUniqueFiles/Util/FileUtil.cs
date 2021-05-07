@@ -90,9 +90,9 @@ public class FileUtil
         }
 
         if (d.Name == "")
-            return Environment.MachineName + " " + directory[0];
+            return Environment.MachineName + "-Drive " + directory[0];
         else
-            return (d.Name + " on " + Environment.MachineName + " " + directory[0]);
+            return d.Name;
     }
 
     public static bool IsSystemDrive(string directory)
