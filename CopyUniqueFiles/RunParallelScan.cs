@@ -50,7 +50,7 @@ namespace DeDupScanner
                 }
                 else
                 {
-                    progress.FileCompleted(fi, fileChecksum);
+                    progress.UniqueFileCompleted(fi, "", fileChecksum);
                     parentFingerprint.FileCompleted(fileChecksum);
 
                     // filesProcessedByThisThread++;

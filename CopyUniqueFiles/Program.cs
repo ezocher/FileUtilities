@@ -63,7 +63,6 @@ namespace DeDupScanner
             fileDB = new FileDB();
             LoadFileLists.LoadBaseFileLists(fileDB);
 
-
             RunParallelScan.ScanAndCopyUniques(baseName, scanRootDir, numThreads, fileDB);
 
             ConsoleUtil.WaitForKeyPress();

@@ -70,12 +70,12 @@ namespace DeDupScanner
             uniquesReport.Close();
         }
 
-        public static void WriteFileInfo(FileInfo fi, string baseName, string fileFingerprint, int numFilesCompleted)
+        public static void WriteFileInfo(FileInfo fi, string copiedFileFullPath, string baseName, string fileFingerprint, int numFilesCompleted)
         {
             filesReport.WriteLine(FilesReportFormat, numFilesCompleted, baseName,
                 fi.CreationTime, fi.LastWriteTime, fi.LastAccessTime,
                 fi.Attributes, // fi.IsReadOnly, - ReadOnly is included FileInfo.Attributes
-                fi.FullName, fi.Extension, fi.Name, fi.Length, fileFingerprint);
+                copiedFileFullPath, fi.Extension, fi.Name, fi.Length, fileFingerprint);
         }
 
         public static void WriteExcludedInfo(bool isFile, string fullPath, string reason, string detail)
