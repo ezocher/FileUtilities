@@ -12,7 +12,7 @@ namespace DeDupScanner
         public static ReportProgress progress;
         static ConcurrentFilesystemTraverser fst;
 
-        public static void ScanAndCopyUniques(string baseName, string scanRootDir, int numThreads)
+        public static void ScanAndCopyUniques(string baseName, string scanRootDir, int numThreads, FileDB fileDB)
         {
             ReportFiles.Open(baseName, scanRootDir);
 

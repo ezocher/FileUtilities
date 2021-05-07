@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-class LoadFileList
+class LoadFileLists
 {
-    private const string BaseFileListsFolder = @"C:\FileDB\Base File Collection";
+    private const string BaseFileListsFolder = @"C:\FileDB\Base File Lists";
 
     private const string ListFileNameFilter = "* - File List.tsv";
 

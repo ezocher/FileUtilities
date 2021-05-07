@@ -17,6 +17,7 @@ namespace DeDupScanner
         static int numThreadsSolidStateDrive = hardwareThreads; // 1; // for testing // 
         static int numThreadsRotatingDrive = Math.Min(hardwareThreads, 3);  // 3 threads arrived at by observation on several rotating drives (internal and USB)
         static int numThreads;
+        private static FileDB fileDB;
 
         [STAThreadAttribute]
         public static void Main(string[] args)
@@ -57,8 +58,12 @@ namespace DeDupScanner
             // Console.WriteLine("Read Buffer Size = {0}", FileUtil.FormatByteSize(ComputeFingerprint.ReadBufferSize));
             Console.WriteLine("Running {0} simultaneous threads on {1} hardware threads\n", numThreads, hardwareThreads);
 
+            // Load in-memory database of existing files to check against for uniques
+            fileDB = new FileDB();
+            LoadFileLists.LoadBaseFileLists(fileDB);
 
-            RunParallelScan.ScanAndCopyUniques(baseName, scanRootDir, numThreads);
+
+            // RunParallelScan.ScanAndCopyUniques(baseName, scanRootDir, numThreads, fileDB);
 
             ConsoleUtil.WaitForKeyPress();
         }

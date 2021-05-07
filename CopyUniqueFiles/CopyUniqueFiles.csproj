@@ -65,7 +65,7 @@
     <Compile Include="CopyUniqueFile.cs" />
     <Compile Include="FileDB.cs" />
     <Compile Include="FileDescription.cs" />
-    <Compile Include="LoadFileList.cs" />
+    <Compile Include="LoadFileLists.cs" />
     <Compile Include="Util\ConfigFileUtil.cs" />
     <Compile Include="Util\ConfigSettings.cs" />
     <Compile Include="Util\ConsoleUtil.cs" />
