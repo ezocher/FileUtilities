@@ -54,7 +54,7 @@ class FileDB
         Console.WriteLine("   Number of unique files = {0:N0} (Total size = {1})", numUniqueFiles,
             FileUtil.FormatByteSize(totalSizeOfUniqueFiles));
         Console.WriteLine("   Number of files with duplicates = {0:N0} ({1:F1}%)", numFilesWithDuplicates,
-            (float)numFilesWithDuplicates / (float)numUniqueFiles * 100.0f);
+            (float)numFilesWithDuplicates / (float)(numUniqueFiles + numFilesWithDuplicates) * 100.0f);
         Console.WriteLine("   Total number of duplicates = {0:N0} (Total size = {1}, {2:F1}%)", numTotalDuplicateFiles,
             FileUtil.FormatByteSize(totalSizeOfDuplicates), 
             (float)totalSizeOfDuplicates / (float)(totalSizeOfUniqueFiles + totalSizeOfDuplicates) * 100.0f);
