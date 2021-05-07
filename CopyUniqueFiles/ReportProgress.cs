@@ -120,8 +120,6 @@ namespace DeDupScanner
             lock (_lockStats)
             {
                 numDirectoriesCompleted++;
-
-                ReportFiles.WriteDirectoryInfo(di, Program.baseName, numItemsScanned, totalNumItems, checksum, numDirectoriesCompleted);
             }
         }
 
