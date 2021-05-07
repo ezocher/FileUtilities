@@ -48,16 +48,16 @@ namespace DeDupScanner
             if (Int32.TryParse(input, out i))
                 numThreads = i;
 
-            Console.Write("Volume name is '{0}'? ", baseName);
+            Console.Write("Directory or Volume name is '{0}'? ", baseName);
             input = Console.ReadLine();
             if (input != String.Empty)
                 baseName = input;
 
-            Console.WriteLine("\nCreating scan report files '{0} - File/Directory List.tsv'", baseName);
-            Console.WriteLine("Read Buffer Size = {0}", FileUtil.FormatByteSize(ComputeFingerprint.ReadBufferSize));
+            Console.WriteLine("\nCreating report files '{0} - Unique Files Copied/Duplicate Files.tsv'", baseName);
+            // Console.WriteLine("Read Buffer Size = {0}", FileUtil.FormatByteSize(ComputeFingerprint.ReadBufferSize));
             Console.WriteLine("Running {0} simultaneous threads on {1} hardware threads\n", numThreads, hardwareThreads);
 
-            RunParallelScan.Run(baseName, scanRootDir, numThreads);
+            RunParallelScan.ScanAndCopyUniques(baseName, scanRootDir, numThreads);
 
             ConsoleUtil.WaitForKeyPress();
         }
