@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +71,30 @@ class FileDB
         totalSizeOfDuplicates = 0;
         mostCopiesOfAFile = 1;
         mostCopiesFilePath = "";
+    }
+
+    readonly object _lockDBQueryAndInsert = new object();
+    public bool IsUniqueFile(FileInfo fi, string fingerprint, string basename, out string originalFileFullPath)
+    {
+        bool result;
+
+        // Lock prevents two identical files coming in at the same time, both thinking they're unique
+        lock (_lockDBQueryAndInsert)
+        {
+            result = !db.ContainsKey(fingerprint);
+            if (result)
+                db.Add(fingerprint, new FileDescription(fi, fingerprint, basename));
+        }
+
+        if (result)
+            originalFileFullPath = null;
+        else
+        {
+            FileDescription fd = db[fingerprint];
+            originalFileFullPath = fd.FullPath;
+        }
+
+        return result;
     }
 }
 

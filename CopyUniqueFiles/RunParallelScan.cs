@@ -11,12 +11,17 @@ namespace DeDupScanner
     {
         public static ReportProgress progress;
         static ConcurrentFilesystemTraverser fst;
+        static FileDB db;
+        static string volumeName;
 
         public static void ScanAndCopyUniques(string baseName, string scanRootDir, int numThreads, FileDB fileDB)
         {
             ReportFiles.Open(baseName, scanRootDir);
 
             fst = new ConcurrentFilesystemTraverser(scanRootDir);
+
+            db = fileDB;
+            volumeName = baseName;
 
             progress = new ReportProgress(numThreads);
             progress.Start();
@@ -28,8 +33,8 @@ namespace DeDupScanner
             progress.DisplayFinalSummary();
 
             // ReportFiles.Close(); // Files closed under lock by progress.DisplayFinalSummary()
-
         }
+
 
         static void FileProcessor(int threadIndex)
         {
@@ -50,14 +55,21 @@ namespace DeDupScanner
                 }
                 else
                 {
-                    progress.UniqueFileCompleted(fi, "", fileChecksum);
-                    parentFingerprint.FileCompleted(fileChecksum);
+                    string originalFilePath;
+                    if ( db.IsUniqueFile(fi, fileChecksum, volumeName, out originalFilePath))
+                    {
+                        // TODO: Copy Unique File
 
-                    // filesProcessedByThisThread++;
+                        progress.UniqueFileCompleted(fi, "dest", fileChecksum);
+                    }
+                    else
+                        progress.DuplicateFileCompleted(fi, originalFilePath, fileChecksum);
+
+                    parentFingerprint.FileCompleted(fileChecksum);
                 }
             }
 
-            // Console.WriteLine("\nThread {0} completed - {1} files processed\n", threadIndex, filesProcessedByThisThread);
+
             progress.ThreadCompleted();
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,15 @@ class FileDescription
     // TODO: List? of file clouds it's on? Would need to capture this at initial scan time or derive by recognizing cloud dirctory roots (vs. backups)
 
     private FileDescription() { }
+
+    public FileDescription(FileInfo fi, string fingerprint, string volume)
+    {
+        VolumeName = volume;
+        FullPath = fi.FullName;
+        Length = fi.Length;
+        Fingerprint = fingerprint;
+        NumberOfCopies = 1; // The 1 is counting this file
+    }
 
     private static long ParseLength(string lengthString)
     {
