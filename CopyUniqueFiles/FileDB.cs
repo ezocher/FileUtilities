@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// In-memory database of existing files to check against for uniques
 class FileDB
 {
     Dictionary<string, FileDescription> db;
@@ -29,7 +30,7 @@ class FileDB
 
             if (db[fd.Fingerprint].NumberOfCopies == 1)
             {
-                numFilesWithDuplicates++; // Count this when first duplicate is encountered
+                numFilesWithDuplicates++; // Count this once when first duplicate is encountered
             }
 
             int n = db[fd.Fingerprint].NumberOfCopies++;
@@ -43,9 +44,8 @@ class FileDB
         {
             numUniqueFiles++;
             totalSizeOfUniqueFiles += fd.Length;
-            db[fd.Fingerprint] = fd;
+            db.Add(fd.Fingerprint, fd);
         }
-
     }
 
     public void DisplayStatsToConsole()
