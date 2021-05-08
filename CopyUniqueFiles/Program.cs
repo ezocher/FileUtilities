@@ -19,6 +19,8 @@ namespace DeDupScanner
         static int numThreads;
         private static FileDB fileDB;
 
+        private static string destinationVolume = "D:";
+
         [STAThreadAttribute]
         public static void Main(string[] args)
         {
@@ -38,10 +40,24 @@ namespace DeDupScanner
                 return;
             }
 
-            Console.Write("File list name is '{0}'? ", baseName);
+            Console.Write("Destination Volume is '{0}'?", destinationVolume);
             string input = Console.ReadLine();
             if (input != String.Empty)
+                destinationVolume = input;
+            if ((destinationVolume.Length != 2) || (destinationVolume[1] != ':'))
+            {
+                ConsoleUtil.WriteLineColor(String.Format("Error: destination volume of '{0}' is not valid", destinationVolume),
+                    ConsoleColor.Red);
+                ConsoleUtil.WaitForKeyPress();
+                return;
+            }
+            CopyUniqueFile.SetDestinationVolume(destinationVolume);
+
+            Console.Write("File list name is '{0}'? ", baseName);
+            input = Console.ReadLine();
+            if (input != String.Empty)
                 baseName = input;
+            CopyUniqueFile.SetSourceBaseName(baseName);
 
             if (FileUtil.IsSystemDrive(scanRootDir))
                 // All my current system drives are SSDs
