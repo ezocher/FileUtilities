@@ -3,6 +3,7 @@
 ExcludeHiddenAndSystem = True
 
 [Ignore]
+\bin
 \ESD
 \MSOTraceLite
 \OEMLOGO
