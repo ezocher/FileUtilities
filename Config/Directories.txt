@@ -54,6 +54,9 @@ $UserProfile$\Ansel						# GeForce Experience screen shots and ?
 $UserProfile$\Documents\Adobe
 $UserProfile$\OneDrive\Documents\Adobe
 
+# SanDisk iExpand (dual Lightning & USB-B memory stick) app files
+\.ixpand
+
 # Exclude other users and Public
 \Users\Default.migrated
 \Users\OVRLibraryService			# Oculus Rift
