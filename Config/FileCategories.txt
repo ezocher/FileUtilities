@@ -1,8 +1,7 @@
 # FileCategories.txt - file categories for organizing found files
-# For use with ezocher/FileUtilities/DeDupScanner and ezocher/FileUtilities/FilesDB/UniqueFileCollector/
+# For use with ezocher/FileUtilities/DeDupScanner and ezocher/FileUtilities/CopyUniqueFiles
 
-[General]
-
+# [General]
 
 [Documents and Books]		# Papers, books, text files, eBooks
 .pdf, .ps
@@ -13,7 +12,6 @@
 .ibooks
 .mobi, .prc
 .azw, .azw3, .kf8, .kfx
-
 
 [Office]
 .xlsx, .xls, .csv
@@ -44,7 +42,6 @@
 # .arw = Sony Raw, .nef = Nikon Raw, .crw/cr2/cr3 = Canon Raw, .gpr = GoPro
 # .dng = Adobe Digital Negative
 
-
 [Music]		# Music, Sound, and Podcast formats
 .wav
 .au
@@ -69,10 +66,10 @@
 .abr
 .epr, .olp			# Premiere and Media encoder
 
-
 [Code]				# Source code and related docs and files
 .md, .txt
 .c, .cpp
+.a
 .cs, .csproj, .sln
 .resx				# .NET resource files (XML)
 .snk				# .NET strong name key
