@@ -65,9 +65,9 @@
 .mp4, .m4v
 .wmv, .avi
 .dvr-ms
-.vob		# DVD
+.vob, .bup, .x, .inf		# DVD
 .mov
-.mts		# Sony camera video
+.mts						# Sony camera video
 .mpg
 
 [Creative]
