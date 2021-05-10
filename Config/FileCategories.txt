@@ -14,7 +14,7 @@
 .azw, .azw3, .kf8, .kfx
 
 [Office]
-.xlsx, .xls, .csv
+.xlsx, .xls, .csv, .tsv
 .pptx, .ppt
 .one
 .ost, .pst, .eml
@@ -25,7 +25,7 @@
 .mht
 .chm
 
-[Images]
+[Bitmaps]
 .gif, .png, .webp
 
 [Photos]	# Photo and image formats
@@ -76,21 +76,19 @@
 .snk				# .NET strong name key
 .editorconfig		# For ??
 .dat, .res			# Testing, ?Unit
-.cake
 .xml				# Sometimes code/data, sometimes app settings
 .linq
 .nuspec
 .props				# Sometimes source, sometimes generated (nuget)
 .js, .json
-.xml
 .gitattributes, .gitignore												# git
-.meta, .tga, .fbx, .mat, .prefab, .shader, .unity, .pfx, .asset, .pfx	# Unity
+.meta, .tga, .fbx, .mat, .prefab, .shader, .unity, .pfx, .asset			# Unity
 .ico
 .ps1				# PowerShell
 .sh
 .bat, .cmd, .cake, .cmake
 # Unity
-.asset, .controller			
+.controller			
 .cginc				# Shader include file
 .clang-format		# Clang compiler
 
