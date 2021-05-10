@@ -1,12 +1,9 @@
 # FileCategories.txt - file categories for organizing found files
-# For use with ezocher/FileUtilities/DeDupScanner and ezocher/FileUtilities/CopyUniqueFiles
-
-# [General]
+# For use with ezocher/FileUtilities/CopyUniqueFiles
 
 [Documents and Books]		# Papers, books, text files, eBooks
 .pdf, .ps
-.doc, .docx					# Include here, or in [Office]?
-.wps						# Microsoft Works
+.xps
 .rtf
 # https://en.wikipedia.org/wiki/Comparison_of_e-book_formats
 .epub
@@ -14,13 +11,20 @@
 .mobi, .prc
 .azw, .azw3, .kf8, .kfx
 
-.md, .txt
 
 [Office]
-.xlsx, .xls, .csv, .tsv
-.pptx, .ppt
-.one, .onetoc2
+.doc, .docx							# Microsoft Word Documents (here or in Docs and Books?)
+.wps								# Microsoft Works
+.dot, .docm, .dotx, .dotm, .docb	# Microsoft Word templates and macros
+.xls, .csv, .tsv, .xlt, .xlm, .xlw
+.xlsx, .xlsm, .xltx, .xltm
+.ppt, .pps, .pot
+.pptx, .pptm, .potx, .potm, .ppam, .ppsx, .ppsm, .sldx, .sldm
+.one, .onetoc, .onetoc2, .onepkg
 .ost, .pst, .eml
+.pub
+.vsd, .vdx, .vsdx, .vsdm, .vssx		# Microsoft Visio
+# TODO Microsoft Access extensions
 
 [Shortcuts]
 .lnk
@@ -73,6 +77,7 @@
 .epr, .olp			# Premiere and Media encoder
 
 [Code]				# Source code and related docs and files
+.md, .txt			# Here or in Docs and Books?
 .c, .cpp
 .a
 .cs
@@ -104,7 +109,7 @@
 .glb				# Oculus user-generated content
 
 [Settings]
-.ini
+.ini				# Do these need to be saved? If not, add to FilesIgnore.txt
 
 [Archives]
 .zip, .rar, .gz
