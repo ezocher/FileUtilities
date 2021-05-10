@@ -70,7 +70,8 @@
 .md, .txt
 .c, .cpp
 .a
-.cs, .csproj, .sln
+.cs
+.csproj, .sln, .config
 .resx				# .NET resource files (XML)
 .snk				# .NET strong name key
 .editorconfig		# For ??

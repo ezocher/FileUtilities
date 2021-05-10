@@ -20,7 +20,8 @@
 
 # Development, Unity
 .asmdef
-.pdb, .cache, .config, .manifest, .projdata1, .suo
+.pdb, .cache, .manifest, .projdata1, .suo
+# App.config is needed by Visual Studio, don't exclude .config
 .buildreport
 .user									# .csproj.user files
 .targets								# nuget
