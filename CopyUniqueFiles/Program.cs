@@ -65,6 +65,25 @@ namespace DeDupScanner
             else
                 numThreads = numThreadsRotatingDrive;
 
+            bool validChoice = false;
+            bool setting = false;
+            do
+            {
+                Console.Write("Divide files into categories (Y|N)? ");
+                input = Console.ReadLine();
+                if (input.ToLower()[0] == 'y')
+                {
+                    setting = true;
+                    validChoice = true;
+                }
+                else if (input.ToLower()[0] == 'n')
+                {
+                    setting = false;
+                    validChoice = true;
+                }
+            } while (!validChoice);
+            CopyUniqueFile.SetOptionDivideFilesIntoCategories(setting);
+
             Console.Write("Run with {0} threads? ", numThreads);
             input = Console.ReadLine();
             int i;

@@ -18,9 +18,6 @@ namespace DeDupScanner
 
         static readonly object _lockNextFile = new object();
 
-        const string configFolderPathUserRelative = @"Repos\FileUtilities\Config\";
-        const string directoriesConfigFile = "Directories.txt";
-        const string filesIgnoreFile = "FilesIgnore.txt";
         const string settingsCategory = "Settings";
         const string ignoreCategory = "Ignore";
         const string extensionsIgnoreCategory = "Extensions Ignore";
@@ -34,10 +31,8 @@ namespace DeDupScanner
             DirectoryInfo di = new DirectoryInfo(rootDirectoryPath);
             directories.Push(Tuple.Create<DirectoryInfo, DirectoryFingerprint>(di, null));
 
-            string configFolderPath = Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), configFolderPathUserRelative);
-
-            InitDirSkipList( rootDirectoryPath, Path.Combine(configFolderPath, directoriesConfigFile) );
-            InitFileSkipList( rootDirectoryPath, Path.Combine(configFolderPath, filesIgnoreFile) );
+            InitDirSkipList( rootDirectoryPath, ConfigFiles.GetDirectoriesFile() );
+            InitFileSkipList( rootDirectoryPath, ConfigFiles.GetFilesIgnoreFile() );
         }
 
         // The path list in the config file (Directories.txt) contains full paths of directories to skip. It may or may not
@@ -54,7 +49,7 @@ namespace DeDupScanner
             DirectorySkipList = new HashSet<string>();
 
             string volume = rootDirectoryPath.Substring(0, @"X:".Length);
-            var dirList = ConfigFileUtil.LoadConfigFile(directoryConfigFilePath);
+            ConfigSettings[] dirList = ConfigFileUtil.LoadConfigFile(directoryConfigFilePath);
 
             foreach (ConfigSettings settings in dirList)
             {
@@ -85,7 +80,7 @@ namespace DeDupScanner
         {
             ExtensionSkipList = new HashSet<string>();
 
-            var extList = ConfigFileUtil.LoadConfigFile(extensionConfigFilePath);
+            ConfigSettings[] extList = ConfigFileUtil.LoadConfigFile(extensionConfigFilePath);
 
             foreach (ConfigSettings settings in extList)
                 if (settings.Category == extensionsIgnoreCategory)

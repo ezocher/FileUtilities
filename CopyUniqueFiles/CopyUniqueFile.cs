@@ -10,6 +10,33 @@ class CopyUniqueFile
     private static string destVolume;
     static string destBasePath;
     const string destRootPrefix = "uu-";
+    private static bool divideFilesIntoCategories;
+    private static Dictionary<string, string> FileExtensionToCategoryMap;
+
+    public static void SetOptionDivideFilesIntoCategories(bool setting)
+    {
+        divideFilesIntoCategories = setting;
+        if (divideFilesIntoCategories)
+        {
+            LoadCategoryMap();
+        }
+    }
+    
+    private static void LoadCategoryMap()
+    {
+        FileExtensionToCategoryMap = new Dictionary<string, string>();
+        HashSet<string> Categories = new HashSet<string>();
+
+        ConfigSettings[] extensionList = ConfigFileUtil.LoadConfigFile(ConfigFiles.GetCategoriesFile());
+
+        foreach (ConfigSettings settings in extensionList)
+        {
+            FileExtensionToCategoryMap.Add(settings.Value.ToLower(), settings.Category);
+            Categories.Add(settings.Category);
+        }
+
+        Console.WriteLine("   Loaded {0} file extensions in {1} categories", FileExtensionToCategoryMap.Count, Categories.Count);
+    }
 
     public static void SetDestinationVolume(string destinationVolume)
     {

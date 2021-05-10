@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="ComputeFingerprint.cs" />
     <Compile Include="ConcurrentFilesystemTraverser.cs" />
+    <Compile Include="ConfigFiles.cs" />
     <Compile Include="CopyUniqueFile.cs" />
     <Compile Include="FileDB.cs" />
     <Compile Include="FileDescription.cs" />
