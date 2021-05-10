@@ -58,10 +58,10 @@ namespace DeDupScanner
                     string originalFilePath;
                     if ( db.IsUniqueFile(fi, fileChecksum, volumeName, out originalFilePath))
                     {
-                        string destinationFullName;
-                        CopyUniqueFile.Copy(fi.FullName, out destinationFullName);
+                        string destinationFullName, category;
+                        CopyUniqueFile.Copy(fi.FullName, out destinationFullName, out category);
 
-                        progress.UniqueFileCompleted(fi, destinationFullName, fileChecksum);
+                        progress.UniqueFileCompleted(fi, destinationFullName, fileChecksum, category);
                     }
                     else
                         progress.DuplicateFileCompleted(fi, originalFilePath, fileChecksum);

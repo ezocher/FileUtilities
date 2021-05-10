@@ -25,8 +25,8 @@ namespace DeDupScanner
         const string DuplicatesReportHeader = "Num\tOriginal Full Path\tDuplicate Full Path\tDup Ext\tDup File Name\tLength\tChecksum";
         const string DuplicatesReportFormat = "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}";
 
-        const string UniquesReportHeader = "Num\tSource Full Path\tCopied Full Path\tExt\tFile Name\tLength\tChecksum";
-        const string UniquesReportFormat = "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}";
+        const string UniquesReportHeader = "Num\tSource Full Path\tCopied Full Path\tExt\tFile Name\tCategory\tLength\tChecksum";
+        const string UniquesReportFormat = "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}";
 
 
         public static void Open(string baseName, string scanRootDir)
@@ -90,10 +90,10 @@ namespace DeDupScanner
                 fi.FullName, fi.Extension, fi.Name, fi.Length, fileFingerprint);
         }
 
-        public static void WriteUniqueInfo(FileInfo fi, string copiedFileFullPath, string fileFingerprint, int numUniquesFound)
+        public static void WriteUniqueInfo(FileInfo fi, string copiedFileFullPath, string fileFingerprint, int numUniquesFound, string category)
         {
             uniquesReport.WriteLine(UniquesReportFormat, numUniquesFound,
-                fi.FullName, copiedFileFullPath, fi.Extension, fi.Name, fi.Length, fileFingerprint);
+                fi.FullName, copiedFileFullPath, fi.Extension, fi.Name, category, fi.Length, fileFingerprint);
         }
     }
 }

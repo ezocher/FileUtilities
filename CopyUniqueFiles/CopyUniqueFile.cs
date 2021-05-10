@@ -55,22 +55,24 @@ class CopyUniqueFile
                 ConsoleColor.Red);
     }
 
-    public static void Copy(string sourceFilePath, out string destinationFilePath)
+    public static void Copy(string sourceFilePath, out string destinationFilePath, out string category)
     {
         string destFilePath;
 
         if (divideFilesIntoCategories)
         {
-            string categoryName;
             string sourceExtension = Path.GetExtension(sourceFilePath).ToLower();
 
-            if (!FileExtensionToCategoryMap.TryGetValue(sourceExtension, out categoryName))
-                categoryName = unknownCategoryName;
+            if (!FileExtensionToCategoryMap.TryGetValue(sourceExtension, out category))
+                category = unknownCategoryName;
 
-            destFilePath = destBasePath + Path.DirectorySeparatorChar + categoryName + sourceFilePath.Remove(0, 2);    // Remove "X:"
+            destFilePath = destBasePath + Path.DirectorySeparatorChar + category + sourceFilePath.Remove(0, 2);    // Remove "X:"
         }
         else
+        {
             destFilePath = destBasePath + sourceFilePath.Remove(0, 2);    // Remove "X:"
+            category = "";
+        }
 
         try
         {

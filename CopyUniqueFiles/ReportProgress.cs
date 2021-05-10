@@ -60,7 +60,7 @@ namespace DeDupScanner
         long lastElapsedMs = 0;
         string lastFileScanned = "";
 
-        public void UniqueFileCompleted(FileInfo fi, string copiedFileFullPath, string checksum)
+        public void UniqueFileCompleted(FileInfo fi, string copiedFileFullPath, string checksum, string category)
         {
             lock (_lockStats)
             {
@@ -71,7 +71,7 @@ namespace DeDupScanner
                 numUniquesFound++;
                 totalBytesCopied += fi.Length;
 
-                ReportFiles.WriteUniqueInfo(fi, copiedFileFullPath, checksum, numUniquesFound);
+                ReportFiles.WriteUniqueInfo(fi, copiedFileFullPath, checksum, numUniquesFound, category);
 
                 ReportFiles.WriteFileInfo(fi, copiedFileFullPath, Program.baseName, checksum, numUniquesFound);
             }
