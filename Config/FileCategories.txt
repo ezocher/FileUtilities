@@ -6,6 +6,7 @@
 [Documents and Books]		# Papers, books, text files, eBooks
 .pdf, .ps
 .doc, .docx					# Include here, or in [Office]?
+.wps						# Microsoft Works
 .rtf
 # https://en.wikipedia.org/wiki/Comparison_of_e-book_formats
 .epub
@@ -13,14 +14,19 @@
 .mobi, .prc
 .azw, .azw3, .kf8, .kfx
 
+.md, .txt
+
 [Office]
 .xlsx, .xls, .csv, .tsv
 .pptx, .ppt
-.one
+.one, .onetoc2
 .ost, .pst, .eml
 
+[Shortcuts]
+.lnk
+
 [Web]
-.url, .lnk
+.url
 .htm, .html
 .mht
 .chm
@@ -67,7 +73,6 @@
 .epr, .olp			# Premiere and Media encoder
 
 [Code]				# Source code and related docs and files
-.md, .txt
 .c, .cpp
 .a
 .cs
