@@ -12,6 +12,7 @@ class CopyUniqueFile
     const string destRootPrefix = "uu-";
     private static bool divideFilesIntoCategories;
     private static Dictionary<string, string> FileExtensionToCategoryMap;
+    private const string unknownCategoryName = "Unknown";
 
     public static void SetOptionDivideFilesIntoCategories(bool setting)
     {
@@ -56,7 +57,20 @@ class CopyUniqueFile
 
     public static void Copy(string sourceFilePath, out string destinationFilePath)
     {
-        string destFilePath = destBasePath + sourceFilePath.Remove(0, 2);    // Remove "X:"
+        string destFilePath;
+
+        if (divideFilesIntoCategories)
+        {
+            string categoryName;
+            string sourceExtension = Path.GetExtension(sourceFilePath).ToLower();
+
+            if (!FileExtensionToCategoryMap.TryGetValue(sourceExtension, out categoryName))
+                categoryName = unknownCategoryName;
+
+            destFilePath = destBasePath + Path.DirectorySeparatorChar + categoryName + sourceFilePath.Remove(0, 2);    // Remove "X:"
+        }
+        else
+            destFilePath = destBasePath + sourceFilePath.Remove(0, 2);    // Remove "X:"
 
         try
         {
