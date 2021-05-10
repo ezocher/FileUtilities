@@ -19,7 +19,7 @@ namespace DeDupScanner
         static int numThreads;
         private static FileDB fileDB;
 
-        private static string destinationVolume = "D:";
+        private static string destinationVolume = "F:";
 
         [STAThreadAttribute]
         public static void Main(string[] args)
