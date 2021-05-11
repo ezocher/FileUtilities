@@ -18,6 +18,8 @@ namespace DeDupScanner
         {
             ReportFiles.Open(baseName, scanRootDir);
 
+            CopyUniqueFile.SetSourcePathRoot(scanRootDir);
+
             fst = new ConcurrentFilesystemTraverser(scanRootDir);
 
             db = fileDB;

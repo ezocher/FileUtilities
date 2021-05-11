@@ -10,6 +10,8 @@ class CopyUniqueFile
     private static string destVolume;
     static string destBasePath;
     const string destRootPrefix = "uu-";
+    private static int sourcePathRootLength;
+
     private static bool divideFilesIntoCategories;
     private static Dictionary<string, string> FileExtensionToCategoryMap;
     private const string unknownCategoryName = "Unknown";
@@ -44,6 +46,11 @@ class CopyUniqueFile
         destVolume = destinationVolume;
     }
 
+    public static void SetSourcePathRoot(string sourceRoot)
+    {
+        sourcePathRootLength = sourceRoot.Length;
+    }
+
     public static void SetSourceBaseName(string name)
     {
         destBasePath = destVolume + Path.DirectorySeparatorChar + destRootPrefix + name;
@@ -66,11 +73,11 @@ class CopyUniqueFile
             if (!FileExtensionToCategoryMap.TryGetValue(sourceExtension, out category))
                 category = unknownCategoryName;
 
-            destFilePath = destBasePath + Path.DirectorySeparatorChar + category + sourceFilePath.Remove(0, 2);    // Remove "X:"
+            destFilePath = destBasePath + Path.DirectorySeparatorChar + category + sourceFilePath.Remove(0, sourcePathRootLength);
         }
         else
         {
-            destFilePath = destBasePath + sourceFilePath.Remove(0, 2);    // Remove "X:"
+            destFilePath = destBasePath + sourceFilePath.Remove(0, sourcePathRootLength);
             category = "";
         }
 
