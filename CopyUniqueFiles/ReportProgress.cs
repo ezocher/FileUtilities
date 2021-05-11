@@ -197,7 +197,7 @@ namespace DeDupScanner
 
             lock (ConsoleUtil._lockGlobalConsole)
             {
-                ConsoleColor color = (lastFileWasUnique) ? ConsoleColor.White : ConsoleColor.Blue;
+                ConsoleColor color = (lastFileWasUnique) ? ConsoleColor.White : ConsoleColor.Yellow;
 
                 ConsoleUtil.WriteColor(String.Format(ProgressFormat, backspaces, spaces, files, FileUtil.FormatByteSize(lastBytesScanned), TimerUtil.FormatMilliseconds(lastElapsedMs),
                     FileUtil.FormatByteSize((long)readSpeedBytesPerMin), FileUtil.TrimFileName(fileName, ConsoleMaxFileNameLength)),
