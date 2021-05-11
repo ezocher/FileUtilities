@@ -52,7 +52,7 @@
 # .arw = Sony Raw, .nef = Nikon Raw, .crw/cr2/cr3 = Canon Raw, .gpr = GoPro
 # .dng = Adobe Digital Negative
 
-[Music]		# Music, Sound, and Podcast formats
+[Music]		# Music, Sound, Playlist, and Podcast formats
 .wav
 .au
 .mp3
@@ -60,6 +60,7 @@
 .m4a, .m4p
 .wma
 .m4b		# AAC audio book
+.m3u, .pls, .vlc, .wpl, .zpl, .xspf
 
 [Video]
 .mp4, .m4v
