@@ -94,6 +94,7 @@
 .gitattributes, .gitignore												# git
 .meta, .tga, .fbx, .mat, .prefab, .shader, .unity, .pfx, .asset			# Unity
 .ico
+.bmp
 .ps1				# PowerShell
 .sh
 .bat, .cmd, .cake, .cmake
