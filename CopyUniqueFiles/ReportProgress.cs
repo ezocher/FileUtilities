@@ -59,6 +59,7 @@ namespace DeDupScanner
         readonly object _lockStats = new object();
         long lastElapsedMs = 0;
         string lastFileScanned = "";
+        bool lastFileWasUnique = true;
 
         public void UniqueFileCompleted(FileInfo fi, string copiedFileFullPath, string checksum, string category)
         {
@@ -67,6 +68,7 @@ namespace DeDupScanner
                 numFilesScanned++;
                 totalBytesScanned += fi.Length;
                 lastFileScanned = "Unique: " + fi.FullName;
+                lastFileWasUnique = true;
 
                 numUniquesFound++;
                 totalBytesCopied += fi.Length;
@@ -84,6 +86,7 @@ namespace DeDupScanner
                 numFilesScanned++;
                 totalBytesScanned += fi.Length;
                 lastFileScanned = "Dup: " + fi.FullName;
+                lastFileWasUnique = false;
 
                 numDuplicatesFound++;
 
@@ -194,10 +197,11 @@ namespace DeDupScanner
 
             lock (ConsoleUtil._lockGlobalConsole)
             {
-                ConsoleUtil.White();
-                Console.Write(ProgressFormat, backspaces, spaces, files, FileUtil.FormatByteSize(lastBytesScanned), TimerUtil.FormatMilliseconds(lastElapsedMs), FileUtil.FormatByteSize((long)readSpeedBytesPerMin), 
-                    FileUtil.TrimFileName(fileName, ConsoleMaxFileNameLength));
-                ConsoleUtil.RestoreColors();
+                ConsoleColor color = (lastFileWasUnique) ? ConsoleColor.White : ConsoleColor.Blue;
+
+                ConsoleUtil.WriteColor(String.Format(ProgressFormat, backspaces, spaces, files, FileUtil.FormatByteSize(lastBytesScanned), TimerUtil.FormatMilliseconds(lastElapsedMs),
+                    FileUtil.FormatByteSize((long)readSpeedBytesPerMin), FileUtil.TrimFileName(fileName, ConsoleMaxFileNameLength)),
+                    color);
             }
         }
 
