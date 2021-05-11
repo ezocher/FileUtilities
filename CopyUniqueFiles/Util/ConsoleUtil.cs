@@ -16,17 +16,6 @@ class ConsoleUtil
     public static string backspaceClearLine = new string('\b', wideTermWidth);
 
 
-    public static void WaitForKeyPress()
-    {
-        lock (_lockGlobalConsole)
-        {
-            White();
-            Console.WriteLine("\n\n(press any key to exit)");
-            RestoreColors();
-        }
-        Console.ReadKey(true);
-    }
-
     public static void InitConsoleSettings(string consoleWindowTitle)
     {
 
@@ -40,6 +29,41 @@ class ConsoleUtil
         if (consoleWindowTitle != "")
             Console.Title = consoleWindowTitle;
     }
+
+    public static void WaitForKeyPress()
+    {
+        lock (_lockGlobalConsole)
+        {
+            White();
+            Console.WriteLine("\n\n(press any key to exit)");
+            RestoreColors();
+        }
+        Console.ReadKey(true);
+    }
+
+    public static bool YesNoChoice(string prompt)
+    {
+        bool validChoice = false;
+        bool setting = false;
+        do
+        {
+            Console.Write(prompt);
+            string input = Console.ReadLine();
+            if (input.ToLower()[0] == 'y')
+            {
+                setting = true;
+                validChoice = true;
+            }
+            else if (input.ToLower()[0] == 'n')
+            {
+                setting = false;
+                validChoice = true;
+            }
+        } while (!validChoice);
+
+        return setting;
+    }
+
 
     public static void SaveColors()
     {

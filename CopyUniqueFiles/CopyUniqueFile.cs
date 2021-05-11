@@ -13,6 +13,7 @@ class CopyUniqueFile
     private static int sourcePathRootLength;
 
     private static bool divideFilesIntoCategories;
+    private static bool copyFiles;
     private static Dictionary<string, string> FileExtensionToCategoryMap;
     private const string unknownCategoryName = "Unknown";
 
@@ -20,9 +21,14 @@ class CopyUniqueFile
     {
         divideFilesIntoCategories = setting;
         if (divideFilesIntoCategories)
-        {
             LoadCategoryMap();
-        }
+        else
+            Console.WriteLine();
+    }
+
+    public static void SetOptionCopyFiles(bool setting)
+    {
+        copyFiles = setting;
     }
     
     private static void LoadCategoryMap()
@@ -38,7 +44,7 @@ class CopyUniqueFile
             Categories.Add(settings.Category);
         }
 
-        Console.WriteLine("   Loaded {0} file extensions in {1} categories", FileExtensionToCategoryMap.Count, Categories.Count);
+        Console.WriteLine("   Loaded {0} file extensions in {1} categories\n", FileExtensionToCategoryMap.Count, Categories.Count);
     }
 
     public static void SetDestinationVolume(string destinationVolume)
@@ -84,8 +90,11 @@ class CopyUniqueFile
         try
         {
             string destDirPath = Path.GetDirectoryName(destFilePath);
-            Directory.CreateDirectory(destDirPath);
-            File.Copy(sourceFilePath, destFilePath, false);
+            if (copyFiles)
+            {
+                Directory.CreateDirectory(destDirPath);
+                File.Copy(sourceFilePath, destFilePath, false);
+            }
 
             destinationFilePath = destFilePath;
         }
