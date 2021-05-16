@@ -208,7 +208,7 @@ public class FileUtil
             File.Delete(filePath);
             return true;
         }
-        catch
+        catch (Exception e)
         {
             return false;
         }
