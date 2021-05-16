@@ -17,9 +17,10 @@ namespace DeDupScanner
         static int numThreadsSolidStateDrive = hardwareThreads; // 1; // for testing // 
         static int numThreadsRotatingDrive = Math.Min(hardwareThreads, 3);  // 3 threads arrived at by observation on several rotating drives (internal and USB)
         static int numThreads;
+
         private static FileDB fileDB;
 
-        private static string destinationVolume = "F:";
+        private static string destinationVolume = "D:";
 
         [STAThreadAttribute]
         public static void Main(string[] args)
@@ -44,7 +45,7 @@ namespace DeDupScanner
             string input = Console.ReadLine();
             if (input != String.Empty)
                 destinationVolume = input;
-            if ((destinationVolume.Length != 2) || (destinationVolume[1] != ':'))
+            if ((destinationVolume.Length != 2) || (destinationVolume[1] != ':') || (!FileUtil.TestWriteVolume(destinationVolume)))
             {
                 ConsoleUtil.WriteLineColor(String.Format("Error: destination volume of '{0}' is not valid", destinationVolume),
                     ConsoleColor.Red);

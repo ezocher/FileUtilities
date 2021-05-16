@@ -194,6 +194,25 @@ public class FileUtil
         else
             return null;
     }
+
+    // Returns true if successfully written, false if there's an exception
+    public static bool TestWriteVolume(string volume)
+    {
+        // Assume this is a safe name
+        string filePath = volume + Path.DirectorySeparatorChar + "testwritevolume.temp";
+        try
+        {
+            StreamWriter testFile = new StreamWriter(filePath, false);  // append = true
+            testFile.WriteLine(filePath);   // Write something, anything
+            testFile.Close();
+            File.Delete(filePath);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
 
 public class SampleFileUtil
