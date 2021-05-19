@@ -105,7 +105,9 @@
 .clang-format		# Clang compiler
 
 [Fonts]
+.pfb , .pfm , .afm		# Adobe Type 1 - deprecated
 .ttf
+.otf
 
 [VR]
 .glb				# Oculus user-generated content
