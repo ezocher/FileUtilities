@@ -162,7 +162,8 @@ namespace DeDupScanner
             catch (Exception e)
             {
                 Error("Directory (Unexpected REF1): " + dirInfo.FullName, e.ToString() + "\n");
-                // Unexpected exception, keep trying
+                directoryAccessException = true;
+                exceptionMessage = "DirectoryExceptionUnexpectedREF1";
             }
 
             // If we've had an UnauthorizedAccessException on this directory there's no need to try accessing it again as it will fail again
