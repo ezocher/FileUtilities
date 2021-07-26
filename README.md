@@ -7,3 +7,8 @@ DeDupScanner | A multi-threaded file scanner which computes and stores unique fi
 DeDupScanner/Util | ConfigFileUtil.cs and ConfigSettings.cs - A simple config file parser meeting the needs of the apps in this project - Documented-ish in FileUtilities/Docs/ConfigFiles.md; Sample/test files in FileUtilities/Config - **Working**
 ExplorationsSpecialFolders | Project for file system framework tests; Lists special folders on Windows - **Inactive**
 PDFValidator | Scans headers of all PDFs in a drive/folder, reports PDF versions of good headers, detects (badly) corrupted PDFs - **Working** _(Someday TBD: Re-do this algorithm in Powershell)_
+
+
+## TBD
+
+* Build and test Blake3.NET (https://github.com/xoofx/Blake3.NET) and compare with existing SHA1-based implementation of CUF and DDS.
