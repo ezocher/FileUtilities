@@ -54,7 +54,12 @@ class CopyUniqueFile
 
     public static void SetSourcePathRoot(string sourceRoot)
     {
-        sourcePathRootLength = sourceRoot.Length;
+        // If the source path is a volume root directory, e.g. "E:\", then set the length to 2 since the root we want is the
+        // full directory name without the slash, which in this case is "E:"
+        if (sourceRoot.Length == 3)
+            sourcePathRootLength = 2;
+        else
+            sourcePathRootLength = sourceRoot.Length;
     }
 
     public static void SetSourceBaseName(string name)

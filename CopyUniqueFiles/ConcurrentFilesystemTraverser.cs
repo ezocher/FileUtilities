@@ -235,7 +235,9 @@ namespace DeDupScanner
             }
 
             // Exclude extensions in skip list
-            if ( ExtensionSkipList.Contains(fi.Extension.ToLower()) )
+            string extension = (fi.Extension.Length == 0) ? "." : fi.Extension;     // Change empty extension to "." for consistency with non-empty
+                                                                                    //  extensions, e.g. ".jpg". This allows it to be matched
+            if ( ExtensionSkipList.Contains(extension.ToLower()) )
             {
                 reason = "Extension in skip list";
                 return false;
