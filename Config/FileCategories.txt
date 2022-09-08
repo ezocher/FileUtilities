@@ -34,6 +34,8 @@
 .htm, .html
 .mht
 .chm
+.css
+.svg
 
 [Bitmaps]
 .gif, .png, .webp
@@ -81,6 +83,7 @@
 .md, .txt			# Here or in Docs and Books?
 .c, .cpp
 .a
+.bas
 .cs
 .csproj, .sln, .config
 .resx				# .NET resource files (XML)

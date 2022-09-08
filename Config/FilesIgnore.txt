@@ -10,6 +10,9 @@
 .log
 .bak, .wbk
 
+# files with no extension
+.
+
 # Development and binaries, Androidmdb
 .aar, .apk
 # .a 			# would like to exclude Android .a, but .a is also used for some assembly language source code

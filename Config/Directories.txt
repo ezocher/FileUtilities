@@ -42,15 +42,22 @@ $UserProfile$\OneDrive\Documents\Microsoft Hardware
 \Test Directory - Bad Sectors
 
 # Dev etc.
+$UserProfile$\.android
+$UserProfile$\.config
 $UserProfile$\.dnx
 $UserProfile$\.dotnet
 $UserProfile$\.gradle
 $UserProfile$\.nuget
+$UserProfile$\.rustup
 $UserProfile$\.templateengine
+$UserProfile$\.vscode
+$UserProfile$\Downloads
+$UserProfile$\Favorites
 $UserProfile$\Tracing					# Skype and MS Teams
 $UserProfile$\Ansel						# GeForce Experience screen shots and ?
 
 # Adobe Creative Cloud app settings
+$UserProfile$\Creative Cloud Files
 $UserProfile$\Documents\Adobe
 $UserProfile$\OneDrive\Documents\Adobe
 
