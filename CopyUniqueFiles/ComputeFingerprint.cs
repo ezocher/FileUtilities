@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 namespace DeDupScanner
 {
     // SHA1 chosen over MD5 (160 bits vs. 128 bits)
+
+    // Consider TBD: Implement and test performance with BLAKE3.NET hash (256 bits)
+    //  Pros:
+    //      * Much faster than SHA256
+    //  Cons:
+    //      * Maybe not a big win because scanning is IO bound on most computers
+    //      * Longer hashes will enlarge all report/DB files
+
     class ComputeFingerprint
     {
         public const int ReadBufferSize = 512 * 1024;
