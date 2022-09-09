@@ -31,11 +31,13 @@
 
 [Web]
 .url
+.website
 .htm, .html
 .mht
-.chm
+.chm, .chw
 .css
 .svg
+.hbs		# Handlebars source
 
 [Bitmaps]
 .gif, .png, .webp
@@ -75,26 +77,48 @@
 
 [Creative]
 .ai
+.ase				# Adobe Swatch Exchange
 .psd, .psb			# Photoshop
 .abr
 .epr, .olp			# Premiere and Media encoder
 
 [Code]				# Source code and related docs and files
 .md, .txt			# Here or in Docs and Books?
-.c, .cpp
+.c, .h, .cpp		# C and C++
+.mak
+.m					# Objective-C
+.dsp, .dsw, .ncb, .opt, .plg	# VC++ 6
+.rc
+.map				# Microsoft linker map file
 .a
 .bas
 .cs
-.csproj, .sln, .config
+.scs				# C# snippet
+.csproj, .sln, .config, .vdproj
 .resx				# .NET resource files (XML)
 .snk				# .NET strong name key
 .editorconfig		# For ??
 .dat, .res			# Testing, ?Unit
-.xml				# Sometimes code/data, sometimes app settings
+.xml				# XML - sometimes code/data, sometimes app settings
+.xsd, .xsx
 .linq
 .nuspec
+.awk
+.l, .y				# Lex, Yacc
 .props				# Sometimes source, sometimes generated (nuget)
-.js, .json
+.java				# Java
+.js, .json, .ts		# JavaScript and TypeScript
+.download			# Found some .js.download files - keep with .js
+.pl					# Perl
+.py					# Python
+.pyc, .pyd, .pyo
+.ipynb				# Jupyter notebook
+.pas, .dpr			# Pascal / Object Pascal / Delphi
+.aspx				# ASP.NET
+.asax, .asmx, .ascx
+.webinfo, .vsdisco, .disco, .wsdl
+.dwp				# SharePoint Webpart Exchange File
+
 .gitattributes, .gitignore												# git
 .meta, .tga, .fbx, .mat, .prefab, .shader, .unity, .pfx, .asset			# Unity
 .ico
@@ -102,6 +126,7 @@
 .ps1				# PowerShell
 .sh
 .bat, .cmd, .cake, .cmake
+
 # Unity
 .controller			
 .cginc				# Shader include file
@@ -111,13 +136,18 @@
 .pfb , .pfm , .afm		# Adobe Type 1 - deprecated
 .ttf
 .otf
+.eot, .woff, .woff2		# Web fonts
 
 [VR]
 .glb				# Oculus user-generated content
 
 [Settings]
 .ini				# Do these need to be saved? If not, add to FilesIgnore.txt
+.settings
 
 [Archives]
 .zip, .rar, .gz
+.tar, .bz2
+.cab
+.uu					# Unix uuencode/uudecode
 

@@ -4,14 +4,16 @@
 [Extensions Ignore]
 .dll, .exe, .bin
 .o
+.out				# Unix executable
 .msi
 .tmp
-.jar
+.jar, .class
 .log
 .bak, .wbk
 
-# files with no extension
-.
+# files with no extension - many of these are strange temp files, but there are many important text files that also have no extension
+#	common examples: README, LICENSE, Copyright, INSTALL, Manifest, Makefile
+#  .
 
 # Development and binaries, Androidmdb
 .aar, .apk
@@ -21,10 +23,12 @@
 .pack, .idx
 .gitconfig
 
-# Development, Unity
+# Development - Visual Studio, VS Code, Unity, etc.
 .asmdef
 .pdb, .cache, .manifest, .projdata1, .suo
 # App.config is needed by Visual Studio, don't exclude .config
+.vspscc, .scc							# non-Git source code management
+.rpt									# Crystal Reports binary
 .buildreport
 .user									# .csproj.user files
 .targets								# nuget
