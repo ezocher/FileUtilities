@@ -43,12 +43,17 @@ $UserProfile$\OneDrive\Documents\Microsoft Hardware
 
 # Dev etc.
 $UserProfile$\.android
+$UserProfile$\.AndroidStudio3.4
+$UserProfile$\.cargo
 $UserProfile$\.config
 $UserProfile$\.dnx
 $UserProfile$\.dotnet
 $UserProfile$\.gradle
+$UserProfile$\.ms-ad
 $UserProfile$\.nuget
+$UserProfile$\.omnisharp
 $UserProfile$\.rustup
+$UserProfile$\.ssh
 $UserProfile$\.templateengine
 $UserProfile$\.vscode
 $UserProfile$\Downloads
