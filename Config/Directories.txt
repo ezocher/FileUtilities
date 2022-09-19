@@ -74,11 +74,13 @@ $UserProfile$\OneDrive\Documents\Adobe
 \Users\OVRLibraryService			# Oculus Rift
 \Users\Public
 
-# Other users specific to my machines
+# Exclude other users specific to my machines
+\Users\Beach House Guest
 \Users\ellen
 \Users\guest_wevfv1k
 \Users\robil
 \Users\zoche
+
 
 
 
