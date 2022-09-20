@@ -58,7 +58,7 @@
 # .dng = Adobe Digital Negative
 
 [Music]		# Music, Sound, Playlist, and Podcast formats
-.wav
+# .wav		# Used for sound effects and music in code
 .au
 .mp3
 .aac
@@ -85,7 +85,7 @@
 
 [Code]				# Source code and related docs and files
 .md, .txt			# Here or in Docs and Books?
-.c, .h, .cpp		# C and C++
+.c, .h, .cpp			# C and C++
 .mak
 .m					# Objective-C
 .dsp, .dsw, .ncb, .opt, .plg	# VC++ 6
@@ -132,6 +132,9 @@
 .controller			
 .cginc				# Shader include file
 .clang-format		# Clang compiler
+
+# UI sounds, game sounds, music
+.wav
 
 [Fonts]
 .pfb , .pfm , .afm		# Adobe Type 1 - deprecated
