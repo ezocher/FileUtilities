@@ -37,17 +37,18 @@
 .chm, .chw
 .css
 .svg
-.hbs		# Handlebars source
+.gif					# Sometimes web, sometimes code
+.hbs					# Handlebars source
 
-[Bitmaps]
-.gif, .png, .webp
 
 [Photos]	# Photo and image formats
+.png					# Sometimes web, sometimes photos, sometimes code (UI)
+.webp					# Sometimes web, sometimes photos
 .jpg, .jpeg, .jpe, .jif, .jfif, .jfi	# JPEG
 .jp2, .j2k,  .jpf, .jpx, .jpm,  .mj2	# JPEG 2000
 .jxr, .hdp, .wdp                      	# JPEG XR aka HD Photo
 .heif, .heic                           	# HEIF
-.tif, .tiff								# TIFF		
+.tif, .tiff				# TIFF		
 
 # Raw image formats - File extensions from https://en.wikipedia.org/wiki/Raw_image_format
 .3fr, .ari, .arw, .bay, .crw, .cr2, .cr3, .cap, .data, .dcs, .dcr, .dng, .drf, .eip, .erf, .fff, .gpr
