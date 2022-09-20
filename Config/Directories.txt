@@ -49,6 +49,7 @@ $UserProfile$\.config
 $UserProfile$\.dnx
 $UserProfile$\.dotnet
 $UserProfile$\.gradle
+$UserProfile$\.m2
 $UserProfile$\.ms-ad
 $UserProfile$\.nuget
 $UserProfile$\.omnisharp
@@ -60,6 +61,7 @@ $UserProfile$\Downloads
 $UserProfile$\Favorites
 $UserProfile$\Tracing					# Skype and MS Teams
 $UserProfile$\Ansel						# GeForce Experience screen shots and ?
+$UserProfile$\Zotero
 
 # Adobe Creative Cloud app settings
 $UserProfile$\Creative Cloud Files
