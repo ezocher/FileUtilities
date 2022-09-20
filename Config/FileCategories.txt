@@ -13,8 +13,8 @@
 
 
 [Office]
-.doc, .docx							# Microsoft Word Documents (here or in Docs and Books?)
-.wps								# Microsoft Works
+.doc, .docx				# Microsoft Word Documents (here or in Docs and Books?)
+.wps					# Microsoft Works
 .dot, .docm, .dotx, .dotm, .docb	# Microsoft Word templates and macros
 .xls, .csv, .tsv, .xlt, .xlm, .xlw
 .xlsx, .xlsm, .xltx, .xltm
@@ -58,7 +58,7 @@
 # .dng = Adobe Digital Negative
 
 [Music]		# Music, Sound, Playlist, and Podcast formats
-# .wav		# Used for sound effects and music in code
+## .wav		# Used for sound effects and music in code - moved to Code category
 .au
 .mp3
 .aac
@@ -83,11 +83,13 @@
 .abr
 .epr, .olp			# Premiere and Media encoder
 
-[Code]				# Source code and related docs and files
+[Code]	# Source code and related docs and files and development tool support/config files
 .md, .txt			# Here or in Docs and Books?
+.wav				# UI sounds, game sounds, music
+
 .c, .h, .cpp			# C and C++
 .mak
-.m					# Objective-C
+.m				# Objective-C
 .dsp, .dsw, .ncb, .opt, .plg	# VC++ 6
 .rc
 .map				# Microsoft linker map file
@@ -132,9 +134,6 @@
 .controller			
 .cginc				# Shader include file
 .clang-format		# Clang compiler
-
-# UI sounds, game sounds, music
-.wav
 
 [Fonts]
 .pfb , .pfm , .afm		# Adobe Type 1 - deprecated
