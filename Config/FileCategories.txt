@@ -22,9 +22,12 @@
 .pptx, .pptm, .potx, .potm, .ppam, .ppsx, .ppsm, .sldx, .sldm
 .one, .onetoc, .onetoc2, .onepkg
 .ost, .pst, .eml, .msg
+.wmf, .emf, .wmz, .emz
 .pub
 .vsd, .vdx, .vsdx, .vsdm, .vssx		# Microsoft Visio
 # TODO Microsoft Access extensions
+.odt, .ods, .odp, .odg					# OpenDocument formats
+.fodt, .fods, .fodp, .fodg
 
 [Shortcuts]
 .lnk
@@ -39,6 +42,7 @@
 .svg
 .gif					# Sometimes web, sometimes code
 .hbs					# Handlebars source
+.swf					# Flash
 
 
 [Photos]	# Photo and image formats
@@ -95,7 +99,7 @@
 .
 
 .c, .h, .cpp		# C and C++
-.lib, .pch
+.lib, .pch, .ipch
 .mak, .make
 .m					# Objective-C
 .dsp, .dsw, .ncb, .opt, .plg	# VC++ 6
@@ -107,15 +111,17 @@
 .cs
 .scs				# C# snippet
 .csproj, .vcproj, .vcxproj, .sln, .config, .vdproj
+.vcxitems
 .resx				# .NET resource files (XML)
+.resources
 .xaml
 .snk				# .NET strong name key
-.sdf				# Microsoft SQL Server Compact (SQL CE) database
+
 .editorconfig		# For ??
 .dat, .res			# Testing, ?Unit
 .xml				# XML - sometimes code/data, sometimes app settings
-.xsd, .xsx
-.yml
+.xsd, .xsx, .xslt
+.yml, .yaml
 .linq
 .nuspec
 .nupkg
@@ -139,17 +145,25 @@
 .cob
 .p, .r, .inc, .t	# Object Pascal and MacApp
 
-.gitattributes, .gitignore												# git
+.gitattributes, .gitignore	# git
+.nojekyll
+
+.sql				# SQL code
+.sdf				# Microsoft SQL Server Compact (SQL CE) database
+# SQLite
+.sqlite, .sqlite3, .db, .db3, .s3db, .sl3
 
 .ico
-.bmp
+.bmp, .dib
 .ps1				# PowerShell
 .sh
 .bat, .cmd, .cake, .cmake
+.key
 
 # Unity
 .meta, .tga, .fbx, .mat, .prefab, .shader, .unity, .pfx
 .asset, .assets
+.userprefs
 .unitypackage
 .controller			
 .cginc				# Shader include file
