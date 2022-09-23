@@ -80,6 +80,8 @@ class CopyUniqueFile
         if (divideFilesIntoCategories)
         {
             string sourceExtension = Path.GetExtension(sourceFilePath).ToLower();
+            if (sourceExtension.Length == 0)        // Change empty extension to "." for consistency with non-empty
+                sourceExtension = ".";              //  extensions, e.g. ".jpg". This allows it to be matched to a category
 
             if (!FileExtensionToCategoryMap.TryGetValue(sourceExtension, out category))
                 category = unknownCategoryName;
