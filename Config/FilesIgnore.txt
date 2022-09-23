@@ -35,7 +35,8 @@
 .targets								# nuget
 
 # Unity Library\ folder
-	.db, .dwlt							# ShaderCache.db
+#	.db, .dwlt							# ShaderCache.db - can't exclude .db because of SQLite
+	.dwlt
 	.info								# metadata
 	.mdb								# PlayerDataCache
 	.pref								# Timeline
@@ -44,7 +45,8 @@
 	.stamp
 
 .dtbcache								# Visual Studio
-.ide, .ide-shm, .ide-wal, .sqlite, .lock	# Visual Studio sqllite3 files
+.ide, .ide-shm, .ide-wal, .lock 		# Visual Studio sqllite3 files
+# .sqlite								# Don't exclude all SQLite DBs
 
 
 
