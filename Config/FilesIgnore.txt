@@ -26,8 +26,9 @@
 # Development - Visual Studio, VS Code, Unity, etc.
 .asmdef
 .pdb, .cache, .manifest, .projdata1, .suo
+.obj
 # App.config is needed by Visual Studio, don't exclude .config
-.vspscc, .scc							# non-Git source code management
+.vspscc, .vssscc, .scc					# non-Git source code management
 .rpt									# Crystal Reports binary
 .buildreport
 .user									# .csproj.user files
