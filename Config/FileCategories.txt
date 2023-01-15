@@ -21,10 +21,19 @@
 .ppt, .pps, .pot
 .pptx, .pptm, .potx, .potm, .ppam, .ppsx, .ppsm, .sldx, .sldm
 .one, .onetoc, .onetoc2, .onepkg
-.ost, .pst, .eml
+.ost, .pst
+.eml, .msg
+.vcf, .vcard						# vCard
+.ical, .ics, .ifb, .icalendar		# iCalendar
+
 .pub
 .vsd, .vdx, .vsdx, .vsdm, .vssx		# Microsoft Visio
-# TODO Microsoft Access extensions
+# TBD Microsoft Access extensions
+
+# OpenDocument formats extensions (OpenOffice and many other apps)
+.odt, .fodt, .ods, .fods, .odp, .fodp
+.odg, .fodg, .odf
+
 
 [Shortcuts]
 .lnk
@@ -38,9 +47,12 @@
 .css
 .svg
 .hbs		# Handlebars source
+.swf		# Adobe Flash
+.download	# For .js.download files
 
-[Bitmaps]
+[Graphics]
 .gif, .png, .webp
+.wmf
 
 [Photos]	# Photo and image formats
 .jpg, .jpeg, .jpe, .jif, .jfif, .jfi	# JPEG
@@ -56,6 +68,8 @@
 # .arw = Sony Raw, .nef = Nikon Raw, .crw/cr2/cr3 = Canon Raw, .gpr = GoPro
 # .dng = Adobe Digital Negative
 
+.mie	# EXIF Meta-information Encapsulation format
+
 [Music]		# Music, Sound, Playlist, and Podcast formats
 .wav
 .au
@@ -65,6 +79,7 @@
 .wma
 .m4b		# AAC audio book
 .m3u, .pls, .vlc, .wpl, .zpl, .xspf
+.amc		# Index database for Advanced MP3 Catalog Pro
 
 [Video]
 .mp4, .m4v
@@ -95,6 +110,7 @@
 .cs
 .scs				# C# snippet
 .csproj, .sln, .config, .vdproj
+.resources
 .resx				# .NET resource files (XML)
 .snk				# .NET strong name key
 .editorconfig		# For ??
@@ -106,17 +122,21 @@
 .awk
 .l, .y				# Lex, Yacc
 .props				# Sometimes source, sometimes generated (nuget)
-.java				# Java
+.java, .jsp			# Java
 .js, .json, .ts		# JavaScript and TypeScript
-.download			# Found some .js.download files - keep with .js
 .pl					# Perl
 .py					# Python
 .pyc, .pyd, .pyo
 .ipynb				# Jupyter notebook
 .pas, .dpr			# Pascal / Object Pascal / Delphi
+.sql
+.pde				# Processing
+.rds, .rdx, .rdb	# R
+
 .aspx				# ASP.NET
 .asax, .asmx, .ascx
 .webinfo, .vsdisco, .disco, .wsdl
+.razor, .cshtml
 .dwp				# SharePoint Webpart Exchange File
 
 .gitattributes, .gitignore												# git
@@ -145,9 +165,20 @@
 .ini				# Do these need to be saved? If not, add to FilesIgnore.txt
 .settings
 
+[Security]
+.kdbx
+
+[OS]
+.efi
+.iso, .cso			# ISO
+.dmg				# Apple
+
 [Archives]
 .zip, .rar, .gz
 .tar, .bz2
 .cab
 .uu					# Unix uuencode/uudecode
+
+[Misc]
+.tax, .tax2017		# TurboTax
 

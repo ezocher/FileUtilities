@@ -51,7 +51,9 @@ $UserProfile$\.nuget
 $UserProfile$\.rustup
 $UserProfile$\.templateengine
 $UserProfile$\.vscode
-$UserProfile$\Downloads
+
+# App folders and misc.
+# $UserProfile$\Downloads
 $UserProfile$\Favorites
 $UserProfile$\Tracing					# Skype and MS Teams
 $UserProfile$\Ansel						# GeForce Experience screen shots and ?

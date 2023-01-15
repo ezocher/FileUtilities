@@ -11,7 +11,12 @@
 .log
 .bak, .wbk
 
-# files with no extension - many of these are strange temp files, but there are many important text files that also have no extension
+# Installers, drivers, etc.
+.pkg
+.sys, .cat, .hlp
+.vsix
+
+# Files with no extension - many of these are strange temp files, but there are many important text files that also have no extension
 #	common examples: README, LICENSE, Copyright, INSTALL, Manifest, Makefile
 #  .
 
@@ -42,7 +47,7 @@
 	.resS								# PlayerDataCache
 	.stamp
 
-.dtbcache								# Visual Studio
+.dtbcache, .v2								# Visual Studio
 .ide, .ide-shm, .ide-wal, .sqlite, .lock	# Visual Studio sqllite3 files
 
 
