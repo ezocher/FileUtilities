@@ -11,12 +11,7 @@
 .log
 .bak, .wbk
 
-# Installers, drivers, etc.
-.pkg
-.sys, .cat, .hlp
-.vsix
-
-# Files with no extension - many of these are strange temp files, but there are many important text files that also have no extension
+# files with no extension - many of these are strange temp files, but there are many important text files that also have no extension
 #	common examples: README, LICENSE, Copyright, INSTALL, Manifest, Makefile
 #  .
 
@@ -31,15 +26,17 @@
 # Development - Visual Studio, VS Code, Unity, etc.
 .asmdef
 .pdb, .cache, .manifest, .projdata1, .suo
+.obj
 # App.config is needed by Visual Studio, don't exclude .config
-.vspscc, .scc							# non-Git source code management
+.vspscc, .vssscc, .scc					# non-Git source code management
 .rpt									# Crystal Reports binary
 .buildreport
 .user									# .csproj.user files
 .targets								# nuget
 
 # Unity Library\ folder
-	.db, .dwlt							# ShaderCache.db
+#	.db, .dwlt							# ShaderCache.db - can't exclude .db because of SQLite
+	.dwlt
 	.info								# metadata
 	.mdb								# PlayerDataCache
 	.pref								# Timeline
@@ -47,8 +44,9 @@
 	.resS								# PlayerDataCache
 	.stamp
 
-.dtbcache, .v2								# Visual Studio
-.ide, .ide-shm, .ide-wal, .sqlite, .lock	# Visual Studio sqllite3 files
+.dtbcache								# Visual Studio
+.ide, .ide-shm, .ide-wal, .lock 		# Visual Studio sqllite3 files
+# .sqlite								# Don't exclude all SQLite DBs
 
 
 

@@ -59,7 +59,7 @@ class FileDB
         Console.WriteLine("   Total number of duplicates = {0:N0} (Total size = {1}, {2:F1}%)", numTotalDuplicateFiles,
             FileUtil.FormatByteSize(totalSizeOfDuplicates), 
             (float)totalSizeOfDuplicates / (float)(totalSizeOfUniqueFiles + totalSizeOfDuplicates) * 100.0f);
-        Console.WriteLine("\n   Most duplicates of a single file = {0:N0} ('{1}')\n", mostCopiesOfAFile, mostCopiesFilePath);
+        Console.WriteLine("\n   Most copies of a single file = {0:N0} ('{1}')\n", mostCopiesOfAFile, mostCopiesFilePath);
     }
 
     public void ResetFileStatistics()

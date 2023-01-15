@@ -13,27 +13,21 @@
 
 
 [Office]
-.doc, .docx							# Microsoft Word Documents (here or in Docs and Books?)
-.wps								# Microsoft Works
+.doc, .docx				# Microsoft Word Documents (here or in Docs and Books?)
+.wps					# Microsoft Works
 .dot, .docm, .dotx, .dotm, .docb	# Microsoft Word templates and macros
 .xls, .csv, .tsv, .xlt, .xlm, .xlw
 .xlsx, .xlsm, .xltx, .xltm
 .ppt, .pps, .pot
 .pptx, .pptm, .potx, .potm, .ppam, .ppsx, .ppsm, .sldx, .sldm
 .one, .onetoc, .onetoc2, .onepkg
-.ost, .pst
-.eml, .msg
-.vcf, .vcard						# vCard
-.ical, .ics, .ifb, .icalendar		# iCalendar
-
+.ost, .pst, .eml, .msg
+.wmf, .emf, .wmz, .emz
 .pub
 .vsd, .vdx, .vsdx, .vsdm, .vssx		# Microsoft Visio
-# TBD Microsoft Access extensions
-
-# OpenDocument formats extensions (OpenOffice and many other apps)
-.odt, .fodt, .ods, .fods, .odp, .fodp
-.odg, .fodg, .odf
-
+# TODO Microsoft Access extensions
+.odt, .ods, .odp, .odg					# OpenDocument formats
+.fodt, .fods, .fodp, .fodg
 
 [Shortcuts]
 .lnk
@@ -46,20 +40,19 @@
 .chm, .chw
 .css
 .svg
-.hbs		# Handlebars source
-.swf		# Adobe Flash
-.download	# For .js.download files
+.gif					# Sometimes web, sometimes code
+.hbs					# Handlebars source
+.swf					# Flash
 
-[Graphics]
-.gif, .png, .webp
-.wmf
 
 [Photos]	# Photo and image formats
+.png					# Sometimes web, sometimes photos, sometimes code (UI)
+.webp					# Sometimes web, sometimes photos
 .jpg, .jpeg, .jpe, .jif, .jfif, .jfi	# JPEG
 .jp2, .j2k,  .jpf, .jpx, .jpm,  .mj2	# JPEG 2000
 .jxr, .hdp, .wdp                      	# JPEG XR aka HD Photo
 .heif, .heic                           	# HEIF
-.tif, .tiff								# TIFF		
+.tif, .tiff				# TIFF		
 
 # Raw image formats - File extensions from https://en.wikipedia.org/wiki/Raw_image_format
 .3fr, .ari, .arw, .bay, .crw, .cr2, .cr3, .cap, .data, .dcs, .dcr, .dng, .drf, .eip, .erf, .fff, .gpr
@@ -68,10 +61,8 @@
 # .arw = Sony Raw, .nef = Nikon Raw, .crw/cr2/cr3 = Canon Raw, .gpr = GoPro
 # .dng = Adobe Digital Negative
 
-.mie	# EXIF Meta-information Encapsulation format
-
 [Music]		# Music, Sound, Playlist, and Podcast formats
-.wav
+## .wav		# Used for sound effects and music in code - moved to Code category
 .au
 .mp3
 .aac
@@ -79,7 +70,8 @@
 .wma
 .m4b		# AAC audio book
 .m3u, .pls, .vlc, .wpl, .zpl, .xspf
-.amc		# Index database for Advanced MP3 Catalog Pro
+.amc		# MP3 Catalog database
+
 
 [Video]
 .mp4, .m4v
@@ -96,61 +88,89 @@
 .psd, .psb			# Photoshop
 .abr
 .epr, .olp			# Premiere and Media encoder
+.tilt				# Google TiltBrush
 
-[Code]				# Source code and related docs and files
+[Code]	# Source code and related docs and files and development tool support/config files
 .md, .txt			# Here or in Docs and Books?
+.wav, .ogg			# UI sounds, game sounds, music
+
+# files with no extension - many of these are strange temp files, but there are many important text files that also have no extension
+#	common examples: README, LICENSE, Copyright, INSTALL, Manifest, Makefile
+.
+
 .c, .h, .cpp		# C and C++
-.mak
+.lib, .pch, .ipch
+.mak, .make
 .m					# Objective-C
 .dsp, .dsw, .ncb, .opt, .plg	# VC++ 6
 .rc
 .map				# Microsoft linker map file
-.a
-.bas
+.ilk				# Incremental linker file
+.a, .asm
+.bas, .vb
 .cs
 .scs				# C# snippet
-.csproj, .sln, .config, .vdproj
-.resources
+.csproj, .vcproj, .vcxproj, .sln, .config, .vdproj
+.vcxitems
 .resx				# .NET resource files (XML)
+.resources
+.xaml
 .snk				# .NET strong name key
+
 .editorconfig		# For ??
 .dat, .res			# Testing, ?Unit
 .xml				# XML - sometimes code/data, sometimes app settings
-.xsd, .xsx
+.xsd, .xsx, .xslt
+.yml, .yaml
 .linq
 .nuspec
+.nupkg
 .awk
 .l, .y				# Lex, Yacc
 .props				# Sometimes source, sometimes generated (nuget)
-.java, .jsp			# Java
+.java				# Java
+.pde				# Processing source code
+.vjp				# Visual J++
 .js, .json, .ts		# JavaScript and TypeScript
-.pl					# Perl
+.download			# Found some .js.download files - keep with .js
+.pl, .pm			# Perl
 .py					# Python
 .pyc, .pyd, .pyo
 .ipynb				# Jupyter notebook
 .pas, .dpr			# Pascal / Object Pascal / Delphi
-.sql
-.pde				# Processing
-.rds, .rdx, .rdb	# R
-
 .aspx				# ASP.NET
 .asax, .asmx, .ascx
 .webinfo, .vsdisco, .disco, .wsdl
-.razor, .cshtml
 .dwp				# SharePoint Webpart Exchange File
+.cob
+.p, .r, .inc, .t	# Object Pascal and MacApp
 
-.gitattributes, .gitignore												# git
-.meta, .tga, .fbx, .mat, .prefab, .shader, .unity, .pfx, .asset			# Unity
+.gitattributes, .gitignore	# git
+.nojekyll
+
+.sql				# SQL code
+.sdf				# Microsoft SQL Server Compact (SQL CE) database
+# SQLite
+.sqlite, .sqlite3, .db, .db3, .s3db, .sl3
+
 .ico
-.bmp
+.bmp, .dib
 .ps1				# PowerShell
 .sh
 .bat, .cmd, .cake, .cmake
+.key
 
 # Unity
+.meta, .tga, .fbx, .mat, .prefab, .shader, .unity, .pfx
+.asset, .assets
+.userprefs
+.unitypackage
 .controller			
 .cginc				# Shader include file
 .clang-format		# Clang compiler
+
+# WWise Sound Engine
+.amb, .akd, .bnk
 
 [Fonts]
 .pfb , .pfm , .afm		# Adobe Type 1 - deprecated
@@ -165,20 +185,14 @@
 .ini				# Do these need to be saved? If not, add to FilesIgnore.txt
 .settings
 
-[Security]
-.kdbx
-
-[OS]
-.efi
-.iso, .cso			# ISO
-.dmg				# Apple
-
 [Archives]
 .zip, .rar, .gz
 .tar, .bz2
 .cab
 .uu					# Unix uuencode/uudecode
 
-[Misc]
-.tax, .tax2017		# TurboTax
+[Application]
+# For app specific extensions not appropriate for other categories
+.kdbx
+.wpg				# Corel WordPerfect Graphic (WPG) format for vector and bitmap data
 

@@ -43,12 +43,18 @@ $UserProfile$\OneDrive\Documents\Microsoft Hardware
 
 # Dev etc.
 $UserProfile$\.android
+$UserProfile$\.AndroidStudio3.4
+$UserProfile$\.cargo
 $UserProfile$\.config
 $UserProfile$\.dnx
 $UserProfile$\.dotnet
 $UserProfile$\.gradle
+$UserProfile$\.m2
+$UserProfile$\.ms-ad
 $UserProfile$\.nuget
+$UserProfile$\.omnisharp
 $UserProfile$\.rustup
+$UserProfile$\.ssh
 $UserProfile$\.templateengine
 $UserProfile$\.vscode
 
@@ -57,6 +63,7 @@ $UserProfile$\.vscode
 $UserProfile$\Favorites
 $UserProfile$\Tracing					# Skype and MS Teams
 $UserProfile$\Ansel						# GeForce Experience screen shots and ?
+$UserProfile$\Zotero
 
 # Adobe Creative Cloud app settings
 $UserProfile$\Creative Cloud Files
@@ -71,11 +78,13 @@ $UserProfile$\OneDrive\Documents\Adobe
 \Users\OVRLibraryService			# Oculus Rift
 \Users\Public
 
-# Other users specific to my machines
+# Exclude other users specific to my machines
+\Users\Beach House Guest
 \Users\ellen
 \Users\guest_wevfv1k
 \Users\robil
 \Users\zoche
+
 
 
 
