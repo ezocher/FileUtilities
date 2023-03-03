@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 class LoadFileLists
 {
-    private const string BaseFileListsFolder = @"C:\FileDB\Base File Lists";
+    private const string OneDriveRootEnv = "OneDriveConsumer";
+    private const string BaseFileListsOneDriveFolder = @"Files and Storage\Base File Lists";
+
 
     private const string ListFileNameFilter = "* - File List.tsv";
 
@@ -16,6 +18,9 @@ class LoadFileLists
     {
         // Open directory with file lists and load them all
         FileInfo[] files;
+
+        string BaseFileListsFolder = 
+            Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), BaseFileListsOneDriveFolder);
 
         try
         {
