@@ -2,7 +2,7 @@
 # and ezocher/FileUtilities/FilesDB/UniqueFileCollector/
 
 [Extensions Ignore]
-.dll, .exe, .bin
+.dll, .exe, .bin, .ildll
 .o
 .out				# Unix executable
 .msi
