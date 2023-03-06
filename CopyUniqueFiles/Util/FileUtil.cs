@@ -196,10 +196,10 @@ public class FileUtil
     }
 
     // Returns true if successfully written, false if there's an exception
-    public static bool TestWriteVolume(string volume)
+    public static bool TestWritePath(string path)
     {
         // Assume this is a safe name
-        string filePath = volume + Path.DirectorySeparatorChar + "testwritevolume.temp";
+        string filePath = path + Path.DirectorySeparatorChar + "testwritevolume.temp";
         try
         {
             StreamWriter testFile = new StreamWriter(filePath, false);  // append = true

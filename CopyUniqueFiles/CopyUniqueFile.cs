@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 class CopyUniqueFile
 {
-    private static string destVolume;
+    private static string destPath;
     static string destBasePath;
     const string destRootPrefix = "uu-";
     private static int sourcePathRootLength;
@@ -47,9 +47,9 @@ class CopyUniqueFile
         Console.WriteLine("   Loaded {0} file extensions in {1} categories\n", FileExtensionToCategoryMap.Count, Categories.Count);
     }
 
-    public static void SetDestinationVolume(string destinationVolume)
+    public static void SetDestinationPath(string destinationPath)
     {
-        destVolume = destinationVolume;
+        destPath = destinationPath;
     }
 
     public static void SetSourcePathRoot(string sourceRoot)
@@ -64,7 +64,7 @@ class CopyUniqueFile
 
     public static void SetSourceBaseName(string name)
     {
-        destBasePath = destVolume + Path.DirectorySeparatorChar + destRootPrefix + name;
+        destBasePath = destPath + Path.DirectorySeparatorChar + destRootPrefix + name;
     }
 
     static void CopyExceptionMessage(string srcPath, string destPath, string exceptionMessage)

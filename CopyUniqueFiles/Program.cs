@@ -20,7 +20,7 @@ namespace DeDupScanner
 
         private static FileDB fileDB;
 
-        private static string destinationVolume = "F:";
+        private static string destinationVolume = "F:", destinationPath;
 
         [STAThreadAttribute]
         public static void Main(string[] args)
@@ -45,14 +45,21 @@ namespace DeDupScanner
             string input = Console.ReadLine();
             if (input != String.Empty)
                 destinationVolume = input;
-            if ((destinationVolume.Length != 2) || (destinationVolume[1] != ':') || (!FileUtil.TestWriteVolume(destinationVolume)))
+
+            // If the destination volume is C: then write results to the user's root directory since we can't write directly to C:\
+            if (destinationVolume.ToUpper() == "C:")
+                destinationPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            else
+                destinationPath = destinationVolume;
+
+            if ((destinationVolume.Length != 2) || (destinationVolume[1] != ':') || (!FileUtil.TestWritePath(destinationPath)))
             {
-                ConsoleUtil.WriteLineColor(String.Format("Error: destination volume of '{0}' is not valid", destinationVolume),
+                ConsoleUtil.WriteLineColor(String.Format("Error: destination volume of '{0}' is not valid", destinationPath),
                     ConsoleColor.Red);
                 ConsoleUtil.WaitForKeyPress();
                 return;
             }
-            CopyUniqueFile.SetDestinationVolume(destinationVolume);
+            CopyUniqueFile.SetDestinationPath(destinationPath);
 
             Console.Write("File list name is '{0}'? ", baseName);
             input = Console.ReadLine();
