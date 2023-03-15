@@ -1,5 +1,11 @@
 # Research and Notes
 
+## TODO: Update this doc
+
+## Copy Unique Files
+
+* TODO: Copy into categories with scanning off
+
 ## Known Files DB Maker
 
 * Keep DeDupScanner for intra-volume cleanup and cross-base-volumes cleanup
