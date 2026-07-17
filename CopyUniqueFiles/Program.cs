@@ -26,6 +26,9 @@ namespace DeDupScanner
         public static void Main(string[] args)
         {
             ConsoleUtil.InitConsoleSettings("CopyUniqueFiles - Under Development");
+            Console.WriteLine("Copy unique files and/or scan all files and generate reports");
+            Console.WriteLine("Base file lists are loaded from '{0}'", LoadFileLists.BaseFileListsFolderName());
+            Console.WriteLine();
 
             // ConfigFileUtil.DumpConfigFiles(Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), @"Repos\FileUtilities\Config\"));
 
@@ -41,7 +44,7 @@ namespace DeDupScanner
                 return;
             }
 
-            Console.Write("Destination Volume is '{0}'?", destinationVolume);
+            Console.Write("Destination Volume '{0}' (or enter new destination)?", destinationVolume);
             string input = Console.ReadLine();
             if (input != String.Empty)
                 destinationVolume = input;
@@ -75,13 +78,14 @@ namespace DeDupScanner
 
             bool copyFiles = ConsoleUtil.YesNoChoice("Copy files (Y|N)? ");
             if (copyFiles)
+            {
                 Console.WriteLine("   Copying unique files from '{0}' to {1}\n", scanRootDir, destinationVolume);
+                CopyUniqueFile.SetOptionDivideFilesIntoCategories(ConsoleUtil.YesNoChoice("Divide files into categories (Y|N)? "));
+            }   
             else
                 Console.WriteLine("   Scanning files and writing reports only\n");
 
             CopyUniqueFile.SetOptionCopyFiles(copyFiles);
-
-            CopyUniqueFile.SetOptionDivideFilesIntoCategories(ConsoleUtil.YesNoChoice("Divide files into categories (Y|N)? "));
 
             Console.Write("Run with {0} threads? ", numThreads);
             input = Console.ReadLine();

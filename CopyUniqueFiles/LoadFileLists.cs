@@ -14,13 +14,17 @@ class LoadFileLists
 
     private const string ListFileNameFilter = "* - File List.tsv";
 
+    public static string BaseFileListsFolderName()
+    {
+        return Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), BaseFileListsOneDriveFolder);
+    }
+
     public static void LoadBaseFileLists(FileDB db)
     {
         // Open directory with file lists and load them all
         FileInfo[] files;
 
-        string BaseFileListsFolder = 
-            Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), BaseFileListsOneDriveFolder);
+        string BaseFileListsFolder = BaseFileListsFolderName();
 
         try
         {

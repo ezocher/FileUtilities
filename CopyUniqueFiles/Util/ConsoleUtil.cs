@@ -49,15 +49,22 @@ class ConsoleUtil
         {
             Console.Write(prompt);
             string input = Console.ReadLine();
-            if (input.ToLower()[0] == 'y')
+            if (input.Length > 0)
             {
-                setting = true;
-                validChoice = true;
+                if (input.ToLower()[0] == 'y')
+                {
+                    setting = true;
+                    validChoice = true;
+                }
+                else if (input.ToLower()[0] == 'n')
+                {
+                    setting = false;
+                    validChoice = true;
+                }
             }
-            else if (input.ToLower()[0] == 'n')
+            else
             {
-                setting = false;
-                validChoice = true;
+                validChoice = false;
             }
         } while (!validChoice);
 
