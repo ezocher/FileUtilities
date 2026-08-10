@@ -16,7 +16,7 @@ namespace Explorations
         static void Main(string[] args)
         {
             string dir = SelectDirectory();
-            Console.WriteLine(dir);
+            Console.WriteLine("Selected directory = {0}", dir);
 
             Console.WriteLine("Processors = {0}", System.Environment.ProcessorCount);
 
