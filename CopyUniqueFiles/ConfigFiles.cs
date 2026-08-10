@@ -3,8 +3,10 @@ using System.IO;
 
 public class ConfigFiles
 {
-    const string configFolderPathUserRelative = @"Repos\FileUtilities\Config\";
-    
+    // const string configFolderPathUserRelative = @"Repos\FileUtilities\Config\";  // On Dell tower
+
+    const string configFolderPathUserRelative = @"OneDrive\Documents\GitHub\FileUtilities\Config\";  // On IdeaPad
+
     const string categoriesConfigFileName = "FileCategories.txt";
     const string directoriesConfigFileName = "Directories.txt";
     const string filesIgnoreFileName = "FilesIgnore.txt";

@@ -20,7 +20,7 @@ namespace DeDupScanner
 
         private static FileDB fileDB;
 
-        private static string destinationVolume = "F:", destinationPath;
+        private static string destinationVolume = "C:", destinationPath;
 
         [STAThreadAttribute]
         public static void Main(string[] args)
@@ -79,7 +79,7 @@ namespace DeDupScanner
             bool copyFiles = ConsoleUtil.YesNoChoice("Copy files (Y|N)? ");
             if (copyFiles)
             {
-                Console.WriteLine("   Copying unique files from '{0}' to {1}\n", scanRootDir, destinationVolume);
+                Console.WriteLine("   Copying unique files from '{0}' to {1}\n", scanRootDir, destinationPath);
                 CopyUniqueFile.SetOptionDivideFilesIntoCategories(ConsoleUtil.YesNoChoice("Divide files into categories (Y|N)? "));
             }   
             else

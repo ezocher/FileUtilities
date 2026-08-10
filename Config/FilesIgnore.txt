@@ -6,10 +6,11 @@
 .o
 .out				# Unix executable
 .msi
-.tmp
 .jar, .class
+.tmp
 .log
 .bak, .wbk
+
 
 # files with no extension - many of these are strange temp files, but there are many important text files that also have no extension
 #	common examples: README, LICENSE, Copyright, INSTALL, Manifest, Makefile
@@ -33,6 +34,7 @@
 .buildreport
 .user									# .csproj.user files
 .targets								# nuget
+.scache									# Shader cache
 
 # Unity Library\ folder
 #	.db, .dwlt							# ShaderCache.db - can't exclude .db because of SQLite
