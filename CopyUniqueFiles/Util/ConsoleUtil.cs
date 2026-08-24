@@ -18,6 +18,7 @@ class ConsoleUtil
 
     public static void InitConsoleSettings(string consoleWindowTitle)
     {
+        const char underlineCharacter = '=';
 
         Console.ForegroundColor = ConsoleColor.Green;
         Console.BackgroundColor = ConsoleColor.Black;
@@ -28,6 +29,9 @@ class ConsoleUtil
         Console.BufferHeight = largeBufferHeight;
         if (consoleWindowTitle != "")
             Console.Title = consoleWindowTitle;
+        Console.WriteLine(consoleWindowTitle);
+        Console.WriteLine(new string(underlineCharacter, consoleWindowTitle.Length));
+        Console.WriteLine();
     }
 
     public static void WaitForKeyPress()

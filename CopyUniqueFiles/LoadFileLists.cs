@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeDupScanner;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,13 +11,17 @@ class LoadFileLists
 {
     private const string OneDriveRootEnv = "OneDriveConsumer";
     private const string BaseFileListsOneDriveFolder = @"Files and Storage\Base File Lists";
+    private const string PhotosFileListsOneDriveFolder = @"Files and Storage\Photos File Lists";
 
 
     private const string ListFileNameFilter = "* - File List.tsv";
 
-    public static string BaseFileListsFolderName()
+    public static string BaseFileListsFolderPath()
     {
-        return Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), BaseFileListsOneDriveFolder);
+        if (Program.WhichApp == WhichApp.PhotoCollector)
+            return Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), PhotosFileListsOneDriveFolder);
+        else
+            return Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), BaseFileListsOneDriveFolder);
     }
 
     public static void LoadBaseFileLists(FileDB db)
@@ -24,7 +29,7 @@ class LoadFileLists
         // Open directory with file lists and load them all
         FileInfo[] files;
 
-        string BaseFileListsFolder = BaseFileListsFolderName();
+        string BaseFileListsFolder = BaseFileListsFolderPath();
 
         try
         {

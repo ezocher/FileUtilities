@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeDupScanner;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,9 +8,16 @@ using System.Threading.Tasks;
 
 class CopyUniqueFile
 {
-    private static string destPath;
+    // Unique/collected files are written to:
+    //      destSpecificPath wich is built starting with destPrefixPath + 
+    // 
+
+
+    private static string destPrefixPath;
     static string destBasePath;
-    const string destRootPrefix = "uu-";
+    const string destRootPrefix = "unq-";
+    const string photosRootFolder = "Collected Photos";
+    const string videosRootFolder = "Collected Videos";
     private static int sourcePathRootLength;
 
     private static bool divideFilesIntoCategories;
@@ -47,10 +55,28 @@ class CopyUniqueFile
         Console.WriteLine("   Loaded {0} file extensions in {1} categories\n", FileExtensionToCategoryMap.Count, Categories.Count);
     }
 
-    public static void SetDestinationPath(string destinationPath)
+    public static void SetDestinationPrefixPath(string destinationPrefixPath)
     {
-        destPath = destinationPath;
+        destPrefixPath = destinationPrefixPath;
     }
+
+    public static string DestinationRootPath(bool photo)
+    {
+        switch (Program.WhichApp)
+        {
+            case WhichApp.FingerprintDBMaker:
+                return "";
+            case WhichApp.UniqueFileCopier:
+                return Path.Combine(destPrefixPath, destRootPrefix + Program.baseName);
+            case WhichApp.PhotoCollector:
+                if (photo)
+                    return Path.Combine(destPrefixPath, photosRootFolder);
+                else
+                    return Path.Combine(destPrefixPath, videosRootFolder);
+        }
+        return "";
+    }
+
 
     public static void SetSourcePathRoot(string sourceRoot)
     {
@@ -64,7 +90,7 @@ class CopyUniqueFile
 
     public static void SetSourceBaseName(string name)
     {
-        destBasePath = destPath + Path.DirectorySeparatorChar + destRootPrefix + name;
+        destBasePath = destPrefixPath + Path.DirectorySeparatorChar + destRootPrefix + name;
     }
 
     static void CopyExceptionMessage(string srcPath, string destPath, string exceptionMessage)

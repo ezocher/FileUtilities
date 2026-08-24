@@ -210,6 +210,7 @@ public class FileUtil
         }
         catch (Exception e)
         {
+            _ = e;
             return false;
         }
     }
