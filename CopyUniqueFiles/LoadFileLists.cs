@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 class LoadFileLists
 {
     private const string OneDriveRootEnv = "OneDriveConsumer";
-    private const string BaseFileListsOneDriveFolder = @"Files and Storage\Base File Lists";
-    private const string PhotosFileListsOneDriveFolder = @"Files and Storage\Photos File Lists";
+    private const string BaseFileListsOneDriveFolder = @"Files and Storage\Base File DBs";
+    private const string PhotosFileListsOneDriveFolder = @"Files and Storage\Photos File DBs";
 
 
-    private const string ListFileNameFilter = "* - File List.tsv";
+    private const string ListFileNameFilter = "* - File DB.tsv";
 
     public static string BaseFileListsFolderPath()
     {

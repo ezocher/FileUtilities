@@ -33,7 +33,7 @@ namespace DeDupScanner
         //  * Unique File Copier
         //  * Photo Collector and Organizer
 
-        public static WhichApp WhichApp = WhichApp.PhotoCollector;
+        public static WhichApp WhichApp = WhichApp.UniqueFileCopier;
 
         public static string baseName;
 
@@ -75,9 +75,8 @@ namespace DeDupScanner
             ConsoleUtil.InitConsoleSettings(appName + " - Under Development");
             Console.WriteLine(appDescription);
 
-        // Base file databases
-            Console.WriteLine("Base file databases are loaded from '{0}'", LoadFileLists.BaseFileListsFolderPath());
-            Console.WriteLine();
+            string baseFileListsDirectory = LoadFileLists.BaseFileListsFolderPath();
+
 
         // Select scan target volume/directory and set basename
         //      basename is name of directory e.g. "Music" or machine + drive name e.g. "MyLap-Drive C"
@@ -93,7 +92,7 @@ namespace DeDupScanner
                 return;
             }
 
-        // Select destination volume for copied uniue files (not needed for FingerprintDBMaker)
+        // Select destination volume for copied unique files (not needed for FingerprintDBMaker)
             string input;
             if (Program.WhichApp != WhichApp.FingerprintDBMaker)
             {
@@ -142,7 +141,7 @@ namespace DeDupScanner
             ConsoleUtil.White();
             if (copyFiles)
             {
-                Console.WriteLine("   Copying unique files from '{0}' to {1}\n", scanRootDir, CopyUniqueFile.DestinationRootPath(true));
+                Console.WriteLine("\tCopying unique files from '{0}' to {1}\n", scanRootDir, CopyUniqueFile.DestinationRootPath(true));
                 if (Program.WhichApp == WhichApp.UniqueFileCopier)
                     CopyUniqueFile.SetOptionDivideFilesIntoCategories(ConsoleUtil.YesNoChoice("Divide files into categories (Y|N)? "));
                 else
@@ -160,9 +159,12 @@ namespace DeDupScanner
             if (Int32.TryParse(input, out i))
                 numThreads = i;
 
-            Console.WriteLine("\nCreating report files '{0} - Unique Files Copied/Duplicate Files.tsv'", baseName);
-            // Console.WriteLine("Read Buffer Size = {0}", FileUtil.FormatByteSize(ComputeFingerprint.ReadBufferSize));
-            Console.WriteLine("Running {0} simultaneous threads on {1} hardware threads\n", numThreads, hardwareThreads);
+            ConsoleUtil.White();
+            Console.WriteLine("\n\tCreating 4 report files '{0} - Unique/Duplicate/Excluded Files.tsv and Files DB.tsv'", baseName);
+            Console.WriteLine("\tRunning {0} simultaneous threads on {1} hardware threads", numThreads, hardwareThreads);
+            Console.WriteLine("\tBase file databases are loaded from '{0}'", baseFileListsDirectory);
+            Console.WriteLine();
+            ConsoleUtil.RestoreColors();
 
             // Load in-memory database of existing files to check against for uniques
             fileDB = new FileDB();
