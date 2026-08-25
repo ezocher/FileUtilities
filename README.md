@@ -8,6 +8,15 @@ DeDupScanner/Util | ConfigFileUtil.cs and ConfigSettings.cs - A simple config fi
 ExplorationsSpecialFolders | Project for file system framework tests; Lists special folders on Windows - **Inactive**
 PDFValidator | Scans headers of all PDFs in a drive/folder, reports PDF versions of good headers, detects (badly) corrupted PDFs - **Working** _(Someday TBD: Re-do this algorithm in Powershell)_
 
+## Next
+
+* Run single threaded photo scanner to test new code and review directory naming possibilities and file collecting strategy and identify any missing file extensions
+* Implement real multi-threaded scanner/collector with a "Would've" report but don't move any files
+* Implement saving newly created DBs in the correct places for all three apps
+
+## Use Photo Collector
+
+* With "finished" collector: start by moving intact special project folders and "best of" folders such as Photo Books and Calendars and then build starting DB (exclude "best of" collections from DB so that they get copied as part of their original full folders)
 
 ## TBD
 
