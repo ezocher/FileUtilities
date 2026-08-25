@@ -18,7 +18,7 @@ public class PhotoDateUtil
     // Returns the year the photo was taken, read from the EXIF DateTimeOriginal tag
     // (falling back to DateTimeDigitized, then the IFD0 DateTime tag).
     // Returns null if the file has no EXIF data or none of those tags are present.
-    public static int? GetYearTaken(string filePath)
+    public static int? ExtractMetadataYearTaken(string filePath)
     {
         IReadOnlyList<MetadataExtractor.Directory> directories;
         try
@@ -48,11 +48,13 @@ public class PhotoDateUtil
     }
 
     // Searches the directory portion of filePath (not the file name itself) for a 4 digit
-    // number between 1839 and the current year. Searches the root directory of the file
-    // first (level N), then each subdirectory in turn (level N-1, N-2, ...2, 1), and returns the
-    // first year found along with the level it was found at.
-    // So if a photo lives at ...\Vacations\2020\Summer 2020 Trip\img99.jpg it returns the 2020 and level 2,
-    // this enables the "Summer 2020 Trip" directory to be preserved in the copy.
+    // number between 1839 and the current year. Level 1 is the directory the file is in.
+    // Searches the root directory of the file first (level N), then each subdirectory in
+    // turn (level N-1, N-2, ...2, 1), and returns the first year found along with the level
+    // it was found at. So if a photo lives at ...\Vacations\2020\Summer 2020 Trip\img99.jpg
+    // it returns the 2020 and level 2. This enables the "Summer 2020 Trip" directory to be
+    // reserved in the copy.
+    //
     // Returns (null, null) if no such year is found anywhere in the path.
     public static (int? Year, int? Level) GetYearFromPath(string filePath)
     {
