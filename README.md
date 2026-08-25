@@ -3,7 +3,7 @@
 Project / Folder | Description & Status
 -----------------|---------------------
 Config | Configuration files (.txt) for file/directory exclusion lists and file extension exclusion list and extension map to file categories. Format documented-ish in Docs/ConfigFiles.md
-CopyUniqueFiles | [TBD: Rename] Main project -- .sln can build three different apps: * File Fingerprint Database Maker, * Unique File Copier, and * Photo Collector and Organizer. Apps share config files from project below for settings and for file/directory exclusion lists. Super hacky WinForms + Console UI - **Working, in active development**
+CopyUniqueFiles | [TBD: Rename] Main project -- .sln can build three different apps: File Fingerprint Database Maker; Unique File Copier; and Photo Collector and Organizer. Apps share config files from Config directory for settings and for file/directory exclusion lists. Super hacky WinForms + Console UI - **Working, in active development**
 CopyUniqueFiles/Util | ConfigFileUtil.cs and ConfigSettings.cs - A simple config file parser meeting the needs of the apps in this project - Documented-ish in Docs/ConfigFiles.md; Sample/test files in Config - **Working**
 DeDupScanner | **Superceded by CopyUniqueFiles**
 ExplorationsSpecialFolders | Project for file system framework tests; Lists special folders on Windows - **Inactive**
