@@ -12,7 +12,6 @@ class CopyUniqueFile
     //      destSpecificPath wich is built starting with destPrefixPath + 
     // 
 
-
     private static string destPrefixPath;
     static string destBasePath;
     const string destRootPrefix = "unq-";
@@ -20,7 +19,7 @@ class CopyUniqueFile
     const string videosRootFolder = "Collected Videos";
     private static int sourcePathRootLength;
 
-    private static bool divideFilesIntoCategories;
+    public static bool divideFilesIntoCategories;
     private static bool copyFiles;
     private static Dictionary<string, string> FileExtensionToCategoryMap;
     private const string unknownCategoryName = "Unknown";
@@ -28,10 +27,6 @@ class CopyUniqueFile
     public static void SetOptionDivideFilesIntoCategories(bool setting)
     {
         divideFilesIntoCategories = setting;
-        if (divideFilesIntoCategories)
-            LoadCategoryMap();
-        else
-            Console.WriteLine();
     }
 
     public static void SetOptionCopyFiles(bool setting)
@@ -39,10 +34,11 @@ class CopyUniqueFile
         copyFiles = setting;
     }
     
-    private static void LoadCategoryMap()
+    public static void LoadFileCategoryMap(bool reportPhotoVideoStats)
     {
         FileExtensionToCategoryMap = new Dictionary<string, string>();
         HashSet<string> Categories = new HashSet<string>();
+        int numPhotoExtensions = 0, numVideoExtensions = 0;
 
         ConfigSettings[] extensionList = ConfigFileUtil.LoadConfigFile(ConfigFiles.GetCategoriesFile());
 
@@ -50,9 +46,19 @@ class CopyUniqueFile
         {
             FileExtensionToCategoryMap.Add(settings.Value.ToLower(), settings.Category);
             Categories.Add(settings.Category);
+            if (reportPhotoVideoStats)
+            {
+                if (settings.Category == Program.photoFileExtensionsCategory) numPhotoExtensions++;
+                else if (settings.Category == Program.videoFileExtensionsCategory) numVideoExtensions++;
+            }
         }
 
-        Console.WriteLine("   Loaded {0} file extensions in {1} categories\n", FileExtensionToCategoryMap.Count, Categories.Count);
+        ConsoleUtil.Yellow();
+        if (reportPhotoVideoStats)
+            Console.WriteLine("\tLoaded {0} photo file extensions and {1} video file extensions\n", numPhotoExtensions, numVideoExtensions);
+        else
+            Console.WriteLine("\tLoaded {0} file extensions in {1} categories\n", FileExtensionToCategoryMap.Count, Categories.Count);
+        ConsoleUtil.RestoreColors();
     }
 
     public static void SetDestinationPrefixPath(string destinationPrefixPath)
@@ -99,6 +105,18 @@ class CopyUniqueFile
                 ConsoleColor.Red);
     }
 
+    // For Photo collector:
+    // Use File.Move() instead of .Copy() - this enables finding left behind things like like .pdf's of
+    // calendars or .docx that went with a trip
+    //
+    // NEVER overwrite existing files, instead use increasing (n) naming, e.g. IMG1000 (2).jpg
+
+    public static void MoveNoOverwrite(string sourceFilePath, out string destinationFilePath, out string category)
+    {
+        destinationFilePath = "";
+        category = "";
+    }
+
     public static void Copy(string sourceFilePath, out string destinationFilePath, out string category)
     {
         string destFilePath;
@@ -142,5 +160,9 @@ class CopyUniqueFile
         // System.IO.IOException: 'The file 'F: \uu - ZB - DriveC\Users\ezoch\Desktop\temp.html' already exists.'
         // System.IO.FileNotFoundException: 'Could not find file 'C:\Users\ezoch\Desktop\LEFT MON\!Left DT - XMas\California wildfires- Is Trump right when he blames forest managers- - BBC News'.'
     }
+
+    // For Photo collector:
+    // Use File.Move() instead of .Copy() - this enables finding left behind things like like .pdf's of
+    // calendars or .docx that went with a trip
 }
 

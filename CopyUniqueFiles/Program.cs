@@ -33,7 +33,7 @@ namespace DeDupScanner
         //  * Unique File Copier
         //  * Photo Collector and Organizer
 
-        public static WhichApp WhichApp = WhichApp.UniqueFileCopier;
+        public static WhichApp WhichApp = WhichApp.PhotoCollector;
 
         public static string baseName;
 
@@ -45,6 +45,9 @@ namespace DeDupScanner
         private static FileDB fileDB;
 
         private static string destinationVolume = "C:", destinationPrefixPath;
+
+        public static string photoFileExtensionsCategory = "Photo";
+        public static string videoFileExtensionsCategory = "Video";
 
         [STAThreadAttribute]
         public static void Main(string[] args)
@@ -143,7 +146,11 @@ namespace DeDupScanner
             {
                 Console.WriteLine("\tCopying unique files from '{0}' to {1}\n", scanRootDir, CopyUniqueFile.DestinationRootPath(true));
                 if (Program.WhichApp == WhichApp.UniqueFileCopier)
+                {
+                    ConsoleUtil.Green();
                     CopyUniqueFile.SetOptionDivideFilesIntoCategories(ConsoleUtil.YesNoChoice("Divide files into categories (Y|N)? "));
+                    ConsoleUtil.RestoreColors();
+                }
                 else
                     CopyUniqueFile.SetOptionDivideFilesIntoCategories(false);
             }   
@@ -151,6 +158,9 @@ namespace DeDupScanner
                 Console.WriteLine("   Scanning and fingerprinting all unique files in '{0}' and writing DB and reports\n", scanRootDir);
             ConsoleUtil.RestoreColors();
 
+            if (Program.WhichApp == WhichApp.PhotoCollector || CopyUniqueFile.divideFilesIntoCategories)
+                CopyUniqueFile.LoadFileCategoryMap(Program.WhichApp == WhichApp.PhotoCollector);
+                
             CopyUniqueFile.SetOptionCopyFiles(copyFiles);
 
             Console.Write("Run with {0} threads? ", numThreads);

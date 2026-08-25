@@ -45,7 +45,7 @@
 .swf					# Flash
 
 
-[Photos]	# Photo and image formats
+[Photo]	# Photo and image formats
 .png					# Sometimes web, sometimes photos, sometimes code (UI)
 .webp					# Sometimes web, sometimes photos
 .jpg, .jpeg, .jpe, .jif, .jfif, .jfi	# JPEG
