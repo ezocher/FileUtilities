@@ -91,7 +91,7 @@ namespace DeDupScanner
                 if (settings.Category == extensionsIgnoreCategory)
                     ExtensionSkipList.Add(settings.Value.ToLower());
 
-            if (Program.WhichApp == WhichApp.PhotoCollector)
+            if (AppSettings.WhichApp == App.PhotoCollector)
             {
                 // Also exclude non-photos/videos
                 extList = ConfigFileUtil.LoadConfigFile(categoryConfigFilePath);

@@ -18,7 +18,7 @@ class LoadFileDBs
 
     public static string BaseFileListsFolderPath()
     {
-        if (Program.WhichApp == WhichApp.PhotoCollector)
+        if (AppSettings.WhichApp == App.PhotoCollector)
             return Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), PhotosFileListsOneDriveFolder);
         else
             return Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), BaseFileListsOneDriveFolder);

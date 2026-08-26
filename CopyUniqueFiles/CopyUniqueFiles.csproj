@@ -50,6 +50,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExifLibrary, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ExifLibNet.2.1.4\lib\netstandard1.3\ExifLibrary.dll</HintPath>

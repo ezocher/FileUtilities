@@ -68,13 +68,13 @@ class CopyUniqueFile
 
     public static string DestinationRootPath(bool photo)
     {
-        switch (Program.WhichApp)
+        switch (AppSettings.WhichApp)
         {
-            case WhichApp.FingerprintDBMaker:
+            case App.FingerprintDBMaker:
                 return "";
-            case WhichApp.UniqueFileCopier:
+            case App.UniqueFileCopier:
                 return Path.Combine(destPrefixPath, destRootPrefix + Program.baseName);
-            case WhichApp.PhotoCollector:
+            case App.PhotoCollector:
                 if (photo)
                     return Path.Combine(destPrefixPath, photosRootFolder);
                 else

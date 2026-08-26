@@ -15,25 +15,18 @@ using System.Windows.Forms;
 
 namespace DeDupScanner
 {
-    public enum WhichApp
-    {
-        FingerprintDBMaker,
-        UniqueFileCopier,
-        PhotoCollector
-    }
+
 
     class Program
     {
-
         //----------------------------------------------------------------------------------------------------------------------------------------
-        //  This project can build three different related file management apps. Which app is being built is selected by the WhichApp enum.
+        //  This project can build three different related file management apps. Which app is being built is selected by the WhichApp setting
+        //      see AppSettings.cs
         //
         //  The tree apps are:
         //  * Fingerprint Database Maker
         //  * Unique File Copier
         //  * Photo Collector and Organizer
-
-        public static WhichApp WhichApp = WhichApp.PhotoCollector;
 
         public static string baseName;
 
@@ -58,21 +51,21 @@ namespace DeDupScanner
 
             AppSettings.LoadAppSettings(appSettingsFile);   // TODO: implement LoadAppSettings, move strings into AppSettings.txt
 
-            switch (WhichApp)
+            switch (AppSettings.WhichApp)
             {
-                case WhichApp.FingerprintDBMaker:
+                case App.FingerprintDBMaker:
                     appName = "Fingerprint Database Maker";
                     appDescription = "Fingerprints unique files in the target volume/directory and creates a DB file in ...";
                     operationDescription = "Fingerprinting unique files from";
                     break;
 
-                case WhichApp.UniqueFileCopier:
+                case App.UniqueFileCopier:
                     appName = "Unique File Copier";
                     appDescription = "Copies unique files found in the target volume/directory. Optionally organizes them into folders by file type";
                     operationDescription = "Copying unique files from";
                     break;
 
-                case WhichApp.PhotoCollector:
+                case App.PhotoCollector:
                     appName = "Photo Collector and Organizer";
                     appDescription = "Collects unique photos and videos and organizes them into folders by year taken";
                     operationDescription = "Collecting and organizing unique photos and videos from";
@@ -101,7 +94,7 @@ namespace DeDupScanner
 
         // Select destination volume for copied unique files (not needed for FingerprintDBMaker)
             string input;
-            if (Program.WhichApp != WhichApp.FingerprintDBMaker)
+            if (AppSettings.WhichApp != App.FingerprintDBMaker)
             {
                 Console.Write("Destination Volume '{0}' (or enter new destination)?", destinationVolume);
                 input = Console.ReadLine();
@@ -140,7 +133,7 @@ namespace DeDupScanner
                 numThreads = numThreadsRotatingDrive;
 
             bool copyFiles;
-            if (Program.WhichApp == WhichApp.FingerprintDBMaker)
+            if (AppSettings.WhichApp == App.FingerprintDBMaker)
                 copyFiles = false;
             else
                 copyFiles = true;
@@ -149,7 +142,7 @@ namespace DeDupScanner
             if (copyFiles)
             {
                 Console.WriteLine("\tCopying unique files from '{0}' to '{1}'\n", scanRootDir, CopyUniqueFile.DestinationRootPath(true));
-                if (Program.WhichApp == WhichApp.UniqueFileCopier)
+                if (AppSettings.WhichApp == App.UniqueFileCopier)
                 {
                     ConsoleUtil.Green();
                     CopyUniqueFile.SetOptionDivideFilesIntoCategories(ConsoleUtil.YesNoChoice("Divide files into categories (Y|N)? "));
@@ -162,8 +155,8 @@ namespace DeDupScanner
                 Console.WriteLine("   Scanning and fingerprinting all unique files in '{0}' and writing DB and reports\n", scanRootDir);
             ConsoleUtil.RestoreColors();
 
-            if (Program.WhichApp == WhichApp.PhotoCollector || CopyUniqueFile.divideFilesIntoCategories)
-                CopyUniqueFile.LoadFileCategoryMap(Program.WhichApp == WhichApp.PhotoCollector);
+            if (AppSettings.WhichApp == App.PhotoCollector || CopyUniqueFile.divideFilesIntoCategories)
+                CopyUniqueFile.LoadFileCategoryMap(AppSettings.WhichApp == App.PhotoCollector);
                 
             CopyUniqueFile.SetOptionCopyFiles(copyFiles);
 
