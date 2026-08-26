@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ExifLibrary;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 
@@ -45,6 +46,17 @@ public class PhotoDateUtil
             return dateTime.Year;
 
         return null;
+    }
+
+    // Writes dateTaken into the EXIF DateTimeOriginal tag of the file at filePath, using
+    // ExifLibrary (MetadataExtractor is read-only and cannot write tags). ExifLibrary edits
+    // the EXIF metadata segment directly rather than re-encoding the image, but it only
+    // supports JPEG and TIFF - not RAW formats like .arw or .cr2.
+    public static void WriteDateTaken(DateTime dateTaken, string filePath)
+    {
+        ImageFile imageFile = ImageFile.FromFile(filePath);
+        imageFile.Properties.Set(ExifTag.DateTimeOriginal, dateTaken);
+        imageFile.Save(filePath);
     }
 
     // Searches the directory portion of filePath (not the file name itself) for a 4 digit

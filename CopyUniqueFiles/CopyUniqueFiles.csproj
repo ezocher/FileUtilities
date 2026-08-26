@@ -51,6 +51,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExifLibrary, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ExifLibNet.2.1.4\lib\netstandard1.3\ExifLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="MetadataExtractor, Version=2.9.3.0, Culture=neutral, PublicKeyToken=b66b5ccaf776c301, processorArchitecture=MSIL">
       <HintPath>packages\MetadataExtractor.2.9.3\lib\netstandard2.0\MetadataExtractor.dll</HintPath>
     </Reference>
