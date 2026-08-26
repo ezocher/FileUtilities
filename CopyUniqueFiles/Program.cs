@@ -49,10 +49,14 @@ namespace DeDupScanner
         public static string photoFileExtensionsCategory = "Photo";
         public static string videoFileExtensionsCategory = "Video";
 
+        private static string appSettingsFile = @"Config\AppSettings.txt";
+
         [STAThreadAttribute]
         public static void Main(string[] args)
         {
             string appName = "", appDescription = "", operationDescription = "";
+
+            AppSettings.LoadAppSettings(appSettingsFile);   // TODO: implement LoadAppSettings, move strings into AppSettings.txt
 
             switch (WhichApp)
             {

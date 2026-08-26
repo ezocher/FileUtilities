@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="ComputeFingerprint.cs" />
     <Compile Include="ConcurrentFilesystemTraverser.cs" />
     <Compile Include="ConfigFiles.cs" />
@@ -124,8 +125,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Config\" />
+    <Content Include="Config\AppSettings.txt" />
+    <Content Include="Config\DirectoriesIgnore.txt" />
+    <Content Include="Config\FileCategoriesByExtension.txt" />
+    <Content Include="Config\FilesIgnoreByExtension.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
