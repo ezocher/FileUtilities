@@ -21,6 +21,8 @@ namespace DeDupScanner
         const string settingsCategory = "Settings";
         const string ignoreCategory = "Ignore";
         const string extensionsIgnoreCategory = "Extensions Ignore";
+        const string extensionsPhotoCategory = "Photo";
+        const string extensionsVideoCategory = "Video";
 
         public ConcurrentFilesystemTraverser(string rootDirectoryPath)
         {
@@ -32,7 +34,7 @@ namespace DeDupScanner
             directories.Push(Tuple.Create<DirectoryInfo, DirectoryFingerprint>(di, null));
 
             InitDirSkipList( rootDirectoryPath, ConfigFiles.GetDirectoriesFile() );
-            InitFileSkipList( rootDirectoryPath, ConfigFiles.GetFilesIgnoreFile() );
+            InitFileSkipList( rootDirectoryPath, ConfigFiles.GetFilesIgnoreFile(), ConfigFiles.GetCategoriesFile());
         }
 
         // The path list in the config file (Directories.txt) contains full paths of directories to skip. It may or may not
@@ -74,9 +76,12 @@ namespace DeDupScanner
 
         // The file extension list in the config file (FilesIgnore.txt) lists the extensions of files to be excluded from the scan
         // Extensions get converted to lower case before loading into this list and file extensions are lower-cased before comparing them
+        //
+        // For the PhotoCollector app, the file category list (FileCategories.txt) is also loaded and any extensions that are not in the
+        // Photo or Video categories are added to the skip list
         static HashSet<string> ExtensionSkipList;
 
-        void InitFileSkipList(string rootDirectoryPath, string extensionConfigFilePath)
+        void InitFileSkipList(string rootDirectoryPath, string extensionConfigFilePath, string categoryConfigFilePath)
         {
             ExtensionSkipList = new HashSet<string>();
 
@@ -85,6 +90,15 @@ namespace DeDupScanner
             foreach (ConfigSettings settings in extList)
                 if (settings.Category == extensionsIgnoreCategory)
                     ExtensionSkipList.Add(settings.Value.ToLower());
+
+            if (Program.WhichApp == WhichApp.PhotoCollector)
+            {
+                // Also exclude non-photos/videos
+                extList = ConfigFileUtil.LoadConfigFile(categoryConfigFilePath);
+                foreach (ConfigSettings settings in extList)
+                    if (settings.Category != extensionsPhotoCategory && settings.Category != extensionsVideoCategory)
+                        ExtensionSkipList.Add(settings.Value.ToLower());
+            }
         }
 
         public Tuple<FileInfo, DirectoryFingerprint> NextFile()
