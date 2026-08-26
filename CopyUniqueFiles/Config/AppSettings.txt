@@ -1,2 +1,16 @@
 # TODO: Move all app settings into this file and implement AppSettings.cs
 #
+[WhichApp]
+PhotoCollector
+
+[All Apps]
+ExcludeHiddenAndSystem = True
+
+[FingerprintDBMaker]
+appName					= Fingerprint Database Maker
+appDescription			= Fingerprints unique files in the target volume/directory and creates a DB file in ...
+operationDescription	= Fingerprinting unique files from
+
+[UniqueFileCopier]
+
+[PhotoCollector]

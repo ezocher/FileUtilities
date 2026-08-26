@@ -18,12 +18,11 @@ namespace DeDupScanner
         FingerprintDBMaker, UniqueFileCopier, PhotoCollector
     }
 
-
     internal class AppSettings
     {
         public static App WhichApp { get; set; }
 
-        // TODO: load settings from 
+        // TODO: load settings from AppSettings.txt
         public static void LoadAppSettings(string solutionRelativePath)
         {
             WhichApp = App.PhotoCollector;
