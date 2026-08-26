@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-class LoadFileLists
+class LoadFileDBs
 {
     private const string OneDriveRootEnv = "OneDriveConsumer";
     private const string BaseFileListsOneDriveFolder = @"Files and Storage\Base File DBs";
@@ -42,12 +42,19 @@ class LoadFileLists
             return;
         }
 
-        foreach (FileInfo file in files)
+        if (files.Length == 0)
         {
-            Load(file.FullName, db);
-            db.DisplayStatsToConsole();
+            ConsoleUtil.WriteLineColor(String.Format("\tNo base file collection DBs found in '{0}", BaseFileListsFolder),
+                ConsoleColor.Yellow);
         }
-
+        else
+        {
+            foreach (FileInfo file in files)
+            {
+                Load(file.FullName, db);
+                db.DisplayStatsToConsole();
+            }
+        }
     }
 
     public static void Load(string path, FileDB db)

@@ -78,7 +78,7 @@ namespace DeDupScanner
             ConsoleUtil.InitConsoleSettings(appName + " - Under Development");
             Console.WriteLine(appDescription);
 
-            string baseFileListsDirectory = LoadFileLists.BaseFileListsFolderPath();
+            string baseFileListsDirectory = LoadFileDBs.BaseFileListsFolderPath();
 
 
         // Select scan target volume/directory and set basename
@@ -144,7 +144,7 @@ namespace DeDupScanner
             ConsoleUtil.White();
             if (copyFiles)
             {
-                Console.WriteLine("\tCopying unique files from '{0}' to {1}\n", scanRootDir, CopyUniqueFile.DestinationRootPath(true));
+                Console.WriteLine("\tCopying unique files from '{0}' to '{1}'\n", scanRootDir, CopyUniqueFile.DestinationRootPath(true));
                 if (Program.WhichApp == WhichApp.UniqueFileCopier)
                 {
                     ConsoleUtil.Green();
@@ -178,7 +178,7 @@ namespace DeDupScanner
 
             // Load in-memory database of existing files to check against for uniques
             fileDB = new FileDB();
-            LoadFileLists.LoadBaseFileLists(fileDB);
+            LoadFileDBs.LoadBaseFileLists(fileDB);
 
             RunParallelScan.ScanAndCopyUniques(baseName, scanRootDir, numThreads, fileDB);
 
