@@ -9,19 +9,12 @@ using System.Threading.Tasks;
 
 class LoadFileDBs
 {
-    private const string OneDriveRootEnv = "OneDriveConsumer";
-    private const string BaseFileListsOneDriveFolder = @"Files and Storage\Base File DBs";
-    private const string PhotosFileListsOneDriveFolder = @"Files and Storage\Photos File DBs";
-
-
-    private const string ListFileNameFilter = "* - File DB.tsv";
-
     public static string BaseFileListsFolderPath()
     {
         if (AppSettings.WhichApp == App.PhotoCollector)
-            return Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), PhotosFileListsOneDriveFolder);
+            return Path.Combine(Environment.GetEnvironmentVariable(AppSettings.OneDriveRootEnvironment), AppSettings.AppRootDirectory, AppSettings.BasePhotoDBsDirectory);
         else
-            return Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), BaseFileListsOneDriveFolder);
+            return Path.Combine(Environment.GetEnvironmentVariable(AppSettings.OneDriveRootEnvironment), AppSettings.AppRootDirectory, AppSettings.BaseFileDBsDirectory);
     }
 
     public static void LoadBaseFileLists(FileDB db)
@@ -33,7 +26,7 @@ class LoadFileDBs
 
         try
         {
-            files = new DirectoryInfo(BaseFileListsFolder).GetFiles(ListFileNameFilter);
+            files = new DirectoryInfo(BaseFileListsFolder).GetFiles(AppSettings.DBFileNameFilter);
         }
         catch (Exception e)
         {
@@ -44,7 +37,7 @@ class LoadFileDBs
 
         if (files.Length == 0)
         {
-            ConsoleUtil.WriteLineColor(String.Format("\tNo base file collection DBs found in '{0}", BaseFileListsFolder),
+            ConsoleUtil.WriteLineColor(String.Format("\tNo base file collection DBs found in '{0}'", BaseFileListsFolder),
                 ConsoleColor.Yellow);
         }
         else
@@ -84,8 +77,5 @@ class LoadFileDBs
             ConsoleUtil.WriteLineColor(String.Format("*** Exception loading report file '{0}' - {1}", path, e.Message),
                 ConsoleColor.Red);
         }
-
     }
 }
-
-

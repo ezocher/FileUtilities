@@ -28,8 +28,8 @@ namespace DeDupScanner
 
     internal class AppSettings
     {
-        private const string OneDriveRootEnv = "OneDriveConsumer";
-        private const string AppRootDirectory = "Files and Storage";
+        public const string OneDriveRootEnvironment = "OneDriveConsumer";
+        public const string AppRootDirectory = "Files and Storage";
         private const string AppConfigSubdirectory = "AppConfig";
         private const string SettingsFileName = "AppSettings.txt";
         private const string WhichAppCategoryName = "WhichApp";
@@ -58,11 +58,14 @@ namespace DeDupScanner
         public static string destRootPrefix { get; set; }
         public static string photosDestRootFolder { get; set; }
         public static string videosDestRootFolder { get; set; }
+        public static string BaseFileDBsDirectory { get; set; }
+        public static string DBFileNameFilter { get; set; }
+        public static string BasePhotoDBsDirectory { get; set; }
 
         // TODO: load settings from AppSettings.txt
         public static void LoadAppSettings()
         {
-            string appSettingsFilePath = Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), AppRootDirectory, AppConfigSubdirectory, SettingsFileName);
+            string appSettingsFilePath = Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnvironment), AppRootDirectory, AppConfigSubdirectory, SettingsFileName);
             ConfigSettings[] appSettingsList = ConfigFileUtil.LoadConfigFile(appSettingsFilePath);
 
             if (appSettingsList[0].Category == WhichAppCategoryName)

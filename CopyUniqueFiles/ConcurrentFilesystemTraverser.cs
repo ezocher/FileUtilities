@@ -15,7 +15,6 @@ namespace DeDupScanner
 
         static readonly object _lockNextFile = new object();
 
-        const string settingsCategory = "Settings";
         const string ignoreCategory = "Ignore";
         const string extensionsIgnoreCategory = "Extensions Ignore";
         const string extensionsPhotoCategory = "Photo";

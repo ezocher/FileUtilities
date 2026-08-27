@@ -23,6 +23,8 @@ ReportFilesSubdirectory		= New Reports
 unknownCategoryName			= Unknown
 destRootPrefix				= unq-
 
+BaseFileDBsDirectory		= Base File DBs
+DBFileNameFilter			= * - File DB.tsv
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 [FingerprintDBMaker]
@@ -48,3 +50,5 @@ VideoFileExtensionsCategory = Video
 
 photosDestRootFolder = Collected Photos
 videosDestRootFolder = Collected Videos
+
+BasePhotoDBsDirectory = Photos File DBs
