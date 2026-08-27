@@ -59,8 +59,11 @@ namespace UniqueFilesUtilities
 
                 // TODO: check if file should be skipped
 
-                if (Program.WhichApp == WhichApp.PhotoCollector)
+                if (AppSettings.WhichApp == App.PhotoCollector)
+                {
                     ExaminePhoto(fi);
+                    break;
+                }
 
                 string fileChecksum = ComputeFingerprint.FileChecksum(fi.FullName);
                 if (fileChecksum == "")
