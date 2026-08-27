@@ -3,9 +3,9 @@ using System.IO;
 
 public class ConfigFiles
 {
-    const string configFolderPathUserRelative = @"Repos\FileUtilities\CopyUniqueFiles\Config\";  // Directly on Dell tower
+    const string configFolderPathUserRelative = @"Repos\FileUtilities\UniqueFilesUtilities\Config\";  // Directly on Dell tower
 
-    // const string configFolderPathUserRelative = @"OneDrive\Documents\GitHub\FileUtilities\CopyUniqueFiles\Config\";  // On IdeaPad and on Dell tower after GitHub + OneDrive sync
+    // const string configFolderPathUserRelative = @"OneDrive\Documents\GitHub\FileUtilities\UniqueFilesUtilities\Config\";  // On IdeaPad and on Dell tower after GitHub + OneDrive sync
 
     const string categoriesConfigFileName = "FileCategoriesByExtension.txt";
     const string directoriesConfigFileName = "DirectoriesIgnore.txt";
