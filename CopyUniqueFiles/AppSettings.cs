@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
-namespace DeDupScanner
+namespace UniqueFilesUtilities
 {
     //----------------------------------------------------------------------------------------------------------------------------------------
     //  This project can build three different related file management apps. Which app is being built is selected by the WhichApp setting

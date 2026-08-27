@@ -1,4 +1,4 @@
-﻿using DeDupScanner;
+﻿using UniqueFilesUtilities;
 using System;
 using System.Collections.Generic;
 using System.IO;

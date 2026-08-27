@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeDupScanner
+namespace UniqueFilesUtilities
 {
     // Used to accumulate file and directory checksums of all items in a directory
 

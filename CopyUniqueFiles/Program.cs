@@ -10,13 +10,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
 
-// TBD: Rename project and main namespace
 
 
-namespace DeDupScanner
+namespace UniqueFilesUtilities
 {
-
-
     class Program
     {
         //----------------------------------------------------------------------------------------------------------------------------------------
