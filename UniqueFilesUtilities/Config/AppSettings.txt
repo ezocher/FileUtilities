@@ -1,12 +1,20 @@
-# TODO: Move all app settings into this file and implement AppSettings.cs
+# This project can run three different related file management apps
 #
-# Boolean setting names start with '_', all other settings are strings
+#   The three apps are:
+#       * Fingerprint Database Maker
+#       * Unique File Copier
+#		* Photo Collector and Organizer
 
-# Important: keep WhichApp first
+# Important: keep WhichApp the first category and setting
+# Possible Apps: FingerprintDBMaker, UniqueFileCopier, PhotoCollector
 [WhichApp]
 PhotoCollector
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
+# C# types for all Key = Value settings below:
+# bool setting names start with '?', int setting names start with '+', all other settings are strings
+#-----------------------------------------------------------------------------------------------------------------------------------------
+
 [All Apps]
 ?ExcludeHiddenAndSystem = True
 
@@ -27,19 +35,21 @@ BaseFileDBsDirectory		= Base File DBs
 DBFileNameFilter			= * - File DB.tsv
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
+
 [FingerprintDBMaker]
 appName					= Fingerprint Database Maker
 appDescription			= Fingerprints unique files in the target volume/directory and creates a DB file in ...
 operationDescription	= Fingerprinting unique files from
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
+
 [UniqueFileCopier]
 appName					= Unique File Copier
 appDescription			= Copies unique files found in the target volume/directory. Optionally organizes them into folders by file category
 operationDescription	= Copying unique files from
 
-
 #-----------------------------------------------------------------------------------------------------------------------------------------
+
 [PhotoCollector]
 appName					= Photo Collector and Organizer
 appDescription			= Collects unique photos and videos and organizes them into folders by year taken

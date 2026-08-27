@@ -12,12 +12,14 @@ using System.Threading.Tasks;
 namespace UniqueFilesUtilities
 {
     //----------------------------------------------------------------------------------------------------------------------------------------
-    //  This project can build three different related file management apps. Which app is being built is selected by the WhichApp setting
+    //  This project can run three different related file management apps. Which app is being run is selected by the WhichApp setting,
+    //  which is the first setting in the AppSettings.txt file
     //
-    //  The tree apps are:
+    //  The three apps are:
     //  * Fingerprint Database Maker
     //  * Unique File Copier
     //  * Photo Collector and Organizer
+    //----------------------------------------------------------------------------------------------------------------------------------------
 
     public enum App
     {
@@ -37,7 +39,7 @@ namespace UniqueFilesUtilities
         // Names of proerties that are bool or int values are preceeded with these chars in AppSettings.txt
         // Properties with no prefix are string values
         private const char BoolPropertyPrefix = '?';
-        private const char IntPropertyPrefix = '=';
+        private const char IntPropertyPrefix = '+';
 
 
         public static App WhichApp { get; set; }
