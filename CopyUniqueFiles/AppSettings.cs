@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -42,6 +43,7 @@ namespace DeDupScanner
 
         public static App WhichApp { get; set; }
         public static bool ExcludeHiddenAndSystem { get; set; }
+        public static string DefaultDestinationVolume { get; set; }
         public static string CategoriesConfigFileName { get; set; }
         public static string DirectoriesConfigFileName { get; set; }
         public static string FilesIgnoreFileName { get; set; }
@@ -50,10 +52,15 @@ namespace DeDupScanner
         public static string appName { get; set; }
         public static string appDescription { get; set; }
         public static string operationDescription { get; set; }
+        public static string PhotoFileExtensionsCategory { get; set; }
+        public static string VideoFileExtensionsCategory { get; set; }
+        public static string unknownCategoryName { get; set; }
+        public static string destRootPrefix { get; set; }
+        public static string photosDestRootFolder { get; set; }
+        public static string videosDestRootFolder { get; set; }
 
-
-    // TODO: load settings from AppSettings.txt
-        public static void LoadAppSettings(string solutionRelativePath)
+        // TODO: load settings from AppSettings.txt
+        public static void LoadAppSettings()
         {
             string appSettingsFilePath = Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnv), AppRootDirectory, AppConfigSubdirectory, SettingsFileName);
             ConfigSettings[] appSettingsList = ConfigFileUtil.LoadConfigFile(appSettingsFilePath);

@@ -37,17 +37,12 @@ namespace DeDupScanner
 
         private static FileDB fileDB;
 
-        private static string destinationVolume = "C:", destinationPrefixPath;
-
-        public static string photoFileExtensionsCategory = "Photo";
-        public static string videoFileExtensionsCategory = "Video";
-
-        private static string appSettingsFile = @"Config\AppSettings.txt";
+        private static string destinationVolume, destinationPrefixPath;
 
         [STAThreadAttribute]
         public static void Main(string[] args)
         {
-            AppSettings.LoadAppSettings(appSettingsFile);
+            AppSettings.LoadAppSettings();
 
             ConsoleUtil.InitConsoleSettings(AppSettings.appName + " - Under Development");
             Console.WriteLine(AppSettings.appDescription);
@@ -70,6 +65,7 @@ namespace DeDupScanner
             }
 
         // Select destination volume for copied unique files (not needed for FingerprintDBMaker)
+            destinationVolume = AppSettings.DefaultDestinationVolume;
             string input;
             if (AppSettings.WhichApp != App.FingerprintDBMaker)
             {

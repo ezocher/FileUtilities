@@ -14,15 +14,11 @@ class CopyUniqueFile
 
     private static string destPrefixPath;
     static string destBasePath;
-    const string destRootPrefix = "unq-";
-    const string photosRootFolder = "Collected Photos";
-    const string videosRootFolder = "Collected Videos";
     private static int sourcePathRootLength;
 
     public static bool divideFilesIntoCategories;
     private static bool copyFiles;
     private static Dictionary<string, string> FileExtensionToCategoryMap;
-    private const string unknownCategoryName = "Unknown";
 
     public static void SetOptionDivideFilesIntoCategories(bool setting)
     {
@@ -48,8 +44,8 @@ class CopyUniqueFile
             Categories.Add(settings.Category);
             if (reportPhotoVideoStats)
             {
-                if (settings.Category == Program.photoFileExtensionsCategory) numPhotoExtensions++;
-                else if (settings.Category == Program.videoFileExtensionsCategory) numVideoExtensions++;
+                if (settings.Category == AppSettings.PhotoFileExtensionsCategory) numPhotoExtensions++;
+                else if (settings.Category == AppSettings.VideoFileExtensionsCategory) numVideoExtensions++;
             }
         }
 
@@ -73,12 +69,12 @@ class CopyUniqueFile
             case App.FingerprintDBMaker:
                 return "";
             case App.UniqueFileCopier:
-                return Path.Combine(destPrefixPath, destRootPrefix + Program.baseName);
+                return Path.Combine(destPrefixPath, AppSettings.destRootPrefix + Program.baseName);
             case App.PhotoCollector:
                 if (photo)
-                    return Path.Combine(destPrefixPath, photosRootFolder);
+                    return Path.Combine(destPrefixPath, AppSettings.photosDestRootFolder);
                 else
-                    return Path.Combine(destPrefixPath, videosRootFolder);
+                    return Path.Combine(destPrefixPath, AppSettings.videosDestRootFolder);
         }
         return "";
     }
@@ -96,7 +92,7 @@ class CopyUniqueFile
 
     public static void SetSourceBaseName(string name)
     {
-        destBasePath = destPrefixPath + Path.DirectorySeparatorChar + destRootPrefix + name;
+        destBasePath = destPrefixPath + Path.DirectorySeparatorChar + AppSettings.destRootPrefix + name;
     }
 
     static void CopyExceptionMessage(string srcPath, string destPath, string exceptionMessage)
@@ -128,7 +124,7 @@ class CopyUniqueFile
                 sourceExtension = ".";              //  extensions, e.g. ".jpg". This allows it to be matched to a category
 
             if (!FileExtensionToCategoryMap.TryGetValue(sourceExtension, out category))
-                category = unknownCategoryName;
+                category = AppSettings.unknownCategoryName;
 
             destFilePath = destBasePath + Path.DirectorySeparatorChar + category + sourceFilePath.Remove(0, sourcePathRootLength);
         }

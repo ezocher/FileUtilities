@@ -6,8 +6,11 @@
 [WhichApp]
 PhotoCollector
 
+#-----------------------------------------------------------------------------------------------------------------------------------------
 [All Apps]
 ?ExcludeHiddenAndSystem = True
+
+DefaultDestinationVolume = C:
 
 # Other settings files
 CategoriesConfigFileName	= FileCategoriesByExtension.txt
@@ -17,18 +20,31 @@ FilesIgnoreFileName			= FilesIgnoreByExtension.txt
 # Other app directories
 ReportFilesSubdirectory		= New Reports
 
+unknownCategoryName			= Unknown
+destRootPrefix				= unq-
 
+
+#-----------------------------------------------------------------------------------------------------------------------------------------
 [FingerprintDBMaker]
 appName					= Fingerprint Database Maker
 appDescription			= Fingerprints unique files in the target volume/directory and creates a DB file in ...
 operationDescription	= Fingerprinting unique files from
 
+#-----------------------------------------------------------------------------------------------------------------------------------------
 [UniqueFileCopier]
 appName					= Unique File Copier
 appDescription			= Copies unique files found in the target volume/directory. Optionally organizes them into folders by file category
 operationDescription	= Copying unique files from
 
+
+#-----------------------------------------------------------------------------------------------------------------------------------------
 [PhotoCollector]
 appName					= Photo Collector and Organizer
 appDescription			= Collects unique photos and videos and organizes them into folders by year taken
 operationDescription	= Collecting and organizing unique photos and videos from
+
+PhotoFileExtensionsCategory = Photo
+VideoFileExtensionsCategory = Video
+
+photosDestRootFolder = Collected Photos
+videosDestRootFolder = Collected Videos
