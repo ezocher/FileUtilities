@@ -47,33 +47,10 @@ namespace DeDupScanner
         [STAThreadAttribute]
         public static void Main(string[] args)
         {
-            string appName = "", appDescription = "", operationDescription = "";
+            AppSettings.LoadAppSettings(appSettingsFile);
 
-            AppSettings.LoadAppSettings(appSettingsFile);   // TODO: implement LoadAppSettings, move strings into AppSettings.txt
-
-            switch (AppSettings.WhichApp)
-            {
-                case App.FingerprintDBMaker:
-                    appName = "Fingerprint Database Maker";
-                    appDescription = "Fingerprints unique files in the target volume/directory and creates a DB file in ...";
-                    operationDescription = "Fingerprinting unique files from";
-                    break;
-
-                case App.UniqueFileCopier:
-                    appName = "Unique File Copier";
-                    appDescription = "Copies unique files found in the target volume/directory. Optionally organizes them into folders by file type";
-                    operationDescription = "Copying unique files from";
-                    break;
-
-                case App.PhotoCollector:
-                    appName = "Photo Collector and Organizer";
-                    appDescription = "Collects unique photos and videos and organizes them into folders by year taken";
-                    operationDescription = "Collecting and organizing unique photos and videos from";
-                    break;
-
-            }
-            ConsoleUtil.InitConsoleSettings(appName + " - Under Development");
-            Console.WriteLine(appDescription);
+            ConsoleUtil.InitConsoleSettings(AppSettings.appName + " - Under Development");
+            Console.WriteLine(AppSettings.appDescription);
 
             string baseFileListsDirectory = LoadFileDBs.BaseFileListsFolderPath();
 
@@ -82,7 +59,7 @@ namespace DeDupScanner
         //      basename is name of directory e.g. "Music" or machine + drive name e.g. "MyLap-Drive C"
             string scanRootDir = FileUtil.SelectDirectory();
             baseName = FileUtil.GetBaseName(scanRootDir);
-            Console.WriteLine(operationDescription + " '{0}'\n", scanRootDir);
+            Console.WriteLine(AppSettings.operationDescription + " '{0}'\n", scanRootDir);
 
             if ((scanRootDir == "") || (baseName == ""))
             {

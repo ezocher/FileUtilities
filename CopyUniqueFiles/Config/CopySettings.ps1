@@ -1,0 +1,1 @@
+Copy-Item -Force -Path "Config\*.txt" -Destination "C:\Users\ezoch\OneDrive\Files and Storage\AppConfig"
