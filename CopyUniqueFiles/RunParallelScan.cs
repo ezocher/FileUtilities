@@ -37,6 +37,15 @@ namespace DeDupScanner
             // ReportFiles.Close(); // Files closed under lock by progress.DisplayFinalSummary()
         }
 
+        static void ExaminePhoto(FileInfo fi)
+        {
+            // Test PhotoDateUtils
+            (int? YearFromPath, int? LevelPath) = PhotoDateUtil.GetYearFromPath(fi.FullName);
+            int? YearFromMetadata = PhotoDateUtil.ExtractMetadataYearTaken(fi.FullName);
+
+            // Examine directory structures
+        }
+
 
         static void FileProcessor(int threadIndex)
         {
@@ -49,6 +58,9 @@ namespace DeDupScanner
                 DirectoryFingerprint parentFingerprint = file.Item2;
 
                 // TODO: check if file should be skipped
+
+                if (Program.WhichApp == WhichApp.PhotoCollector)
+                    ExaminePhoto(fi);
 
                 string fileChecksum = ComputeFingerprint.FileChecksum(fi.FullName);
                 if (fileChecksum == "")
@@ -71,7 +83,6 @@ namespace DeDupScanner
                     parentFingerprint.FileCompleted(fileChecksum);
                 }
             }
-
 
             progress.ThreadCompleted();
         }
