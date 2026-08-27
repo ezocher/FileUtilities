@@ -2,17 +2,17 @@
 
 Project / Folder | Description & Status
 -----------------|---------------------
+UniqueFileUtilities | Main project -- .sln can build three different apps: File Fingerprint Database Maker; Unique File Copier; and Photo Collector and Organizer. Apps share config files from Config directory for settings and for file/directory exclusion lists. Super hacky WinForms + Console UI - **Working, Photo Collector in active development**
+UniqueFileUtilities/Util | ConfigFileUtil.cs and ConfigSettings.cs - A simple config file parser meeting the needs of the apps in this project - Documented-ish in Docs/ConfigFiles.md; Sample/test files in Config - **Working**
 Config | Configuration files (.txt) for file/directory exclusion lists and file extension exclusion list and extension map to file categories. Format documented-ish in Docs/ConfigFiles.md
-CopyUniqueFiles | [TBD: Rename] Main project -- .sln can build three different apps: File Fingerprint Database Maker; Unique File Copier; and Photo Collector and Organizer. Apps share config files from Config directory for settings and for file/directory exclusion lists. Super hacky WinForms + Console UI - **Working, in active development**
-CopyUniqueFiles/Util | ConfigFileUtil.cs and ConfigSettings.cs - A simple config file parser meeting the needs of the apps in this project - Documented-ish in Docs/ConfigFiles.md; Sample/test files in Config - **Working**
-DeDupScanner | **Superceded by CopyUniqueFiles**
+DeDupScanner | **Superceded by UniqueFileUtilities**
 ExplorationsSpecialFolders | Project for file system framework tests; Lists special folders on Windows - **Inactive**
 PDFValidator | Scans headers of all PDFs in a drive/folder, reports PDF versions of good headers, detects (badly) corrupted PDFs - **Working** _(Someday TBD: Re-do this algorithm in Powershell)_
 
-## CopyUniqueFiles Notes
+## UniqueFilesUtilities Notes
 
 * A multi-threaded file scanner which computes and stores unique file signatures/fingerprints (SHA1 hash of entire file contents). 
-* Produces tab separated text files of data about files and directories scanned. Data files can be used with Excel to analyze or de-dup within a set of volumes or can be used as baselines by CopyUniqueFiles. 
+* Produces tab separated text files of data about files and directories scanned. Data files can be used with Excel to analyze or de-dup within a set of volumes or can be used as baselines by UniqueFilesUtilities. 
 * Uses config files from Config directory for file/directory exclusion lists.
 
 ## Next

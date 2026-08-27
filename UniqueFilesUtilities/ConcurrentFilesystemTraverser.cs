@@ -6,19 +6,15 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace DeDupScanner
+namespace UniqueFilesUtilities
 {
     class ConcurrentFilesystemTraverser
     {
         Stack<Tuple<DirectoryInfo, DirectoryFingerprint>> directories;
         Queue<Tuple<FileInfo, DirectoryFingerprint>> files;
 
-        bool excludeHiddenSystemFilesDirs;
-        const string excludeHiddenSystemKey = "ExcludeHiddenAndSystem";
-
         static readonly object _lockNextFile = new object();
 
-        const string settingsCategory = "Settings";
         const string ignoreCategory = "Ignore";
         const string extensionsIgnoreCategory = "Extensions Ignore";
         const string extensionsPhotoCategory = "Photo";
@@ -55,7 +51,6 @@ namespace DeDupScanner
 
             foreach (ConfigSettings settings in dirList)
             {
-                
                 if (settings.Category == ignoreCategory)
                 {
                     string newSkipPath = settings.Value;
@@ -66,10 +61,6 @@ namespace DeDupScanner
 
                     if (newSkipPath.Length >= rootDirectoryPath.Length)
                         DirectorySkipList.Add(newSkipPath.ToLower());
-                }
-                else if ((settings.Category == settingsCategory) && (settings.Key == excludeHiddenSystemKey))
-                {
-                    excludeHiddenSystemFilesDirs = !(settings.Value.ToLower() == "false");
                 }
             }
         }
@@ -91,7 +82,7 @@ namespace DeDupScanner
                 if (settings.Category == extensionsIgnoreCategory)
                     ExtensionSkipList.Add(settings.Value.ToLower());
 
-            if (Program.WhichApp == WhichApp.PhotoCollector)
+            if (AppSettings.WhichApp == App.PhotoCollector)
             {
                 // Also exclude non-photos/videos
                 extList = ConfigFileUtil.LoadConfigFile(categoryConfigFilePath);
@@ -238,7 +229,7 @@ namespace DeDupScanner
                 return false;
             }
             
-            if (excludeHiddenSystemFilesDirs)
+            if (AppSettings.ExcludeHiddenAndSystem)
             {
                 // Exclude Hidden and System files
                 if (FileUtil.IsSystemOrHidden(fi))
@@ -263,9 +254,7 @@ namespace DeDupScanner
 
         bool DirectoryIncluded(DirectoryInfo di)
         {
-            if (!excludeHiddenSystemFilesDirs)
-                return true;
-            else
+            if (AppSettings.ExcludeHiddenAndSystem)
             {
                 // Exclude Hidden and/or System directories
                 bool include = !FileUtil.IsSystemOrHidden(di);
@@ -273,6 +262,8 @@ namespace DeDupScanner
                 //  Console.WriteLine("\nDirectory {0} is System and/or Hidden", di.FullName);
                 return (include);
             }
+            else
+                return true;
         }
 
     }

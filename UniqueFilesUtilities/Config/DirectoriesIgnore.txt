@@ -1,6 +1,4 @@
-# Directories.txt
-[Settings]
-ExcludeHiddenAndSystem = True
+# DirectoriesIgnore.txt
 
 [Ignore]
 \bin

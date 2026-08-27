@@ -3,13 +3,13 @@ using System.IO;
 
 public class ConfigFiles
 {
-    // const string configFolderPathUserRelative = @"Repos\FileUtilities\Config\";  // Directly on Dell tower
+    const string configFolderPathUserRelative = @"Repos\FileUtilities\UniqueFilesUtilities\Config\";  // Directly on Dell tower
 
-    const string configFolderPathUserRelative = @"OneDrive\Documents\GitHub\FileUtilities\Config\";  // On IdeaPad and on Dell tower after GitHub + OneDrive sync
+    // const string configFolderPathUserRelative = @"OneDrive\Documents\GitHub\FileUtilities\UniqueFilesUtilities\Config\";  // On IdeaPad and on Dell tower after GitHub + OneDrive sync
 
-    const string categoriesConfigFileName = "FileCategories.txt";
-    const string directoriesConfigFileName = "Directories.txt";
-    const string filesIgnoreFileName = "FilesIgnore.txt";
+    const string categoriesConfigFileName = "FileCategoriesByExtension.txt";
+    const string directoriesConfigFileName = "DirectoriesIgnore.txt";
+    const string filesIgnoreFileName = "FilesIgnoreByExtension.txt";
 
     private static string ConfigDirectory()
     {

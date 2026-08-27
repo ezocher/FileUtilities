@@ -50,6 +50,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExifLibrary, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ExifLibNet.2.1.4\lib\netstandard1.3\ExifLibrary.dll</HintPath>
@@ -88,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="ComputeFingerprint.cs" />
     <Compile Include="ConcurrentFilesystemTraverser.cs" />
     <Compile Include="ConfigFiles.cs" />
@@ -110,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Config\CopySettings.ps1" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +128,13 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Config\AppSettings.txt" />
+    <Content Include="Config\DirectoriesIgnore.txt" />
+    <Content Include="Config\FileCategoriesByExtension.txt" />
+    <Content Include="Config\FilesIgnoreByExtension.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

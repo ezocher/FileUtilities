@@ -1,5 +1,5 @@
-# FileCategories.txt - file categories for organizing found files
-# For use with ezocher/FileUtilities/CopyUniqueFiles
+# FileCategoriesByExtension.txt - file categories for organizing found files
+# For use with ezocher/FileUtilities/UniqueFilesUtilities
 
 [Documents and Books]		# Papers, books, text files, eBooks
 .pdf, .ps
@@ -71,7 +71,6 @@
 .m4b		# AAC audio book
 .m3u, .pls, .vlc, .wpl, .zpl, .xspf
 .amc		# MP3 Catalog database
-
 
 [Video]
 .mp4, .m4v

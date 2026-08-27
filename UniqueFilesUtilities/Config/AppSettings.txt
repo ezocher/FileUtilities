@@ -1,0 +1,69 @@
+# This project can run three different related file management apps
+#
+#   The three apps are:
+#       * Fingerprint Database Maker
+#       * Unique File Copier
+#		* Photo Collector and Organizer
+
+# Important: keep WhichApp the first category and setting
+# Possible Apps: FingerprintDBMaker, UniqueFileCopier, PhotoCollector
+[WhichApp]
+PhotoCollector
+
+#-----------------------------------------------------------------------------------------------------------------------------------------
+# C# types for all Key = Value settings below:
+# bool setting names start with '?', int setting names start with '+', all other settings are strings
+#-----------------------------------------------------------------------------------------------------------------------------------------
+
+[All Apps]
+?ExcludeHiddenAndSystem = True
+
+DefaultDestinationVolume = C:
+
+# Other settings files
+CategoriesConfigFileName	= FileCategoriesByExtension.txt
+DirectoriesConfigFileName	= DirectoriesIgnore.txt
+FilesIgnoreFileName			= FilesIgnoreByExtension.txt
+
+# Report and DB files
+ReportFilesSubdirectory		= New Reports
+ReportFilesExtension		= .tsv
+FilesDBNameSuffix			= -File DB
+ExcludedReportNameSuffix	= -Excluded List
+DuplicatesReportNameSuffix	= -Duplicate Files
+UniquesReportNameSuffix		= -Unique Files
+
+unknownCategoryName			= Unknown
+destRootPrefix				= unq-
+
+BaseFileDBsDirectory		= Base File DBs
+DBFileNameFilter			= *-File DB.tsv			# Match pattern above
+
+#-----------------------------------------------------------------------------------------------------------------------------------------
+
+[FingerprintDBMaker]
+appName					= Fingerprint Database Maker
+appDescription			= Fingerprints unique files in the target volume/directory and creates a DB file in ...
+operationDescription	= Fingerprinting unique files from
+
+#-----------------------------------------------------------------------------------------------------------------------------------------
+
+[UniqueFileCopier]
+appName					= Unique File Copier
+appDescription			= Copies unique files found in the target volume/directory. Optionally organizes them into folders by file category
+operationDescription	= Copying unique files from
+
+#-----------------------------------------------------------------------------------------------------------------------------------------
+
+[PhotoCollector]
+appName					= Photo Collector and Organizer
+appDescription			= Collects unique photos and videos and organizes them into folders by year taken
+operationDescription	= Collecting and organizing unique photos and videos from
+
+PhotoFileExtensionsCategory = Photo
+VideoFileExtensionsCategory = Video
+
+photosDestRootFolder = Collected Photos
+videosDestRootFolder = Collected Videos
+
+BasePhotoDBsDirectory = Photos File DBs

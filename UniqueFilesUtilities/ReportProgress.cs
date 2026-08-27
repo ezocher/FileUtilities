@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Timers;
 
 
-namespace DeDupScanner
+namespace UniqueFilesUtilities
 {
     public class ReportProgress
     {

@@ -10,30 +10,20 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
 
-// TBD: Rename project and main namespace
 
 
-namespace DeDupScanner
+namespace UniqueFilesUtilities
 {
-    public enum WhichApp
-    {
-        FingerprintDBMaker,
-        UniqueFileCopier,
-        PhotoCollector
-    }
-
     class Program
     {
-
         //----------------------------------------------------------------------------------------------------------------------------------------
-        //  This project can build three different related file management apps. Which app is being built is selected by the WhichApp enum.
+        //  This project can build three different related file management apps. Which app is being built is selected by the WhichApp setting
+        //      see AppSettings.cs
         //
         //  The tree apps are:
         //  * Fingerprint Database Maker
         //  * Unique File Copier
         //  * Photo Collector and Organizer
-
-        public static WhichApp WhichApp = WhichApp.PhotoCollector;
 
         public static string baseName;
 
@@ -44,39 +34,15 @@ namespace DeDupScanner
 
         private static FileDB fileDB;
 
-        private static string destinationVolume = "C:", destinationPrefixPath;
-
-        public static string photoFileExtensionsCategory = "Photo";
-        public static string videoFileExtensionsCategory = "Video";
+        private static string destinationVolume, destinationPrefixPath;
 
         [STAThreadAttribute]
         public static void Main(string[] args)
         {
-            string appName = "", appDescription = "", operationDescription = "";
+            AppSettings.LoadAppSettings();
 
-            switch (WhichApp)
-            {
-                case WhichApp.FingerprintDBMaker:
-                    appName = "Fingerprint Database Maker";
-                    appDescription = "Fingerprints unique files in the target volume/directory and creates a DB file in ...";
-                    operationDescription = "Fingerprinting unique files from";
-                    break;
-
-                case WhichApp.UniqueFileCopier:
-                    appName = "Unique File Copier";
-                    appDescription = "Copies unique files found in the target volume/directory. Optionally organizes them into folders by file type";
-                    operationDescription = "Copying unique files from";
-                    break;
-
-                case WhichApp.PhotoCollector:
-                    appName = "Photo Collector and Organizer";
-                    appDescription = "Collects unique photos and videos and organizes them into folders by year taken";
-                    operationDescription = "Collecting and organizing unique photos and videos from";
-                    break;
-
-            }
-            ConsoleUtil.InitConsoleSettings(appName + " - Under Development");
-            Console.WriteLine(appDescription);
+            ConsoleUtil.InitConsoleSettings(AppSettings.appName + " - Under Development");
+            Console.WriteLine(AppSettings.appDescription);
 
             string baseFileListsDirectory = LoadFileDBs.BaseFileListsFolderPath();
 
@@ -85,7 +51,7 @@ namespace DeDupScanner
         //      basename is name of directory e.g. "Music" or machine + drive name e.g. "MyLap-Drive C"
             string scanRootDir = FileUtil.SelectDirectory();
             baseName = FileUtil.GetBaseName(scanRootDir);
-            Console.WriteLine(operationDescription + " '{0}'\n", scanRootDir);
+            Console.WriteLine(AppSettings.operationDescription + " '{0}'\n", scanRootDir);
 
             if ((scanRootDir == "") || (baseName == ""))
             {
@@ -96,8 +62,9 @@ namespace DeDupScanner
             }
 
         // Select destination volume for copied unique files (not needed for FingerprintDBMaker)
+            destinationVolume = AppSettings.DefaultDestinationVolume;
             string input;
-            if (Program.WhichApp != WhichApp.FingerprintDBMaker)
+            if (AppSettings.WhichApp != App.FingerprintDBMaker)
             {
                 Console.Write("Destination Volume '{0}' (or enter new destination)?", destinationVolume);
                 input = Console.ReadLine();
@@ -136,7 +103,7 @@ namespace DeDupScanner
                 numThreads = numThreadsRotatingDrive;
 
             bool copyFiles;
-            if (Program.WhichApp == WhichApp.FingerprintDBMaker)
+            if (AppSettings.WhichApp == App.FingerprintDBMaker)
                 copyFiles = false;
             else
                 copyFiles = true;
@@ -145,7 +112,7 @@ namespace DeDupScanner
             if (copyFiles)
             {
                 Console.WriteLine("\tCopying unique files from '{0}' to '{1}'\n", scanRootDir, CopyUniqueFile.DestinationRootPath(true));
-                if (Program.WhichApp == WhichApp.UniqueFileCopier)
+                if (AppSettings.WhichApp == App.UniqueFileCopier)
                 {
                     ConsoleUtil.Green();
                     CopyUniqueFile.SetOptionDivideFilesIntoCategories(ConsoleUtil.YesNoChoice("Divide files into categories (Y|N)? "));
@@ -158,8 +125,8 @@ namespace DeDupScanner
                 Console.WriteLine("   Scanning and fingerprinting all unique files in '{0}' and writing DB and reports\n", scanRootDir);
             ConsoleUtil.RestoreColors();
 
-            if (Program.WhichApp == WhichApp.PhotoCollector || CopyUniqueFile.divideFilesIntoCategories)
-                CopyUniqueFile.LoadFileCategoryMap(Program.WhichApp == WhichApp.PhotoCollector);
+            if (AppSettings.WhichApp == App.PhotoCollector || CopyUniqueFile.divideFilesIntoCategories)
+                CopyUniqueFile.LoadFileCategoryMap(AppSettings.WhichApp == App.PhotoCollector);
                 
             CopyUniqueFile.SetOptionCopyFiles(copyFiles);
 
