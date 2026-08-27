@@ -25,14 +25,19 @@ CategoriesConfigFileName	= FileCategoriesByExtension.txt
 DirectoriesConfigFileName	= DirectoriesIgnore.txt
 FilesIgnoreFileName			= FilesIgnoreByExtension.txt
 
-# Other app directories
+# Report and DB files
 ReportFilesSubdirectory		= New Reports
+ReportFilesExtension		= .tsv
+FilesDBNameSuffix			= -File DB
+ExcludedReportNameSuffix	= -Excluded List
+DuplicatesReportNameSuffix	= -Duplicate Files
+UniquesReportNameSuffix		= -Unique Files
 
 unknownCategoryName			= Unknown
 destRootPrefix				= unq-
 
 BaseFileDBsDirectory		= Base File DBs
-DBFileNameFilter			= * - File DB.tsv
+DBFileNameFilter			= *-File DB.tsv			# Match pattern above
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 

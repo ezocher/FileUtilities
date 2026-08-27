@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace UniqueFilesUtilities
 {
     //----------------------------------------------------------------------------------------------------------------------------------------
-    //  This project can run three different related file management apps. Which app is being run is selected by the WhichApp setting,
+    //  This project can run three different related file management apps. Which app is being run is selected by the WhichApp category,
     //  which is the first setting in the AppSettings.txt file
     //
     //  The three apps are:
@@ -30,7 +30,8 @@ namespace UniqueFilesUtilities
     {
         // Settings needed to load AppSettings.txt and set which app
         public const string OneDriveRootEnvironment = "OneDriveConsumer";
-        public const string AppRootDirectory = "Files and Storage";
+        private const string AppRootDirectory = "Files and Storage";
+        public static string AppRootPath { get; private set; }              // Combined $OneDrive$\Files and Storage
         private const string AppConfigSubdirectory = "AppConfig";
         private const string SettingsFileName = "AppSettings.txt";
         private const string WhichAppCategoryName = "WhichApp";
@@ -45,10 +46,19 @@ namespace UniqueFilesUtilities
         public static App WhichApp { get; set; }
         public static bool ExcludeHiddenAndSystem { get; set; }
         public static string DefaultDestinationVolume { get; set; }
+
+        // Settings files
         public static string CategoriesConfigFileName { get; set; }
         public static string DirectoriesConfigFileName { get; set; }
         public static string FilesIgnoreFileName { get; set; }
+
+        // Report and DB files
         public static string ReportFilesSubdirectory { get; set; }
+        public static string ReportFilesExtension { get; set; }
+        public static string FilesDBNameSuffix { get; set; }
+        public static string ExcludedReportNameSuffix { get; set; }
+        public static string DuplicatesReportNameSuffix { get; set; }
+        public static string UniquesReportNameSuffix { get; set; }
 
         public static string appName { get; set; }
         public static string appDescription { get; set; }
@@ -66,19 +76,23 @@ namespace UniqueFilesUtilities
         // TODO: load settings from AppSettings.txt
         public static void LoadAppSettings()
         {
-            string appSettingsFilePath = Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnvironment), AppRootDirectory, AppConfigSubdirectory, SettingsFileName);
-            ConfigSettings[] appSettingsList = ConfigFileUtil.LoadConfigFile(appSettingsFilePath);
+            AppRootPath = Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnvironment), AppRootDirectory);
+
+            string appSettingsFileFullPath = Path.Combine(AppRootPath, AppConfigSubdirectory, SettingsFileName);
+            ConfigSettings[] appSettingsList = ConfigFileUtil.LoadConfigFile(appSettingsFileFullPath);
 
             if (appSettingsList[0].Category == WhichAppCategoryName)
                 WhichApp = (App) Enum.Parse(typeof(App), appSettingsList[0].Value);
             else
-                throw new Exception("Invalid value for WhichApp in " + appSettingsFilePath);
+                // throw exception if the first setting is not in the WhichApp category
+                throw new Exception("WhichApp nust be the first setting in " + appSettingsFileFullPath);
 
             foreach (ConfigSettings setting in appSettingsList)
                 if (setting.Category == AllAppsCategoryName || setting.Category == WhichApp.ToString())
                     SetNewSetting(setting.Key, setting.Value);
         }
 
+        // Uses reflection to convert strings from the settings file in values that it sets for properties in this class 
         private static void SetNewSetting(string whichProperty, string value)
         {
             if (whichProperty[0] == BoolPropertyPrefix)

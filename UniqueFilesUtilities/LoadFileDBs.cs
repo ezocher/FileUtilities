@@ -12,9 +12,9 @@ class LoadFileDBs
     public static string BaseFileListsFolderPath()
     {
         if (AppSettings.WhichApp == App.PhotoCollector)
-            return Path.Combine(Environment.GetEnvironmentVariable(AppSettings.OneDriveRootEnvironment), AppSettings.AppRootDirectory, AppSettings.BasePhotoDBsDirectory);
+            return Path.Combine(AppSettings.AppRootPath, AppSettings.BasePhotoDBsDirectory);
         else
-            return Path.Combine(Environment.GetEnvironmentVariable(AppSettings.OneDriveRootEnvironment), AppSettings.AppRootDirectory, AppSettings.BaseFileDBsDirectory);
+            return Path.Combine(AppSettings.AppRootPath, AppSettings.BaseFileDBsDirectory);
     }
 
     public static void LoadBaseFileLists(FileDB db)
