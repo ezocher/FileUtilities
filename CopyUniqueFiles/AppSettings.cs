@@ -20,7 +20,6 @@ namespace UniqueFilesUtilities
     //  * Unique File Copier
     //  * Photo Collector and Organizer
 
-
     public enum App
     {
         FingerprintDBMaker, UniqueFileCopier, PhotoCollector
@@ -28,6 +27,7 @@ namespace UniqueFilesUtilities
 
     internal class AppSettings
     {
+        // Settings needed to load AppSettings.txt and set which app
         public const string OneDriveRootEnvironment = "OneDriveConsumer";
         public const string AppRootDirectory = "Files and Storage";
         private const string AppConfigSubdirectory = "AppConfig";
@@ -35,10 +35,10 @@ namespace UniqueFilesUtilities
         private const string WhichAppCategoryName = "WhichApp";
         private const string AllAppsCategoryName = "All Apps";
 
-        // Names of proerties that are bool values are preceeded with this char in AppSettings.txt
-        // All other properties are string values
+        // Names of proerties that are bool or int values are preceeded with these chars in AppSettings.txt
+        // Properties with no prefix are string values
         private const char BoolPropertyPrefix = '?';
-
+        private const char IntPropertyPrefix = '=';
 
 
         public static App WhichApp { get; set; }
@@ -85,7 +85,14 @@ namespace UniqueFilesUtilities
                 // bool property
                 whichProperty = whichProperty.Substring(1);
                 PropertyInfo prop = typeof(AppSettings).GetProperty(whichProperty, BindingFlags.Public | BindingFlags.Static);
-                prop.SetValue(null, value == "True");
+                prop.SetValue(null, value.ToLower() == "true");
+            }
+            else if (whichProperty[0] == IntPropertyPrefix)
+            {
+                // int property
+                whichProperty = whichProperty.Substring(1);
+                PropertyInfo prop = typeof(AppSettings).GetProperty(whichProperty, BindingFlags.Public | BindingFlags.Static);
+                prop.SetValue(null, int.Parse(value));
             }
             else
             {
