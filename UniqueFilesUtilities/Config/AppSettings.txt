@@ -36,8 +36,14 @@ UniquesReportNameSuffix		= -Unique Files
 unknownCategoryName			= Unknown
 destRootPrefix				= unq-
 
-BaseFileDBsDirectory		= Base File DBs
 DBFileNameFilter			= *-File DB.tsv			# Match pattern above
+
+# Category names in settings files
+DirectoriesIgnoreCategory   = Directories Ignore
+ExtensionsIgnoreCategory    = Extensions Ignore
+
+PhotoFileExtensionsCategory = Photo
+VideoFileExtensionsCategory = Video
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -46,12 +52,16 @@ appName					= Fingerprint Database Maker
 appDescription			= Fingerprints unique files in the target volume/directory and creates a DB file in ...
 operationDescription	= Fingerprinting unique files from
 
+BaseFileDBsDirectory	= Base File DBs
+
 #-----------------------------------------------------------------------------------------------------------------------------------------
 
 [UniqueFileCopier]
 appName					= Unique File Copier
 appDescription			= Copies unique files found in the target volume/directory. Optionally organizes them into folders by file category
 operationDescription	= Copying unique files from
+
+BaseFileDBsDirectory	= Base File DBs
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -60,10 +70,7 @@ appName					= Photo Collector and Organizer
 appDescription			= Collects unique photos and videos and organizes them into folders by year taken
 operationDescription	= Collecting and organizing unique photos and videos from
 
-PhotoFileExtensionsCategory = Photo
-VideoFileExtensionsCategory = Video
+photosDestRootFolder	= Collected Photos
+videosDestRootFolder	= Collected Videos
 
-photosDestRootFolder = Collected Photos
-videosDestRootFolder = Collected Videos
-
-BasePhotoDBsDirectory = Photos File DBs
+BaseFileDBsDirectory	= Photos File DBs

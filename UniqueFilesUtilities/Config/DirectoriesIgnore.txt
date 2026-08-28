@@ -1,6 +1,6 @@
 # DirectoriesIgnore.txt
 
-[Ignore]
+[Directories Ignore]
 \bin
 \ESD
 \MSOTraceLite
@@ -82,7 +82,3 @@ $UserProfile$\OneDrive\Documents\Adobe
 \Users\guest_wevfv1k
 \Users\robil
 \Users\zoche
-
-
-
-

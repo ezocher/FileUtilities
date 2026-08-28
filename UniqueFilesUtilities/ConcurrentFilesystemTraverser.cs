@@ -15,11 +15,6 @@ namespace UniqueFilesUtilities
 
         static readonly object _lockNextFile = new object();
 
-        const string ignoreCategory = "Ignore";
-        const string extensionsIgnoreCategory = "Extensions Ignore";
-        const string extensionsPhotoCategory = "Photo";
-        const string extensionsVideoCategory = "Video";
-
         public ConcurrentFilesystemTraverser(string rootDirectoryPath)
         {
             directories = new Stack<Tuple<DirectoryInfo, DirectoryFingerprint>> ();
@@ -29,7 +24,7 @@ namespace UniqueFilesUtilities
             DirectoryInfo di = new DirectoryInfo(rootDirectoryPath);
             directories.Push(Tuple.Create<DirectoryInfo, DirectoryFingerprint>(di, null));
 
-            InitDirSkipList( rootDirectoryPath, ConfigFiles.GetDirectoriesFile() );
+            InitDirSkipList( rootDirectoryPath, ConfigFiles.GetDirectoriesIgnoreFile() );
             InitFileSkipList( rootDirectoryPath, ConfigFiles.GetFilesIgnoreFile(), ConfigFiles.GetCategoriesFile());
         }
 
@@ -51,7 +46,7 @@ namespace UniqueFilesUtilities
 
             foreach (ConfigSettings settings in dirList)
             {
-                if (settings.Category == ignoreCategory)
+                if (settings.Category == AppSettings.DirectoriesIgnoreCategory)
                 {
                     string newSkipPath = settings.Value;
                     Match match = Regex.Match(newSkipPath, @"^[a-zA-Z]:");
@@ -79,7 +74,7 @@ namespace UniqueFilesUtilities
             ConfigSettings[] extList = ConfigFileUtil.LoadConfigFile(extensionConfigFilePath);
 
             foreach (ConfigSettings settings in extList)
-                if (settings.Category == extensionsIgnoreCategory)
+                if (settings.Category == AppSettings.ExtensionsIgnoreCategory)
                     ExtensionSkipList.Add(settings.Value.ToLower());
 
             if (AppSettings.WhichApp == App.PhotoCollector)
@@ -87,7 +82,7 @@ namespace UniqueFilesUtilities
                 // Also exclude non-photos/videos
                 extList = ConfigFileUtil.LoadConfigFile(categoryConfigFilePath);
                 foreach (ConfigSettings settings in extList)
-                    if (settings.Category != extensionsPhotoCategory && settings.Category != extensionsVideoCategory)
+                    if (settings.Category != AppSettings.ExtensionsPhotoCategory && settings.Category != AppSettings.ExtensionsVideoCategory)
                         ExtensionSkipList.Add(settings.Value.ToLower());
             }
         }

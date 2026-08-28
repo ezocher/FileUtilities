@@ -42,7 +42,6 @@ namespace UniqueFilesUtilities
         private const char BoolPropertyPrefix = '?';
         private const char IntPropertyPrefix = '+';
 
-
         public static App WhichApp { get; set; }
         public static bool ExcludeHiddenAndSystem { get; set; }
         public static string DefaultDestinationVolume { get; set; }
@@ -63,15 +62,18 @@ namespace UniqueFilesUtilities
         public static string appName { get; set; }
         public static string appDescription { get; set; }
         public static string operationDescription { get; set; }
-        public static string PhotoFileExtensionsCategory { get; set; }
-        public static string VideoFileExtensionsCategory { get; set; }
         public static string unknownCategoryName { get; set; }
         public static string destRootPrefix { get; set; }
         public static string photosDestRootFolder { get; set; }
         public static string videosDestRootFolder { get; set; }
         public static string BaseFileDBsDirectory { get; set; }
         public static string DBFileNameFilter { get; set; }
-        public static string BasePhotoDBsDirectory { get; set; }
+
+        public static string DirectoriesIgnoreCategory { get; set; }
+        public static string ExtensionsIgnoreCategory { get; set; }
+        public static string PhotoFileExtensionsCategory { get; set; }
+        public static string VideoFileExtensionsCategory { get; set; }
+
 
         // TODO: load settings from AppSettings.txt
         public static void LoadAppSettings()

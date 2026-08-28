@@ -9,13 +9,8 @@ using System.Threading.Tasks;
 
 class LoadFileDBs
 {
-    public static string BaseFileListsFolderPath()
-    {
-        if (AppSettings.WhichApp == App.PhotoCollector)
-            return Path.Combine(AppSettings.AppRootPath, AppSettings.BasePhotoDBsDirectory);
-        else
-            return Path.Combine(AppSettings.AppRootPath, AppSettings.BaseFileDBsDirectory);
-    }
+    public static string BaseFileListsFolderPath() => 
+        Path.Combine(AppSettings.AppRootPath, AppSettings.BaseFileDBsDirectory);
 
     public static void LoadBaseFileLists(FileDB db)
     {

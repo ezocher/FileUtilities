@@ -1,34 +1,19 @@
-﻿using System;
+﻿using UniqueFilesUtilities;
+using System;
 using System.IO;
+
 
 public class ConfigFiles
 {
-    const string configFolderPathUserRelative = @"Repos\FileUtilities\UniqueFilesUtilities\Config\";  // Directly on Dell tower
+    private static string ConfigDirectory() => 
+        Path.Combine(AppSettings.AppRootPath, AppSettings.AppConfigSubdirectory);
 
-    // const string configFolderPathUserRelative = @"OneDrive\Documents\GitHub\FileUtilities\UniqueFilesUtilities\Config\";  // On IdeaPad and on Dell tower after GitHub + OneDrive sync
+    public static string GetCategoriesFile() => 
+        Path.Combine(ConfigDirectory(), AppSettings.CategoriesConfigFileName);
 
-    const string categoriesConfigFileName = "FileCategoriesByExtension.txt";
-    const string directoriesConfigFileName = "DirectoriesIgnore.txt";
-    const string filesIgnoreFileName = "FilesIgnoreByExtension.txt";
+    public static string GetDirectoriesIgnoreFile() => 
+        Path.Combine(ConfigDirectory(), AppSettings.DirectoriesConfigFileName);
 
-    private static string ConfigDirectory()
-    {
-        return Path.Combine(Environment.GetFolderPath((Environment.SpecialFolder.UserProfile)), 
-            configFolderPathUserRelative);
-    }
-
-    public static string GetCategoriesFile()
-    {
-        return Path.Combine(ConfigDirectory(), categoriesConfigFileName);
-    }
-
-    public static string GetDirectoriesFile()
-    {
-        return Path.Combine(ConfigDirectory(), directoriesConfigFileName);
-    }
-
-    public static string GetFilesIgnoreFile()
-    {
-        return Path.Combine(ConfigDirectory(), filesIgnoreFileName);
-    }
+    public static string GetFilesIgnoreFile() => 
+        Path.Combine(ConfigDirectory(), AppSettings.FilesIgnoreConfigFileName);
 }
