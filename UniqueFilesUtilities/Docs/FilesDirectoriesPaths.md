@@ -27,7 +27,7 @@ In the Visual Studio solution the Config folder contains all of the .txt files a
 
 ## 2 - Unique file DBs
 
-The databases of previously scanned unique files are stored in one of two directories:
+The databases of previously scanned unique files are stored in one of two subdirectories of the app root directory:
 * "Base File DBs" for the FingerprintDBMaker and UniqueFileCopier apps
 * "Photos File DBs" for the PhotoCollector app
 
@@ -35,6 +35,19 @@ The databases are stored in .tsv files and the unique entries are all loaded int
 
 ## 3 - Reports and new DB's
 
-As the scan runs new reports (ExcludedReportNameSuffix	= -Excluded List
-DuplicatesReportNameSuffix	= -Duplicate Files
-UniquesReportNameSuffix		= -Unique Files
+As the scan runs, three new reports are generated into .tsv files: excluded/skipped files, duplicate files, and unique files.
+
+These reports are all created in the "New Reports" subdirectory of the app root directory. If there are existing reports with the same name a (#) will be added to subsequent report names, no reports are ever overwritten.
+
+The database of newly found unique files is also generated as a .tsv file and stored in "New Reports". Currently the "*-File DB.tsv" files must be manually copied to one of the Base File DBs folders to be used in the baseline for future scans.
+
+### Scan target name 
+The prefixes of the report file names can be set
+
+## 4 -  Scan target volume or directory (source)
+
+
+## 5 - Copy/Move destination directory (dest)
+
+
+
