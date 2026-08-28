@@ -59,30 +59,30 @@ public class PhotoDateUtil
         imageFile.Save(filePath);
     }
 
-    // Searches the directory portion of filePath (not the file name itself) for a 4 digit
-    // number between 1839 and the current year. Level 1 is the directory the file is in.
+    // Searches the directory portion of filePath then the file name itself for a 4 digit
+    // number between 1839 and the current year. Level 1 is the directory the file is in and
+    // level 0 is the file name.
+    //
     // Searches the root directory of the file first (level N), then each subdirectory in
-    // turn (level N-1, N-2, ...2, 1), and returns the first year found along with the level
+    // turn (level N-1, N-2, ...2, 1, 0), and returns the first year found along with the level
     // it was found at. So if a photo lives at ...\Vacations\2020\Summer 2020 Trip\img99.jpg
     // it returns the 2020 and level 2. This enables the "Summer 2020 Trip" directory to be
     // reserved in the copy.
     //
     // Returns (null, null) if no such year is found anywhere in the path.
+
+    // TODO: reject false years found in filenames like "IMG1999.jpg"
+    //  but extract years if legit, eg Win 11 screenshots: "Screenshot 2026-04-10 233348.png"
     public static (int? Year, int? Level) GetYearFromPath(string filePath)
     {
-        // strip off the file name so it's never checked
-        string directoryPath = Path.GetDirectoryName(filePath);
-        if (string.IsNullOrEmpty(directoryPath))
-            return (null, null);
-
         int currentYear = DateTime.Now.Year;
-        string[] pathLevels = directoryPath.Split(
+        string[] pathLevels = filePath.Split(
             new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar },
             StringSplitOptions.RemoveEmptyEntries);
 
-        for (int level = pathLevels.Length; level >= 1 ; level--)
+        for (int level = pathLevels.Length - 1; level >= 0 ; level--)
         {
-            string pathLevel = pathLevels[pathLevels.Length - level];
+            string pathLevel = pathLevels[pathLevels.Length - (level + 1)];
 
             foreach (Match match in FourDigitRegex.Matches(pathLevel))
             {
@@ -107,7 +107,9 @@ public class PhotoDateUtil
             @"C:\OneDrive\Photos\Kayaking 2005-2007\IMG1999.jpg",
             @"C:\OneDrive\Photos\2005-06\IMG1999.jpg",
             @"C:\OneDrive\Photos\200506\IMG1999.jpg",
-            @"C:\Photos\img2020.arw"
+            @"C:\Photos\img.arw",
+            @"C:\Users\person\OneDrive\Pictures\Screenshots\Screenshot 2026-04-10 233348.png",
+            @"C:\Users\person\OneDrive\Pictures\Screenshots\Screenshot 20260410-233348.png"
         };
 
         foreach (string filePath in testPaths)
