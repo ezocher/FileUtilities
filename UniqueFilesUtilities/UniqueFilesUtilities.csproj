@@ -115,6 +115,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Config\CopySettings.ps1" />
+    <None Include="Docs\FilesDirectoriesPaths.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

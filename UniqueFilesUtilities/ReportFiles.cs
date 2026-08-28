@@ -14,7 +14,6 @@ namespace UniqueFilesUtilities
         static StreamWriter duplicatesReport;
         static StreamWriter uniquesReport;
 
-
         public static void Open(string baseName, string scanRootDir)
         {
             string reportsDirectoryPath = Path.Combine(AppSettings.AppRootPath, AppSettings.ReportFilesSubdirectory);
