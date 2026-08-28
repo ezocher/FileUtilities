@@ -22,7 +22,7 @@ DefaultDestinationVolume = C:
 
 # Other settings files
 CategoriesConfigFileName	= FileCategoriesByExtension.txt
-DirectoriesConfigFileName	= DirectoriesIgnore.txt
+DirectoriesIgnoreFileName	= DirectoriesIgnore.txt
 FilesIgnoreFileName			= FilesIgnoreByExtension.txt
 
 # Report and DB files

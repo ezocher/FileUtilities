@@ -12,8 +12,8 @@ public class ConfigFiles
         Path.Combine(ConfigDirectory(), AppSettings.CategoriesConfigFileName);
 
     public static string GetDirectoriesIgnoreFile() => 
-        Path.Combine(ConfigDirectory(), AppSettings.DirectoriesConfigFileName);
+        Path.Combine(ConfigDirectory(), AppSettings.DirectoriesIgnoreFileName);
 
     public static string GetFilesIgnoreFile() => 
-        Path.Combine(ConfigDirectory(), AppSettings.FilesIgnoreConfigFileName);
+        Path.Combine(ConfigDirectory(), AppSettings.FilesIgnoreFileName);
 }

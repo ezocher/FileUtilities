@@ -62,7 +62,6 @@ namespace UniqueFilesUtilities
                 if (AppSettings.WhichApp == App.PhotoCollector)
                 {
                     ExaminePhoto(fi);
-                    break;
                 }
 
                 string fileChecksum = ComputeFingerprint.FileChecksum(fi.FullName);

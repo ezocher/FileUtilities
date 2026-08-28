@@ -32,7 +32,7 @@ namespace UniqueFilesUtilities
         public const string OneDriveRootEnvironment = "OneDriveConsumer";
         private const string AppRootDirectory = "Files and Storage";
         public static string AppRootPath { get; private set; }              // Combined $OneDrive$\Files and Storage
-        private const string AppConfigSubdirectory = "AppConfig";
+        public const string AppConfigSubdirectory = "AppConfig";
         private const string SettingsFileName = "AppSettings.txt";
         private const string WhichAppCategoryName = "WhichApp";
         private const string AllAppsCategoryName = "All Apps";
@@ -48,7 +48,7 @@ namespace UniqueFilesUtilities
 
         // Settings files
         public static string CategoriesConfigFileName { get; set; }
-        public static string DirectoriesConfigFileName { get; set; }
+        public static string DirectoriesIgnoreFileName { get; set; }
         public static string FilesIgnoreFileName { get; set; }
 
         // Report and DB files

@@ -82,7 +82,8 @@ namespace UniqueFilesUtilities
                 // Also exclude non-photos/videos
                 extList = ConfigFileUtil.LoadConfigFile(categoryConfigFilePath);
                 foreach (ConfigSettings settings in extList)
-                    if (settings.Category != AppSettings.ExtensionsPhotoCategory && settings.Category != AppSettings.ExtensionsVideoCategory)
+                    if (settings.Category != AppSettings.PhotoFileExtensionsCategory && 
+                        settings.Category != AppSettings.VideoFileExtensionsCategory)
                         ExtensionSkipList.Add(settings.Value.ToLower());
             }
         }
