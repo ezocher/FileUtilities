@@ -25,19 +25,14 @@ class UniqueFilesUtilities
     //
     //----------------------------------------------------------------------------------------------------------------------------------------
 
-    static int hardwareThreads = Environment.ProcessorCount;
-    static int numThreadsSolidStateDrive = hardwareThreads; // 1; // for testing // 
-    static int numThreadsRotatingDrive = Math.Min(hardwareThreads, 3);  // 3 threads arrived at by observation on several rotating drives (internal and USB)
-    static int numThreads;
 
-    private static FileDB fileDB;
-
-    private static string destinationVolume, destinationPrefixPath;
 
     [STAThreadAttribute]
     public static void Main(string[] args)
     {
         string baseName;
+        string destinationVolume, destinationPrefixPath;
+        FileDB fileDB;
 
         AppSettings.LoadAppSettings();
 
@@ -50,7 +45,7 @@ class UniqueFilesUtilities
     // Select scan target volume/directory and set default basename
     //      basename is name of directory e.g. "Music" or machine + drive name e.g. "MyLap-Drive C"
         string sourceRootDir = FileUtil.SelectDirectory();
-        baseName = FileUtil.GetBaseName(sourceRootDir);
+        baseName = FileUtil.DeriveBaseName(sourceRootDir);
         Console.WriteLine(AppSettings.operationDescription + " '{0}'\n", sourceRootDir);
 
         if ((sourceRootDir == "") || (baseName == ""))
@@ -98,11 +93,6 @@ class UniqueFilesUtilities
 
         CopyUniqueFile.SetDestBasePath(AppSettings.BaseName);
 
-        if (FileUtil.IsSystemDrive(sourceRootDir))
-            // Most current system drives are SSDs
-            numThreads = numThreadsSolidStateDrive;
-        else
-            numThreads = numThreadsRotatingDrive;
 
         bool copyFiles;
         if (AppSettings.WhichApp == App.FingerprintDBMaker)
@@ -132,11 +122,7 @@ class UniqueFilesUtilities
                 
         CopyUniqueFile.SetOptionCopyFiles(copyFiles);
 
-        Console.Write("Run with {0} threads? ", numThreads);
-        input = Console.ReadLine();
-        int i;
-        if (Int32.TryParse(input, out i))
-            numThreads = i;
+        (int numThreads, int hardwareThreads) = NumberOfThreads.Set(sourceRootDir);
 
         ConsoleUtil.White();
         Console.WriteLine("\n\tCreating 4 report files '{0}-Unique/Duplicate/Excluded Files.tsv and -Files DB.tsv'", AppSettings.BaseName);

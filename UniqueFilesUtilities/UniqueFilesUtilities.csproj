@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F593959C-EE27-4B52-8327-545F696407E2}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UniqueFilesUtilities</RootNamespace>
     <AssemblyName>UniqueFilesUtilities</AssemblyName>
@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>UniqueFilesUtilities</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExifLibrary, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
@@ -110,6 +110,7 @@
     <Compile Include="ReportFiles.cs" />
     <Compile Include="ReportProgress.cs" />
     <Compile Include="RunParallelScan.cs" />
+    <Compile Include="Util\NumberOfThreads.cs" />
     <Compile Include="Util\TimerUtil.cs" />
   </ItemGroup>
   <ItemGroup>

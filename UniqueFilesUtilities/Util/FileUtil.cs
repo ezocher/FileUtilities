@@ -76,7 +76,7 @@ public class FileUtil
         return directory;
     }
 
-    public static string GetBaseName(string directory)
+    public static string DeriveBaseName(string directory)
     {
         FileInfo d;
 
