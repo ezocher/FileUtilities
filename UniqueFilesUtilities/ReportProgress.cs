@@ -72,7 +72,7 @@ public class ReportProgress
 
             ReportFiles.WriteUniqueInfo(fi, copiedFileFullPath, checksum, numUniquesFound, category);
 
-            ReportFiles.WriteFileInfo(fi, copiedFileFullPath, UniqueFilesUtilities.baseName, checksum, numUniquesFound);
+            ReportFiles.WriteFileInfo(fi, copiedFileFullPath, AppSettings.BaseName, checksum, numUniquesFound);
         }
     }
 

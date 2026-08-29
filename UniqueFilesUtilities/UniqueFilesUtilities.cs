@@ -32,12 +32,13 @@ class UniqueFilesUtilities
 
     private static FileDB fileDB;
 
-    public static string baseName;
     private static string destinationVolume, destinationPrefixPath;
 
     [STAThreadAttribute]
     public static void Main(string[] args)
     {
+        string baseName;
+
         AppSettings.LoadAppSettings();
 
         ConsoleUtil.InitConsoleSettings(AppSettings.appName + " - Under Development");
@@ -93,7 +94,9 @@ class UniqueFilesUtilities
         input = Console.ReadLine();
         if (input != String.Empty)
             baseName = input;
-        CopyUniqueFile.SetSourceBaseName(baseName);
+        AppSettings.BaseName = baseName;
+
+        CopyUniqueFile.SetDestBasePath(AppSettings.BaseName);
 
         if (FileUtil.IsSystemDrive(sourceRootDir))
             // Most current system drives are SSDs
@@ -136,7 +139,7 @@ class UniqueFilesUtilities
             numThreads = i;
 
         ConsoleUtil.White();
-        Console.WriteLine("\n\tCreating 4 report files '{0}-Unique/Duplicate/Excluded Files.tsv and -Files DB.tsv'", baseName);
+        Console.WriteLine("\n\tCreating 4 report files '{0}-Unique/Duplicate/Excluded Files.tsv and -Files DB.tsv'", AppSettings.BaseName);
         Console.WriteLine("\tRunning {0} simultaneous threads on {1} hardware threads", numThreads, hardwareThreads);
         Console.WriteLine("\tBase file databases are loaded from '{0}'", baseFileListsDirectory);
         Console.WriteLine();
@@ -146,7 +149,7 @@ class UniqueFilesUtilities
         fileDB = new FileDB();
         LoadFileDBs.LoadBaseFileLists(fileDB);
 
-        RunParallelScan.ScanAndCopyUniques(baseName, sourceRootDir, numThreads, fileDB);
+        RunParallelScan.ScanAndCopyUniques(AppSettings.BaseName, sourceRootDir, numThreads, fileDB);
 
         ConsoleUtil.WaitForKeyPress();
     }

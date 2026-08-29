@@ -77,8 +77,12 @@ internal class AppSettings
     public static string VideoFileExtensionsCategory { get; set; }
     public static string unknownYearName { get; set; }
 
+    //----------------------------------------------------------------------------------------------------------------------------------------
+    // Settings determined at run time for each run
+    //----------------------------------------------------------------------------------------------------------------------------------------
+    public static string BaseName { get; set; }
 
-    // TODO: load settings from AppSettings.txt
+    // Load the AppSettings.txt file and set the WhichApp property and other properties in this class
     public static void LoadAppSettings()
     {
         AppRootPath = Path.Combine(Environment.GetEnvironmentVariable(OneDriveRootEnvironment), AppRootDirectory);

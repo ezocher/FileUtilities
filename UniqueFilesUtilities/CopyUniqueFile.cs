@@ -68,7 +68,7 @@ class CopyUniqueFile
             case App.FingerprintDBMaker:
                 return "";
             case App.UniqueFileCopier:
-                return Path.Combine(destPrefixPath, AppSettings.destRootPrefix + UniqueFilesUtilities.baseName);
+                return Path.Combine(destPrefixPath, AppSettings.destRootPrefix + AppSettings.BaseName);
             case App.PhotoCollector:
                 if (photo)
                     return Path.Combine(destPrefixPath, AppSettings.photosDestRootFolder);
@@ -89,9 +89,9 @@ class CopyUniqueFile
             sourcePathRootLength = sourceRoot.Length;
     }
 
-    public static void SetSourceBaseName(string name)
+    public static void SetDestBasePath(string baseName)
     {
-        destBasePath = destPrefixPath + Path.DirectorySeparatorChar + AppSettings.destRootPrefix + name;
+        destBasePath = destPrefixPath + Path.DirectorySeparatorChar + AppSettings.destRootPrefix + baseName;
     }
 
     static void CopyExceptionMessage(string srcPath, string destPath, string exceptionMessage)
