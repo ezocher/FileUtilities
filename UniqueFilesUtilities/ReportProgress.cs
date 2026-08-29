@@ -218,8 +218,11 @@ namespace UniqueFilesUtilities
 
             Console.WriteLine("\n\nRun Complete - {0:N0} files and {1:N0} directories scanned in {2} - {3} at {4}/minute",
                 numFilesScanned, numDirectoriesScanned, TimerUtil.FormatMilliseconds(progressStopwatch.ElapsedMilliseconds), FileUtil.FormatByteSize(totalBytesScanned), FileUtil.FormatByteSize((long)readSpeedbytesPerMin));
-
-            Console.WriteLine("   {0:N0} unique files copied ({1}), {2:N0} duplicate files found", numUniquesFound, FileUtil.FormatByteSize(totalBytesCopied), numDuplicatesFound);
+            
+            if (AppSettings.WhichApp == App.FingerprintDBMaker)
+                Console.WriteLine("   {0:N0} unique files found ({1}), {2:N0} duplicate files found", numUniquesFound, FileUtil.FormatByteSize(totalBytesCopied), numDuplicatesFound);
+            else
+                Console.WriteLine("   {0:N0} unique files copied ({1}), {2:N0} duplicate files found", numUniquesFound, FileUtil.FormatByteSize(totalBytesCopied), numDuplicatesFound);
             
             int totalFilesSkipped = 0, totalDirsSkipped = 0;
 

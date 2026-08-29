@@ -9,7 +9,7 @@ namespace UniqueFilesUtilities
 {
     class ReportFiles
     {
-        static StreamWriter filesReport;
+        static StreamWriter filesDB;
         static StreamWriter excludedReport;
         static StreamWriter duplicatesReport;
         static StreamWriter uniquesReport;
@@ -21,8 +21,8 @@ namespace UniqueFilesUtilities
 
             string filesReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + AppSettings.FilesDBNameSuffix + AppSettings.ReportFilesExtension;
             filesReportFullName = FileUtil.GetUniqueFileName(filesReportFullName);
-            filesReport = new StreamWriter(filesReportFullName, false); // Append = true
-            filesReport.WriteLine(FilesReportHeader);
+            filesDB = new StreamWriter(filesReportFullName, false); // Append = true
+            filesDB.WriteLine(FilesReportHeader);
 
             string excludedReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + AppSettings.ExcludedReportNameSuffix + AppSettings.ReportFilesExtension;
             excludedReportFullName = FileUtil.GetUniqueFileName(excludedReportFullName);
@@ -42,7 +42,7 @@ namespace UniqueFilesUtilities
 
         public static void Close()
         {
-            filesReport.Close();
+            filesDB.Close();
             excludedReport.Close();
             duplicatesReport.Close();
             uniquesReport.Close();
@@ -54,7 +54,7 @@ namespace UniqueFilesUtilities
 
         public static void WriteFileInfo(FileInfo fi, string copiedFileFullPath, string baseName, string fileFingerprint, int numFilesCompleted)
         {
-            filesReport.WriteLine(FilesReportFormat, numFilesCompleted, baseName,
+            filesDB.WriteLine(FilesReportFormat, numFilesCompleted, baseName,
                 fi.CreationTime, fi.LastWriteTime, fi.LastAccessTime,
                 fi.Attributes, // fi.IsReadOnly, - ReadOnly is included FileInfo.Attributes
                 copiedFileFullPath, fi.Extension, fi.Name, fi.Length, fileFingerprint);
@@ -87,6 +87,9 @@ namespace UniqueFilesUtilities
 
         public static void WriteUniqueInfo(FileInfo fi, string copiedFileFullPath, string fileFingerprint, int numUniquesFound, string category)
         {
+            if (AppSettings.WhichApp == App.FingerprintDBMaker)
+                copiedFileFullPath = "";
+            
             uniquesReport.WriteLine(UniquesReportFormat, numUniquesFound,
                 fi.FullName, copiedFileFullPath, fi.Extension, fi.Name, category, fi.Length, fileFingerprint);
         }
