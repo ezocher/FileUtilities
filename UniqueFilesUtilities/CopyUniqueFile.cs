@@ -17,11 +17,17 @@ class CopyUniqueFile
 
     public static bool divideFilesIntoCategories;
     private static bool copyFiles;
+    private static bool moveFiles; // Move versus copy files, used by PhotoCollector only
     private static Dictionary<string, string> FileExtensionToCategoryMap;
 
     public static void SetOptionDivideFilesIntoCategories(bool setting)
     {
         divideFilesIntoCategories = setting;
+    }
+
+    public static void SetOptionMoveOrCopyFiles(bool setting)
+    {
+        moveFiles = setting;
     }
 
     public static void SetOptionCopyFiles(bool setting)

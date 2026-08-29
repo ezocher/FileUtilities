@@ -75,6 +75,35 @@ class ConsoleUtil
         return setting;
     }
 
+    public static bool TwoChoices(string prompt, char trueChoice, char falseChoice)
+    {
+        bool validChoice = false;
+        bool setting = false;
+        do
+        {
+            Console.Write(prompt);
+            string input = Console.ReadLine();
+            if (input.Length > 0)
+            {
+                if (input.ToLower()[0] == char.ToLower(trueChoice))
+                {
+                    setting = true;
+                    validChoice = true;
+                }
+                else if (input.ToLower()[0] == char.ToLower(falseChoice))
+                {
+                    setting = false;
+                    validChoice = true;
+                }
+            }
+            else
+            {
+                validChoice = false;
+            }
+        } while (!validChoice);
+
+        return setting;
+    }
 
     public static void SaveColors()
     {

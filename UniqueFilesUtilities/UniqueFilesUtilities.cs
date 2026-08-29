@@ -93,7 +93,6 @@ class UniqueFilesUtilities
 
         CopyUniqueFile.SetDestBasePath(AppSettings.BaseName);
 
-
         bool copyFiles;
         if (AppSettings.WhichApp == App.FingerprintDBMaker)
             copyFiles = false;
@@ -106,13 +105,20 @@ class UniqueFilesUtilities
             Console.WriteLine("\tCopying unique files from '{0}' to '{1}'\n", sourceRootDir, CopyUniqueFile.DestinationRootPath(true));
             if (AppSettings.WhichApp == App.UniqueFileCopier)
             {
+                CopyUniqueFile.SetOptionMoveOrCopyFiles(false); // Always copy files for UniqueFileCopier
                 ConsoleUtil.Green();
                 CopyUniqueFile.SetOptionDivideFilesIntoCategories(ConsoleUtil.YesNoChoice("Divide files into categories (Y|N)? "));
                 ConsoleUtil.RestoreColors();
             }
             else // AppSettings.WhichApp == App.PhotoCollector
+            {
                 CopyUniqueFile.SetOptionDivideFilesIntoCategories(false);
-        }   
+                ConsoleUtil.Green();
+                // Allow user to select move or copy for PhotoCollector
+                CopyUniqueFile.SetOptionMoveOrCopyFiles(ConsoleUtil.TwoChoices("Move files or copy files (M|C)? ", 'M', 'C'));
+                ConsoleUtil.RestoreColors();
+            }
+        }
         else
             Console.WriteLine("   Scanning and fingerprinting all unique files in '{0}' and writing DB and reports\n", sourceRootDir);
         ConsoleUtil.RestoreColors();
