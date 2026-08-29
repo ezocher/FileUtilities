@@ -41,13 +41,18 @@ These reports are all created in the "New Reports" subdirectory of the app root 
 
 The database of newly found unique files is also generated as a .tsv file and stored in "New Reports". Currently the "*-File DB.tsv" files must be manually copied to one of the Base File DBs folders to be used in the baseline for future scans.
 
-### Scan target name 
-The prefixes of the report file names can be set
+### Base Name
+When the scan target volume or directory is selected, this determines the default "base name" for the target of the scan. Base name is name of directory e.g. "Music" or machine + drive name e.g. "MyLaptop-Drive C". This base name can be changed to anything desired before the scan is started.
+
+The base name is used as the prefix of the names of the reports and new DB that are generated during the scan.
+
+In the Unique File Copier app, the base name is also used as the suffix name of the destination directory for the copy/move operation (see 5 below).
 
 ## 4 -  Scan target volume or directory (source)
 
 
 ## 5 - Copy/Move destination directory (dest)
 
+If the selected destination volume is the system volume (C:), then we can't write to the root of the volume and instead create the destination root directory in the current user's root directory (E.g. C:\Users\username).
 
 

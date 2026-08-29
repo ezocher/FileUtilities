@@ -73,6 +73,7 @@ namespace UniqueFilesUtilities
         public static string ExtensionsIgnoreCategory { get; set; }
         public static string PhotoFileExtensionsCategory { get; set; }
         public static string VideoFileExtensionsCategory { get; set; }
+        public static string unknownYearName { get; set; }
 
 
         // TODO: load settings from AppSettings.txt

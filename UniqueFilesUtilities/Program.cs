@@ -47,15 +47,15 @@ namespace UniqueFilesUtilities
             string baseFileListsDirectory = LoadFileDBs.BaseFileListsFolderPath();
 
 
-        // Select scan target volume/directory and set basename
+        // Select scan target volume/directory and set default basename
         //      basename is name of directory e.g. "Music" or machine + drive name e.g. "MyLap-Drive C"
-            string scanRootDir = FileUtil.SelectDirectory();
-            baseName = FileUtil.GetBaseName(scanRootDir);
-            Console.WriteLine(AppSettings.operationDescription + " '{0}'\n", scanRootDir);
+            string sourceRootDir = FileUtil.SelectDirectory();
+            baseName = FileUtil.GetBaseName(sourceRootDir);
+            Console.WriteLine(AppSettings.operationDescription + " '{0}'\n", sourceRootDir);
 
-            if ((scanRootDir == "") || (baseName == ""))
+            if ((sourceRootDir == "") || (baseName == ""))
             {
-                ConsoleUtil.WriteLineColor(String.Format("Error: scan directory '{0}' or directory name '{1}' is empty", scanRootDir, baseName),
+                ConsoleUtil.WriteLineColor(String.Format("Error: scan directory '{0}' or directory name '{1}' is empty", sourceRootDir, baseName),
                     ConsoleColor.Red);
                 ConsoleUtil.WaitForKeyPress();
                 return;
@@ -89,15 +89,15 @@ namespace UniqueFilesUtilities
 
         // Set the name for this scan target
         //      Used to name the generated DB and report files in all apps
-        //      Also used to the name destination folder for UniqueFileCopier
-            Console.Write("Scan target's name is '{0}'? ", baseName);
+        //      Also used as the suffix of the destination root folder name for UniqueFileCopier
+            Console.Write("Scan target's base name is '{0}'? ", baseName);
             input = Console.ReadLine();
             if (input != String.Empty)
                 baseName = input;
             CopyUniqueFile.SetSourceBaseName(baseName);
 
-            if (FileUtil.IsSystemDrive(scanRootDir))
-                // All my current system drives are SSDs
+            if (FileUtil.IsSystemDrive(sourceRootDir))
+                // Most current system drives are SSDs
                 numThreads = numThreadsSolidStateDrive;
             else
                 numThreads = numThreadsRotatingDrive;
@@ -111,18 +111,18 @@ namespace UniqueFilesUtilities
             ConsoleUtil.White();
             if (copyFiles)
             {
-                Console.WriteLine("\tCopying unique files from '{0}' to '{1}'\n", scanRootDir, CopyUniqueFile.DestinationRootPath(true));
+                Console.WriteLine("\tCopying unique files from '{0}' to '{1}'\n", sourceRootDir, CopyUniqueFile.DestinationRootPath(true));
                 if (AppSettings.WhichApp == App.UniqueFileCopier)
                 {
                     ConsoleUtil.Green();
                     CopyUniqueFile.SetOptionDivideFilesIntoCategories(ConsoleUtil.YesNoChoice("Divide files into categories (Y|N)? "));
                     ConsoleUtil.RestoreColors();
                 }
-                else
+                else // AppSettings.WhichApp == App.PhotoCollector
                     CopyUniqueFile.SetOptionDivideFilesIntoCategories(false);
             }   
             else
-                Console.WriteLine("   Scanning and fingerprinting all unique files in '{0}' and writing DB and reports\n", scanRootDir);
+                Console.WriteLine("   Scanning and fingerprinting all unique files in '{0}' and writing DB and reports\n", sourceRootDir);
             ConsoleUtil.RestoreColors();
 
             if (AppSettings.WhichApp == App.PhotoCollector || CopyUniqueFile.divideFilesIntoCategories)
@@ -137,7 +137,7 @@ namespace UniqueFilesUtilities
                 numThreads = i;
 
             ConsoleUtil.White();
-            Console.WriteLine("\n\tCreating 4 report files '{0} - Unique/Duplicate/Excluded Files.tsv and Files DB.tsv'", baseName);
+            Console.WriteLine("\n\tCreating 4 report files '{0}-Unique/Duplicate/Excluded Files.tsv and -Files DB.tsv'", baseName);
             Console.WriteLine("\tRunning {0} simultaneous threads on {1} hardware threads", numThreads, hardwareThreads);
             Console.WriteLine("\tBase file databases are loaded from '{0}'", baseFileListsDirectory);
             Console.WriteLine();
@@ -147,7 +147,7 @@ namespace UniqueFilesUtilities
             fileDB = new FileDB();
             LoadFileDBs.LoadBaseFileLists(fileDB);
 
-            RunParallelScan.ScanAndCopyUniques(baseName, scanRootDir, numThreads, fileDB);
+            RunParallelScan.ScanAndCopyUniques(baseName, sourceRootDir, numThreads, fileDB);
 
             ConsoleUtil.WaitForKeyPress();
         }

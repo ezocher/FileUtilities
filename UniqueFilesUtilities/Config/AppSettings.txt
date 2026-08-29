@@ -8,7 +8,9 @@
 # Important: keep WhichApp the first category and setting
 # Possible Apps: FingerprintDBMaker, UniqueFileCopier, PhotoCollector
 [WhichApp]
-PhotoCollector
+FingerprintDBMaker
+# UniqueFileCopier
+# PhotoCollector
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 # C# types for all Key = Value settings below:
@@ -34,7 +36,6 @@ DuplicatesReportNameSuffix	= -Duplicate Files
 UniquesReportNameSuffix		= -Unique Files
 
 unknownCategoryName			= Unknown
-destRootPrefix				= unq-
 
 DBFileNameFilter			= *-File DB.tsv			# Match pattern above
 
@@ -49,7 +50,7 @@ VideoFileExtensionsCategory = Video
 
 [FingerprintDBMaker]
 appName					= Fingerprint Database Maker
-appDescription			= Fingerprints unique files in the target volume/directory and creates a DB file in ...
+appDescription			= Fingerprints unique files in the target volume/directory and creates a DB file in the New Reports directory
 operationDescription	= Fingerprinting unique files from
 
 BaseFileDBsDirectory	= Base File DBs
@@ -58,10 +59,12 @@ BaseFileDBsDirectory	= Base File DBs
 
 [UniqueFileCopier]
 appName					= Unique File Copier
-appDescription			= Copies unique files found in the target volume/directory. Optionally organizes them into folders by file category
+appDescription			= Copies unique files found in the target volume/directory and optionally organizes them into folders by file category
 operationDescription	= Copying unique files from
 
 BaseFileDBsDirectory	= Base File DBs
+
+destRootPrefix			= unq-
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -74,3 +77,6 @@ photosDestRootFolder	= Collected Photos
 videosDestRootFolder	= Collected Videos
 
 BaseFileDBsDirectory	= Photos File DBs
+
+unknownYearName			= Unknown Year
+
