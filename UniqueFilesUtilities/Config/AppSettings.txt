@@ -7,10 +7,15 @@
 
 # Important: keep WhichApp the first category and setting
 # Possible Apps: FingerprintDBMaker, UniqueFileCopier, PhotoCollector
+#
+# If the app is named one of these three names then the app name will override the setting below
+#
 [WhichApp]
-FingerprintDBMaker
-# UniqueFileCopier
+# FingerprintDBMaker
+UniqueFileCopier
 # PhotoCollector
+
+
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 # C# types for all Key = Value settings below:

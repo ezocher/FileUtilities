@@ -5,116 +5,112 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniqueFilesUtilities
+
+public class DirectoryFingerprint
 {
-    // Used to accumulate file and directory checksums of all items in a directory
+    DirectoryInfo di;
+    DirectoryFingerprint parentFingerprint;
 
-    public class DirectoryFingerprint
+    readonly object _lockDirFingerprint = new object();
+    string[] checksums;
+    int checksumsStored = 0;
+
+    int numberOfItems;
+    int numberOfItemsCompleted = 0;
+
+    bool completed = false;
+
+    public DirectoryFingerprint(DirectoryInfo di, DirectoryFingerprint parentFingerprint)
     {
-        DirectoryInfo di;
-        DirectoryFingerprint parentFingerprint;
+        this.di = di;
+        this.parentFingerprint = parentFingerprint;
+    }
 
-        readonly object _lockDirFingerprint = new object();
-        string[] checksums;
-        int checksumsStored = 0;
+    public void SetNumberOfItems(int numFiles, int numDirs)
+    {
+        this.numberOfItems = numFiles + numDirs;
 
-        int numberOfItems;
-        int numberOfItemsCompleted = 0;
+        if (numberOfItems > 0)
+            checksums = new string[numberOfItems];
+        else
+            EmptyDirectory();
+    }
 
-        bool completed = false;
-
-        public DirectoryFingerprint(DirectoryInfo di, DirectoryFingerprint parentFingerprint)
+    public void ChildDirectorySkipped()
+    {
+        lock (_lockDirFingerprint)
         {
-            this.di = di;
-            this.parentFingerprint = parentFingerprint;
+            numberOfItemsCompleted++;
         }
+        CheckSelfCompleted();
+    }
 
-        public void SetNumberOfItems(int numFiles, int numDirs)
+    public void ChildFileSkipped()
+    {
+        ChildDirectorySkipped();
+    }
+
+    public void FileCompleted(string fileChecksum)
+    {
+        lock (_lockDirFingerprint)
         {
-            this.numberOfItems = numFiles + numDirs;
-
-            if (numberOfItems > 0)
-                checksums = new string[numberOfItems];
-            else
-                EmptyDirectory();
+            checksums[checksumsStored++] = fileChecksum;
+            numberOfItemsCompleted++;
         }
+        CheckSelfCompleted();
 
-        public void ChildDirectorySkipped()
+    }
+
+    public void DirectoryCompleted(string dirChecksum)
+    {
+        FileCompleted(dirChecksum);
+    }
+
+    private void CheckSelfCompleted()
+    {
+        string directoryChecksum;
+
+        lock (_lockDirFingerprint)
         {
-            lock (_lockDirFingerprint)
+            if (!completed) // Only do this once
             {
-                numberOfItemsCompleted++;
-            }
-            CheckSelfCompleted();
-        }
-
-        public void ChildFileSkipped()
-        {
-            ChildDirectorySkipped();
-        }
-
-        public void FileCompleted(string fileChecksum)
-        {
-            lock (_lockDirFingerprint)
-            {
-                checksums[checksumsStored++] = fileChecksum;
-                numberOfItemsCompleted++;
-            }
-            CheckSelfCompleted();
-
-        }
-
-        public void DirectoryCompleted(string dirChecksum)
-        {
-            FileCompleted(dirChecksum);
-        }
-
-        private void CheckSelfCompleted()
-        {
-            string directoryChecksum;
-
-            lock (_lockDirFingerprint)
-            {
-                if (!completed) // Only do this once
+                if (numberOfItemsCompleted == numberOfItems)
                 {
-                    if (numberOfItemsCompleted == numberOfItems)
+                    completed = true;
+
+                    if (numberOfItemsCompleted == checksumsStored)
+                        directoryChecksum = ComputeFingerprint.DirectoryChecksum(checksums);
+                    else
                     {
-                        completed = true;
-
-                        if (numberOfItemsCompleted == checksumsStored)
-                            directoryChecksum = ComputeFingerprint.DirectoryChecksum(checksums);
-                        else
-                        {
-                            string[] storedChecksums = new string[checksumsStored];
-                            Array.Copy(checksums, storedChecksums, storedChecksums.Length);
-                            directoryChecksum = ComputeFingerprint.DirectoryChecksum(storedChecksums);
-                        }
-
-                        RunParallelScan.progress.DirectoryCompleted(di, directoryChecksum, checksumsStored, numberOfItems);
-
-                        // Pass checksum up to parent
-                        parentFingerprint?.DirectoryCompleted(directoryChecksum);
+                        string[] storedChecksums = new string[checksumsStored];
+                        Array.Copy(checksums, storedChecksums, storedChecksums.Length);
+                        directoryChecksum = ComputeFingerprint.DirectoryChecksum(storedChecksums);
                     }
+
+                    RunParallelScan.progress.DirectoryCompleted(di, directoryChecksum, checksumsStored, numberOfItems);
+
+                    // Pass checksum up to parent
+                    parentFingerprint?.DirectoryCompleted(directoryChecksum);
                 }
             }
         }
+    }
 
-        private void EmptyDirectory()
+    private void EmptyDirectory()
+    {
+        string[] EmptyDirChecksumSeed = { String.Empty };
+        string directoryChecksum;
+
+        lock (_lockDirFingerprint)
         {
-            string[] EmptyDirChecksumSeed = { String.Empty };
-            string directoryChecksum;
+            completed = true;
+            directoryChecksum = ComputeFingerprint.DirectoryChecksum(EmptyDirChecksumSeed);
 
-            lock (_lockDirFingerprint)
-            {
-                completed = true;
-                directoryChecksum = ComputeFingerprint.DirectoryChecksum(EmptyDirChecksumSeed);
+            RunParallelScan.progress.DirectoryCompleted(di, directoryChecksum, checksumsStored, numberOfItems);
 
-                RunParallelScan.progress.DirectoryCompleted(di, directoryChecksum, checksumsStored, numberOfItems);
-
-                // Don't Pass empty checksum up to parent
-                parentFingerprint?.ChildDirectorySkipped();
-            }
-
+            // Don't Pass empty checksum up to parent
+            parentFingerprint?.ChildDirectorySkipped();
         }
+
     }
 }

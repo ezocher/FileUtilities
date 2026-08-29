@@ -1,5 +1,4 @@
-﻿using UniqueFilesUtilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -69,7 +68,7 @@ class CopyUniqueFile
             case App.FingerprintDBMaker:
                 return "";
             case App.UniqueFileCopier:
-                return Path.Combine(destPrefixPath, AppSettings.destRootPrefix + Program.baseName);
+                return Path.Combine(destPrefixPath, AppSettings.destRootPrefix + UniqueFilesUtilities.baseName);
             case App.PhotoCollector:
                 if (photo)
                     return Path.Combine(destPrefixPath, AppSettings.photosDestRootFolder);

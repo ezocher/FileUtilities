@@ -5,10 +5,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F593959C-EE27-4B52-8327-545F696407E2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeDupScanner</RootNamespace>
-    <AssemblyName>CopyUniqueFiles</AssemblyName>
+    <RootNamespace>UniqueFilesUtilities</RootNamespace>
+    <AssemblyName>UniqueFilesUtilities</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -105,7 +105,7 @@
     <Compile Include="DirectoryFingerprint.cs" />
     <Compile Include="Util\FileUtil.cs" />
     <Compile Include="Util\PhotoDateUtil.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="UniqueFilesUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportFiles.cs" />
     <Compile Include="ReportProgress.cs" />

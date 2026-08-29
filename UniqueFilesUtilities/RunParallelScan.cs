@@ -5,89 +5,86 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniqueFilesUtilities
+class RunParallelScan
 {
-    class RunParallelScan
+    public static ReportProgress progress;
+    static ConcurrentFilesystemTraverser fst;
+    static FileDB db;
+    static string volumeName;
+
+    public static void ScanAndCopyUniques(string baseName, string scanRootDir, int numThreads, FileDB fileDB)
     {
-        public static ReportProgress progress;
-        static ConcurrentFilesystemTraverser fst;
-        static FileDB db;
-        static string volumeName;
+        ReportFiles.Open(baseName, scanRootDir);
 
-        public static void ScanAndCopyUniques(string baseName, string scanRootDir, int numThreads, FileDB fileDB)
+        CopyUniqueFile.SetSourcePathRoot(scanRootDir);
+
+        fst = new ConcurrentFilesystemTraverser(scanRootDir);
+
+        db = fileDB;
+        volumeName = baseName;
+
+        progress = new ReportProgress(numThreads);
+        progress.Start();
+
+        int nThreads = numThreads;
+        Parallel.For(0, nThreads, i => { FileProcessor(i); });
+
+        progress.Stop();
+        progress.DisplayFinalSummary();
+
+        // ReportFiles.Close(); // Files closed under lock by progress.DisplayFinalSummary()
+    }
+
+    static void ExaminePhoto(FileInfo fi)
+    {
+        // Test PhotoDateUtils
+        (int? YearFromPath, int? LevelPath) = PhotoDateUtil.GetYearFromPath(fi.FullName);
+        int? YearFromMetadata = PhotoDateUtil.ExtractMetadataYearTaken(fi.FullName);
+
+        // Examine directory structures
+    }
+
+
+    static void FileProcessor(int threadIndex)
+    {
+        Tuple<FileInfo, DirectoryFingerprint> file;
+        // int filesProcessedByThisThread = 0;
+
+        while ((file = fst.NextFile()) != null)
         {
-            ReportFiles.Open(baseName, scanRootDir);
+            FileInfo fi = file.Item1;
+            DirectoryFingerprint parentFingerprint = file.Item2;
 
-            CopyUniqueFile.SetSourcePathRoot(scanRootDir);
+            // TODO: check if file should be skipped
 
-            fst = new ConcurrentFilesystemTraverser(scanRootDir);
-
-            db = fileDB;
-            volumeName = baseName;
-
-            progress = new ReportProgress(numThreads);
-            progress.Start();
-
-            int nThreads = numThreads;
-            Parallel.For(0, nThreads, i => { FileProcessor(i); });
-
-            progress.Stop();
-            progress.DisplayFinalSummary();
-
-            // ReportFiles.Close(); // Files closed under lock by progress.DisplayFinalSummary()
-        }
-
-        static void ExaminePhoto(FileInfo fi)
-        {
-            // Test PhotoDateUtils
-            (int? YearFromPath, int? LevelPath) = PhotoDateUtil.GetYearFromPath(fi.FullName);
-            int? YearFromMetadata = PhotoDateUtil.ExtractMetadataYearTaken(fi.FullName);
-
-            // Examine directory structures
-        }
-
-
-        static void FileProcessor(int threadIndex)
-        {
-            Tuple<FileInfo, DirectoryFingerprint> file;
-            // int filesProcessedByThisThread = 0;
-
-            while ((file = fst.NextFile()) != null)
+            if (AppSettings.WhichApp == App.PhotoCollector)
             {
-                FileInfo fi = file.Item1;
-                DirectoryFingerprint parentFingerprint = file.Item2;
-
-                // TODO: check if file should be skipped
-
-                if (AppSettings.WhichApp == App.PhotoCollector)
-                {
-                    ExaminePhoto(fi);
-                }
-
-                string fileChecksum = ComputeFingerprint.FileChecksum(fi.FullName);
-                if (fileChecksum == "")
-                {
-                    parentFingerprint.ChildFileSkipped();
-                }
-                else
-                {
-                    string originalFilePath;
-                    if ( db.IsUniqueFile(fi, fileChecksum, volumeName, out originalFilePath))
-                    {
-                        string destinationFullName, category;
-                        CopyUniqueFile.Copy(fi.FullName, out destinationFullName, out category);
-
-                        progress.UniqueFileCompleted(fi, destinationFullName, fileChecksum, category);
-                    }
-                    else
-                        progress.DuplicateFileCompleted(fi, originalFilePath, fileChecksum);
-
-                    parentFingerprint.FileCompleted(fileChecksum);
-                }
+                ExaminePhoto(fi);
             }
 
-            progress.ThreadCompleted();
+            string fileChecksum = ComputeFingerprint.FileChecksum(fi.FullName);
+            if (fileChecksum == "")
+            {
+                parentFingerprint.ChildFileSkipped();
+            }
+            else
+            {
+                string originalFilePath;
+                if ( db.IsUniqueFile(fi, fileChecksum, volumeName, out originalFilePath))
+                {
+                    string destinationFullName, category;
+                    CopyUniqueFile.Copy(fi.FullName, out destinationFullName, out category);
+
+                    progress.UniqueFileCompleted(fi, destinationFullName, fileChecksum, category);
+                }
+                else
+                    progress.DuplicateFileCompleted(fi, originalFilePath, fileChecksum);
+
+                parentFingerprint.FileCompleted(fileChecksum);
+            }
         }
 
+        progress.ThreadCompleted();
     }
+
 }

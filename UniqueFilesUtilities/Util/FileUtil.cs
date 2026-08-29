@@ -214,6 +214,11 @@ public class FileUtil
             return false;
         }
     }
+
+    // Returns the name of the currenlty running exe without the path or extension
+    public static string GetExeName() => 
+        Path.GetFileNameWithoutExtension(System.Windows.Forms.Application.ExecutablePath);
+
 }
 
 public class SampleFileUtil
