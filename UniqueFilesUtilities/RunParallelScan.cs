@@ -35,13 +35,28 @@ class RunParallelScan
         // ReportFiles.Close(); // Files closed under lock by progress.DisplayFinalSummary()
     }
 
-    static void ExaminePhoto(FileInfo fi)
+    static string GetYearTaken(FileInfo fi)
     {
         // Test PhotoDateUtils
         (int? YearFromPath, int? LevelPath) = PhotoDateUtil.GetYearFromPath(fi.FullName);
         int? YearFromMetadata = PhotoDateUtil.ExtractMetadataYearTaken(fi.FullName);
 
-        // Examine directory structures
+        // TODO: Examine directory structures
+        // TODO: What to do with level?
+
+
+        if (YearFromMetadata.HasValue)
+        {
+            return YearFromMetadata.Value.ToString();
+        }
+        else if (YearFromPath.HasValue)
+        {
+            return YearFromPath.Value.ToString();
+        }
+        else 
+        {
+            return AppSettings.unknownYearName;
+        }
     }
 
 
@@ -57,11 +72,6 @@ class RunParallelScan
 
             // TODO: check if file should be skipped
 
-            if (AppSettings.WhichApp == App.PhotoCollector)
-            {
-                ExaminePhoto(fi);
-            }
-
             string fileChecksum = ComputeFingerprint.FileChecksum(fi.FullName);
             if (fileChecksum == "")
             {
@@ -72,8 +82,12 @@ class RunParallelScan
                 string originalFilePath;
                 if ( db.IsUniqueFile(fi, fileChecksum, volumeName, out originalFilePath))
                 {
-                    string destinationFullName, category;
-                    CopyUniqueFile.Copy(fi.FullName, out destinationFullName, out category);
+                    string destinationFullName, category, yearTaken = "";
+
+                    if (AppSettings.WhichApp == App.PhotoCollector)
+                        yearTaken = GetYearTaken(fi);
+
+                    CopyUniqueFile.Copy(fi.FullName, out destinationFullName, out category, yearTaken);
 
                     progress.UniqueFileCompleted(fi, destinationFullName, fileChecksum, category);
                 }

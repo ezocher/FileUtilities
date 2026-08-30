@@ -101,6 +101,11 @@ class CopyUniqueFile
                 ConsoleColor.Red);
     }
 
+
+    // For Photo collector:
+    // Use File.Move() instead of .Copy() - this enables finding left behind things like like .pdf's of
+    // calendars or .docx that went with a trip
+
     // For Photo collector:
     // Use File.Move() instead of .Copy() - this enables finding left behind things like like .pdf's of
     // calendars or .docx that went with a trip
@@ -112,7 +117,7 @@ class CopyUniqueFile
         category = "";
     }
 
-    public static void Copy(string sourceFilePath, out string destinationFilePath, out string category)
+    public static void Copy(string sourceFilePath, out string destinationFilePath, out string category, string yearTaken)
     {
         string destFilePath;
 
@@ -127,12 +132,20 @@ class CopyUniqueFile
 
             destFilePath = DestinationRootPath(true) + Path.DirectorySeparatorChar + category + sourceFilePath.Remove(0, sourcePathRootLength);
         }
+        else if (AppSettings.WhichApp == App.PhotoCollector)
+        {
+            string sourceExtension = Path.GetExtension(sourceFilePath).ToLower();
+            if (!FileExtensionToCategoryMap.TryGetValue(sourceExtension, out category))
+                throw new Exception("Not a photo or video file extension: " + sourceExtension);
+            destFilePath = DestinationRootPath(category == AppSettings.PhotoFileExtensionsCategory) + Path.DirectorySeparatorChar + yearTaken + sourceFilePath.Remove(0, sourcePathRootLength);
+        }
         else
         {
             destFilePath = DestinationRootPath(true) + sourceFilePath.Remove(0, sourcePathRootLength);
             category = "";
         }
 
+        // TODO: for photo collector: if a file with the same name exists then use xxx to add (#)
         try
         {
             string destDirPath = Path.GetDirectoryName(destFilePath);
@@ -156,8 +169,5 @@ class CopyUniqueFile
         // System.IO.FileNotFoundException: 'Could not find file 'C:\Users\ezoch\Desktop\LEFT MON\!Left DT - XMas\California wildfires- Is Trump right when he blames forest managers- - BBC News'.'
     }
 
-    // For Photo collector:
-    // Use File.Move() instead of .Copy() - this enables finding left behind things like like .pdf's of
-    // calendars or .docx that went with a trip
 }
 

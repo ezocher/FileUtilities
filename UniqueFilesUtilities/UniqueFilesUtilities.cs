@@ -63,8 +63,10 @@ class UniqueFilesUtilities
         {
             Console.Write("Destination Volume '{0}' (or enter new destination)?", destinationVolume);
             input = Console.ReadLine();
-            if (input != String.Empty)
-                destinationVolume = input;
+            if (input != String.Empty) destinationVolume = input;
+
+            // Add the colon if it's missing
+            if (destinationVolume.Length == 1) destinationVolume += ":";
 
             // If the destination volume is C: then write results to the user's root directory since we can't write directly to C:\
             if (destinationVolume.ToUpper() == "C:")
