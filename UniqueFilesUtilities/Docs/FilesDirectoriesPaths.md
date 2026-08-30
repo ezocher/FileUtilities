@@ -46,13 +46,34 @@ When the scan target volume or directory is selected, this determines the defaul
 
 The base name is used as the prefix of the names of the reports and new DB that are generated during the scan.
 
-In the Unique File Copier app, the base name is also used as the suffix name of the destination directory for the copy/move operation (see 5 below).
+In the Unique File Copier app, the base name is also used as the suffix name of the destination directory for the copy operation (see 5 below).
 
 ## 4 -  Scan target volume or directory (source)
 
+The source root directory (string sourceRootDir)is the root of the volume or directory that is selected for scanning. 
 
 ## 5 - Copy/Move destination directory (dest)
 
-If the selected destination volume is the system volume (C:), then we can't write to the root of the volume and instead create the destination root directory in the current user's root directory (E.g. C:\Users\username).
+If the selected destination volume is the system volume (typically C:), then we can't write to the root of the volume and instead create the destination root directory in the current user's root directory (E.g. C:\Users\username).
 
+### Unique File Copier Destination Directory
+For the Unique File Copier app, the destination root directory is named based on the base name described above, prefixed by "unq-".
 
+If the base name is "Thumb drive 1" for example, the destination root directory would be "unq-Thumb drive 1", with the path being "D:\unq-Thumb drive 1" or "C:\Users\username\unq-Thumb drive 1" in this example.
+
+### Unique File Copier Copied Files Subdirectories
+Unique files found in the scan target are copied to this destination root directory.
+
+If the option to copy files into categories is selected then the files are copied into subdirectories of the destination root directory based on their extension's category as defined in the FileCategoriesByExtension.txt file. Within each category directory, the the directory structure of the source files is preserved. This subdirectory structure is created in the category directories as needed.
+
+If the files are being copied without categorization, then they are copied into the destination root directory, preserving the directory structure of the source files. The subdirectory structure is created in the destination root directory as needed.
+
+### Photo Collector Destination Directory
+For the Photo Collector app, there are two destination root directories, one for Photos and one for Videos.
+
+For example, the destination root directory for Photos will be "D:\Collected Photos" or "C:\Users\username\Collected Photos" on the system volume.
+
+### Photo Collector Copied Files Subdirectories
+Unique photos and videos found in the scan target are checked for the year they were taken using metadata in the files or for year names found in the file's path.
+
+The year taken (or "Unknown Year" if it can't be determined) is used to create a subdirectory of the destination root directory for each year. The unique photos and videos are copied into these year directories, preserving the directory structure of the source files. The subdirectory structure is created in the year directories as needed.
