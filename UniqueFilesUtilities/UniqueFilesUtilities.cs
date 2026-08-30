@@ -91,8 +91,6 @@ class UniqueFilesUtilities
             baseName = input;
         AppSettings.BaseName = baseName;
 
-        CopyUniqueFile.SetDestBasePath(AppSettings.BaseName);
-
         bool copyFiles;
         if (AppSettings.WhichApp == App.FingerprintDBMaker)
             copyFiles = false;

@@ -95,11 +95,6 @@ class CopyUniqueFile
             sourcePathRootLength = sourceRoot.Length;
     }
 
-    public static void SetDestBasePath(string baseName)
-    {
-        destBasePath = destPrefixPath + Path.DirectorySeparatorChar + AppSettings.destRootPrefix + baseName;
-    }
-
     static void CopyExceptionMessage(string srcPath, string destPath, string exceptionMessage)
     {
         ConsoleUtil.WriteLineColor(String.Format("\n*** File Copy Exception '{0}' -> '{1}': {2}\n", srcPath, destPath, exceptionMessage),
@@ -111,7 +106,6 @@ class CopyUniqueFile
     // calendars or .docx that went with a trip
     //
     // NEVER overwrite existing files, instead use increasing (n) naming, e.g. IMG1000 (2).jpg
-
     public static void MoveNoOverwrite(string sourceFilePath, out string destinationFilePath, out string category)
     {
         destinationFilePath = "";
@@ -131,11 +125,11 @@ class CopyUniqueFile
             if (!FileExtensionToCategoryMap.TryGetValue(sourceExtension, out category))
                 category = AppSettings.unknownCategoryName;
 
-            destFilePath = destBasePath + Path.DirectorySeparatorChar + category + sourceFilePath.Remove(0, sourcePathRootLength);
+            destFilePath = DestinationRootPath(true) + Path.DirectorySeparatorChar + category + sourceFilePath.Remove(0, sourcePathRootLength);
         }
         else
         {
-            destFilePath = destBasePath + sourceFilePath.Remove(0, sourcePathRootLength);
+            destFilePath = DestinationRootPath(true) + sourceFilePath.Remove(0, sourcePathRootLength);
             category = "";
         }
 
