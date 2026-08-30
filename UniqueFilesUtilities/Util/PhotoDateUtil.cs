@@ -67,12 +67,12 @@ public class PhotoDateUtil
     // turn (level N-1, N-2, ...2, 1, 0), and returns the first year found along with the level
     // it was found at. So if a photo lives at ...\Vacations\2020\Summer 2020 Trip\img99.jpg
     // it returns the 2020 and level 2. This enables the "Summer 2020 Trip" directory to be
-    // reserved in the copy.
+    // preserved in the copy.
     //
     // Returns (null, null) if no such year is found anywhere in the path.
 
-    // TODO: reject false years found in filenames like "IMG1999.jpg"
-    //  but extract years if legit, eg Win 11 screenshots: "Screenshot 2026-04-10 233348.png"
+    // Rejects false years found in filenames like "IMG1999.jpg" or "PIC_2002.ARW"
+    //  but extracts years if legit, eg Win 11 screenshots: "Screenshot 2026-04-10 233348.png"
     public static (int? Year, int? Level) GetYearFromPath(string filePath)
     {
         int currentYear = DateTime.Now.Year;
@@ -88,7 +88,18 @@ public class PhotoDateUtil
             {
                 int year = int.Parse(match.Value);
                 if (year >= MinPathYear && year <= currentYear)
+                {
+                    if (level == 0)
+                    {
+                        // If the year is found in the file name, check if it's a false positive like "IMG1999.jpg"
+                        // If the file name starts with the year or has a space before the year then it's not XXX1999.JPG or XXX_2020.JPG etc.
+                        if ((match.Index == 0) || (match.Value[match.Index - 1] == ' '))
+                            return (year, level);
+                        else
+                            return (null, null);
+                    }
                     return (year, level);
+                }
             }
         }
 
