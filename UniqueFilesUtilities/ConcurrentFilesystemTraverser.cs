@@ -65,10 +65,12 @@ class ConcurrentFilesystemTraverser
     // For the PhotoCollector app, the file category list (FileCategories.txt) is also loaded and any extensions that are not in the
     // Photo or Video categories are added to the skip list
     static HashSet<string> ExtensionSkipList;
+    static HashSet<string> PhotoVideoExtensionList;
 
     void InitFileSkipList(string rootDirectoryPath, string extensionConfigFilePath, string categoryConfigFilePath)
     {
         ExtensionSkipList = new HashSet<string>();
+        PhotoVideoExtensionList = new HashSet<string>();
 
         ConfigSettings[] extList = ConfigFileUtil.LoadConfigFile(extensionConfigFilePath);
 
@@ -78,12 +80,12 @@ class ConcurrentFilesystemTraverser
 
         if (AppSettings.WhichApp == App.PhotoCollector)
         {
-            // Also exclude non-photos/videos
+            // Add known photo/video extensions to photo/video extensions list
             extList = ConfigFileUtil.LoadConfigFile(categoryConfigFilePath);
             foreach (ConfigSettings settings in extList)
-                if (settings.Category != AppSettings.PhotoFileExtensionsCategory && 
-                    settings.Category != AppSettings.VideoFileExtensionsCategory)
-                    ExtensionSkipList.Add(settings.Value.ToLower());
+                if (settings.Category == AppSettings.PhotoFileExtensionsCategory || 
+                    settings.Category == AppSettings.VideoFileExtensionsCategory)
+                        PhotoVideoExtensionList.Add(settings.Value.ToLower());
         }
     }
 
@@ -241,6 +243,16 @@ class ConcurrentFilesystemTraverser
         {
             reason = "Extension in skip list";
             return false;
+        }
+
+        // Exclude remaining non-Photo/Video extensions for PhotoCollector app
+        if (AppSettings.WhichApp == App.PhotoCollector)
+        {
+            if (!PhotoVideoExtensionList.Contains(extension.ToLower()))
+            {
+                reason = "Not a Photo or Video extension";
+                return false;
+            }
         }
 
         reason = "Included";

@@ -12,7 +12,6 @@ class CopyUniqueFile
     // 
 
     private static string destPrefixPath;
-    static string destBasePath;
     private static int sourcePathRootLength;
 
     public static bool divideFilesIntoCategories;

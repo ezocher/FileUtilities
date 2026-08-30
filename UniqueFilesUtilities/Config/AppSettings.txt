@@ -12,8 +12,8 @@
 #
 [WhichApp]
 # FingerprintDBMaker
-UniqueFileCopier
-# PhotoCollector
+# UniqueFileCopier
+PhotoCollector
 
 
 
