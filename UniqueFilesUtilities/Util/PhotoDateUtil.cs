@@ -16,6 +16,11 @@ public class PhotoDateUtil
     // Matches a run of exactly 4 digits, not part of a longer digit run (e.g. skips "12345" and "202", finds "2023" or 2023 in "2023-2024" ok, but rejects digits embedded in a longer number)
     private static readonly Regex FourDigitRegex = new Regex(@"(?<!\d)\d{4}(?!\d)", RegexOptions.Compiled);
 
+    // Matches a run of exactly 8 digits, finds "20230410" in "Screenshot 20230410-233348.png"
+    // Used to extract the year from the commonly occuring YYYYMMDD or YYYYDDMM date formats in file names
+    private static readonly Regex EightDigitRegex = new Regex(@"(?<!\d)\d{8}(?!\d)", RegexOptions.Compiled);
+
+
     // Returns the year the photo was taken, read from the EXIF DateTimeOriginal tag
     // (falling back to DateTimeDigitized, then the IFD0 DateTime tag).
     // Returns null if the file has no EXIF data or none of those tags are present.
@@ -81,7 +86,7 @@ public class PhotoDateUtil
             new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar },
             StringSplitOptions.RemoveEmptyEntries);
 
-        for (int level = pathLevels.Length - 1; level >= 0 ; level--)
+        for (int level = pathLevels.Length - 1; level >= 1 ; level--)
         {
             string pathLevel = pathLevels[pathLevels.Length - (level + 1)];
 
@@ -90,26 +95,19 @@ public class PhotoDateUtil
                 int year = int.Parse(match.Value);
                 if (year >= MinPathYear && year <= currentYear)
                 {
-                    if (level == 0)
-                    {
-                        // If the year is found in the file name, check if it's a false positive like "IMG1999.jpg"
-                        // If the file name starts with the year or has a space before the year then it's not XXX1999.JPG or XXX_2020.JPG etc.
-                        if ((match.Index == 0) || (match.Value[match.Index - 1] == ' '))
-                            return (year, level);
-
-                        // Check for file name starting with a valid year number but follwed by other digits (won't match the regex)
-                        else if ((pathLevel.Length >= CharsInAYear) && int.TryParse(pathLevel.Substring(0, CharsInAYear), out int fileNameYear))
-                        {
-                            if (fileNameYear >= MinPathYear && fileNameYear <= currentYear)
-                                return (fileNameYear, level);
-                        }
-
-                        else
-                            return (null, null);
-                    }
                     return (year, level);
                 }
             }
+        }
+
+        // Check for the year in the file name as YYYY part of YYYYMMDD
+        Match matchfilename = EightDigitRegex.Match(pathLevels[pathLevels.Length - 1]);
+
+        if (matchfilename.Success)
+        {
+            int year = int.Parse(matchfilename.Value.Substring(0, CharsInAYear));
+            if (year >= MinPathYear && year <= currentYear)
+                return (year, 0);
         }
 
         return (null, null);
