@@ -43,7 +43,7 @@ class RunParallelScan
 
         // TODO: Examine directory structures
         // TODO: What to do with level?
-
+        string path = Path.GetDirectoryName(fi.FullName);
 
         if (YearFromMetadata.HasValue)
         {

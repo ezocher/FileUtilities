@@ -75,6 +75,7 @@ public class PhotoDateUtil
     //  but extracts years if legit, eg Win 11 screenshots: "Screenshot 2026-04-10 233348.png"
     public static (int? Year, int? Level) GetYearFromPath(string filePath)
     {
+        const int CharsInAYear = 4;
         int currentYear = DateTime.Now.Year;
         string[] pathLevels = filePath.Split(
             new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar },
@@ -95,6 +96,14 @@ public class PhotoDateUtil
                         // If the file name starts with the year or has a space before the year then it's not XXX1999.JPG or XXX_2020.JPG etc.
                         if ((match.Index == 0) || (match.Value[match.Index - 1] == ' '))
                             return (year, level);
+
+                        // Check for file name starting with a valid year number but follwed by other digits (won't match the regex)
+                        else if ((pathLevel.Length >= CharsInAYear) && int.TryParse(pathLevel.Substring(0, CharsInAYear), out int fileNameYear))
+                        {
+                            if (fileNameYear >= MinPathYear && fileNameYear <= currentYear)
+                                return (fileNameYear, level);
+                        }
+
                         else
                             return (null, null);
                     }
