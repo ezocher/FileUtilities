@@ -91,6 +91,14 @@ public class ReportProgress
         }
     }
 
+    public void ReportPhotoVideo(FileInfo fi, int yearFromPath, int pathLevel, int yearFromMetadata, string category)
+    {
+        lock (_lockStats)
+        {
+            ReportFiles.WritePhotoVideoInfo(fi, yearFromPath, pathLevel, yearFromMetadata, category);
+        }
+    }
+
     public void HiddenSystemDirSkipped(DirectoryInfo di)
     {
         lock (_lockStats)

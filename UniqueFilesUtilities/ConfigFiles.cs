@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 
-
 public class ConfigFiles
 {
     private static string ConfigDirectory() => 

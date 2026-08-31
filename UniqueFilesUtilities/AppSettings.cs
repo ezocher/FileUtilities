@@ -60,6 +60,7 @@ internal class AppSettings
     public static string ExcludedReportNameSuffix { get; set; }
     public static string DuplicatesReportNameSuffix { get; set; }
     public static string UniquesReportNameSuffix { get; set; }
+    public static string PhotosReportNameSuffix { get; set; }
 
     public static string appName { get; set; }
     public static string appDescription { get; set; }
@@ -76,6 +77,7 @@ internal class AppSettings
     public static string PhotoFileExtensionsCategory { get; set; }
     public static string VideoFileExtensionsCategory { get; set; }
     public static string unknownYearName { get; set; }
+    public static bool CreatePhotosReport { get; set; }
 
     //----------------------------------------------------------------------------------------------------------------------------------------
     // Settings determined at run time for each run

@@ -61,6 +61,16 @@ class CopyUniqueFile
         ConsoleUtil.RestoreColors();
     }
 
+    public static string GetFileCategory(FileInfo fi)
+    {
+        string fileExtenson = Path.GetExtension(fi.FullName).ToLower();
+        if (FileExtensionToCategoryMap.TryGetValue(fileExtenson, out string category))
+            return category;
+        else
+            return AppSettings.unknownCategoryName;
+    }
+
+
     public static void SetDestinationPrefixPath(string destinationPrefixPath)
     {
         destPrefixPath = destinationPrefixPath;

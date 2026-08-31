@@ -150,6 +150,9 @@ public class FileUtil
     // Returns the first unused file name of the form: "<input full name> (#).<input file ext>"
     //  increments the trailing number until it finds an unused one
     // -OR- returns the input full name if it is unused
+
+    // TODO: fix this to handle the case where the input file name already has a trailing number in parentheses,
+    //  e.g. "file (1).txt" should become "file (2).txt" instead of "file (1) (1).txt"
     public static string GetUniqueFileName(string tryFullName)
     {
         int tryCounter = 0;

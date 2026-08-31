@@ -39,6 +39,7 @@ FilesDBNameSuffix			= -File DB
 ExcludedReportNameSuffix	= -Excluded List
 DuplicatesReportNameSuffix	= -Duplicate Files
 UniquesReportNameSuffix		= -Unique Files
+PhotosReportNameSuffix		= -Photos-Videos
 
 unknownCategoryName			= Unknown
 
@@ -85,3 +86,4 @@ BaseFileDBsDirectory	= Photos File DBs
 
 unknownYearName			= Unknown Year
 
+?CreatePhotosReport		= True

@@ -41,9 +41,15 @@ class RunParallelScan
         (int? YearFromPath, int? LevelPath) = PhotoDateUtil.GetYearFromPath(fi.FullName);
         int? YearFromMetadata = PhotoDateUtil.ExtractMetadataYearTaken(fi.FullName);
 
-        // TODO: Examine directory structures
-        // TODO: What to do with level?
-        string path = Path.GetDirectoryName(fi.FullName);
+
+        // TODO: This is a temporary location for this report to get details which we won't need later
+        if (AppSettings.CreatePhotosReport)
+        {
+            progress.ReportPhotoVideo(fi, (YearFromPath.HasValue)     ? YearFromPath.Value     : 0, 
+                                          (LevelPath.HasValue)        ? LevelPath.Value        : 0,
+                                          (YearFromMetadata.HasValue) ? YearFromMetadata.Value : 0,
+                                          CopyUniqueFile.GetFileCategory(fi)                        );
+        }
 
         if (YearFromMetadata.HasValue)
         {

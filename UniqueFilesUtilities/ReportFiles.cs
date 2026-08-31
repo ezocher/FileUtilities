@@ -11,31 +11,40 @@ class ReportFiles
     static StreamWriter excludedReport;
     static StreamWriter duplicatesReport;
     static StreamWriter uniquesReport;
+    static StreamWriter photosReport;
+
+    private static string reportsDirectoryPath;
+
+    private static string ReportFileName(string baseName, string reportSuffix) =>
+        (reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + reportSuffix + AppSettings.ReportFilesExtension);
 
     public static void Open(string baseName, string scanRootDir)
     {
-        string reportsDirectoryPath = Path.Combine(AppSettings.AppRootPath, AppSettings.ReportFilesSubdirectory);
+        reportsDirectoryPath = Path.Combine(AppSettings.AppRootPath, AppSettings.ReportFilesSubdirectory);
         Directory.CreateDirectory(reportsDirectoryPath);
 
-        string filesReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + AppSettings.FilesDBNameSuffix + AppSettings.ReportFilesExtension;
-        filesReportFullName = FileUtil.GetUniqueFileName(filesReportFullName);
-        filesDB = new StreamWriter(filesReportFullName, false); // Append = true
+        filesDB = new StreamWriter(FileUtil.GetUniqueFileName(
+            ReportFileName(baseName, AppSettings.FilesDBNameSuffix)), false); // Append = true
         filesDB.WriteLine(FilesReportHeader);
 
-        string excludedReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + AppSettings.ExcludedReportNameSuffix + AppSettings.ReportFilesExtension;
-        excludedReportFullName = FileUtil.GetUniqueFileName(excludedReportFullName);
-        excludedReport = new StreamWriter(excludedReportFullName, false); // Append = true
+        excludedReport = new StreamWriter(FileUtil.GetUniqueFileName(
+            ReportFileName(baseName, AppSettings.ExcludedReportNameSuffix)), false); // Append = true
         excludedReport.WriteLine(ExcludedReportHeader);
 
-        string duplicatesReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + AppSettings.DuplicatesReportNameSuffix + AppSettings.ReportFilesExtension;
-        duplicatesReportFullName = FileUtil.GetUniqueFileName(duplicatesReportFullName);
-        duplicatesReport = new StreamWriter(duplicatesReportFullName, false); // Append = true
+        duplicatesReport = new StreamWriter(FileUtil.GetUniqueFileName(
+            ReportFileName(baseName, AppSettings.DuplicatesReportNameSuffix)), false); // Append = true
         duplicatesReport.WriteLine(DuplicatesReportHeader);
 
-        string uniquesReportFullName = reportsDirectoryPath + Path.DirectorySeparatorChar + baseName + AppSettings.UniquesReportNameSuffix + AppSettings.ReportFilesExtension;
-        uniquesReportFullName = FileUtil.GetUniqueFileName(uniquesReportFullName);
-        uniquesReport = new StreamWriter(uniquesReportFullName, false); // Append = true
+        uniquesReport = new StreamWriter(FileUtil.GetUniqueFileName(
+            ReportFileName(baseName, AppSettings.UniquesReportNameSuffix)), false); // Append = true
         uniquesReport.WriteLine(UniquesReportHeader);
+
+        if ((AppSettings.WhichApp == App.PhotoCollector) && (AppSettings.CreatePhotosReport))
+        {
+            photosReport = new StreamWriter(FileUtil.GetUniqueFileName(
+                ReportFileName(baseName, AppSettings.PhotosReportNameSuffix)), false); // Append = true
+            photosReport.WriteLine(PhotosReportHeader);
+        }
     }
 
     public static void Close()
@@ -44,6 +53,8 @@ class ReportFiles
         excludedReport.Close();
         duplicatesReport.Close();
         uniquesReport.Close();
+        if (photosReport != null)
+            photosReport.Close();
     }
 
 
@@ -91,4 +102,14 @@ class ReportFiles
         uniquesReport.WriteLine(UniquesReportFormat, numUniquesFound,
             fi.FullName, copiedFileFullPath, fi.Extension, fi.Name, category, fi.Length, fileFingerprint);
     }
+
+    const string PhotosReportHeader = "Source Full Path\tYear Path\tPath Level\tYear Meta\tExt\tFile Name\tCategory\tLength";
+    const string PhotosReportFormat = "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}";
+
+    public static void WritePhotoVideoInfo(FileInfo fi, int yearFromPath, int pathLevel, int yearFromMetadata, string category)
+    {
+        photosReport.WriteLine(PhotosReportFormat, 
+            fi.FullName, yearFromPath, pathLevel, yearFromMetadata, fi.Extension, fi.Name, category, fi.Length);
+    }
+
 }
