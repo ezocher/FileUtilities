@@ -144,13 +144,15 @@ class CopyUniqueFile
             category = "";
         }
 
-        // TODO: for photo collector: if a file with the same name exists then use xxx to add (#)
         try
         {
             string destDirPath = Path.GetDirectoryName(destFilePath);
             if (copyFiles)
             {
                 Directory.CreateDirectory(destDirPath);
+                if (AppSettings.WhichApp == App.PhotoCollector)
+                    // For photo collector: if a file with the same name exists then add the first unused (#)
+                    destFilePath = FileUtil.GetUniqueFileName(destFilePath);
                 File.Copy(sourceFilePath, destFilePath, false);
             }
 
