@@ -146,7 +146,11 @@ class CopyUniqueFile
             string sourceExtension = Path.GetExtension(sourceFilePath).ToLower();
             if (!FileExtensionToCategoryMap.TryGetValue(sourceExtension, out category))
                 throw new Exception("Not a photo or video file extension: " + sourceExtension);
-            destFilePath = DestinationRootPath(category == AppSettings.PhotoFileExtensionsCategory) + Path.DirectorySeparatorChar + yearTaken + sourceFilePath.Remove(0, sourcePathRootLength);
+            destFilePath = DestinationRootPath(category == AppSettings.PhotoFileExtensionsCategory) + Path.DirectorySeparatorChar +
+              yearTaken + sourceFilePath.Remove(0, sourcePathRootLength);
+
+            // For photo collector only: if a file with the same name exists then add the first unused (#)
+            destFilePath = FileUtil.GetUniqueFileName(destFilePath);
         }
         else
         {
@@ -160,10 +164,11 @@ class CopyUniqueFile
             if (copyFiles)
             {
                 Directory.CreateDirectory(destDirPath);
-                if (AppSettings.WhichApp == App.PhotoCollector)
-                    // For photo collector: if a file with the same name exists then add the first unused (#)
-                    destFilePath = FileUtil.GetUniqueFileName(destFilePath);
-                File.Copy(sourceFilePath, destFilePath, false);
+
+                if ((AppSettings.WhichApp == App.PhotoCollector) && moveFiles)
+                    File.Move(sourceFilePath, destFilePath);
+                else
+                    File.Copy(sourceFilePath, destFilePath, false);
             }
 
             destinationFilePath = destFilePath;
