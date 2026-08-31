@@ -51,13 +51,15 @@ class RunParallelScan
                                           CopyUniqueFile.GetFileCategory(fi)                        );
         }
 
-        if (YearFromMetadata.HasValue)
-        {
-            return YearFromMetadata.Value.ToString();
-        }
-        else if (YearFromPath.HasValue)
+        // If year is available in the file path, use it first.
+        //  Some photos have incorrect metadata because of camera dates not being set correctly
+        if (YearFromPath.HasValue)
         {
             return YearFromPath.Value.ToString();
+        }
+        else if (YearFromMetadata.HasValue)
+        {
+            return YearFromMetadata.Value.ToString();
         }
         else 
         {

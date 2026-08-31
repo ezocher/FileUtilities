@@ -3,4 +3,9 @@
 ## Naming and Renaming Conventions
 
 ## Issues
-1 . Camera date/time settings are sometimes incorrect, resulting in incorrect metadata in files. Observed: camera set to correct date but wrong year
+1 . Camera date/time settings are sometimes incorrect, resulting in incorrect metadata in files.
+Observed multiple times.
+* Resolution: Use year from file path if available, use metadata as fallback when available (Issue #12, closed).
+## Questions
+1. What to do with .zip files?
+1. 
